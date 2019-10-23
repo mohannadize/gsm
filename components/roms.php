@@ -43,7 +43,7 @@
                         <td>21-2-2022</td>
                         <td>15</td>
                         <td>40</td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -55,7 +55,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -67,7 +67,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -79,7 +79,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -91,7 +91,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -103,7 +103,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -115,7 +115,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -127,7 +127,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -139,7 +139,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -151,7 +151,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="" class="button is-primary">Download</a></td>
+                        <td><a href="" class="button is-dark">Download</a></td>
                     </tr>
                 </tbody>
             </table>

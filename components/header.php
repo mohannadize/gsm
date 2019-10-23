@@ -32,7 +32,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href='signup.php' class="button is-primary">
+                    <a href='signup.php' class="button is-danger">
                         <strong>Sign up</strong>
                     </a>
                     <a href='login.php' class="button is-light">
