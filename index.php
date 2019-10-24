@@ -1,25 +1,33 @@
-<!DOCTYPE html>
-<html lang="en" class="has-navbar-fixed-top">
+<?php
 
-<head>
-    <?php include "components/head.php"; ?>
-</head>
+include "./functions/functions.php";
 
-<body>
+if (isset($_GET['a'])) {
+    $action = $_GET['a'];
+} else {
+    $action = "index";
+}
 
+switch ($action) {
+    case 'index':
+    case 'roms':
+        $page = "./components/roms.php";
+        break;
+    case "login":
+        $page = "./components/login.php";
+        break;
+    case "signup":
+        $page = "./components/signup.php";
+        break;
+    case "user":
+        $page = "./components/users.php";
+        break;
+    case "admin":
+        $page = "./components/admin.php";
+        break;
+    default:
+        $page = "./components/404.php";
+        break;
+}
 
-    <?php 
-    
-    include "components/header.php";
-    
-    // Page Content
-    include "components/roms.php";
-
-    include "components/footer.php";
-
-    include "components/scripts.php";
-
-    ?>
-</body>
-
-</html>
+print_web_page($page);

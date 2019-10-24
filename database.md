@@ -33,3 +33,11 @@
 * site name
 * description
 * maintainance
+
+## Transactions
+
+* id
+* rom_id
+* user_id
+* timestamp
+* confirmed

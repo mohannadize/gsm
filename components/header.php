@@ -20,22 +20,25 @@
 
     <div id="navmenu" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item">
+            <a class="navbar-item" href=".">
                 Home
             </a>
 
-            <a class="navbar-item" href="index.php">
+            <a class="navbar-item" href="roms">
                 Roms
+            </a>
+            <a class="navbar-item" href="404">
+                404
             </a>
         </div>
 
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href='signup.php' class="button is-danger">
+                    <a href='signup' class="button is-danger">
                         <strong>Sign up</strong>
                     </a>
-                    <a href='login.php' class="button is-light">
+                    <a href='login' class="button is-light">
                         Log in
                     </a>
                 </div>
