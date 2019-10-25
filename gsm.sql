@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 23, 2019 at 10:52 PM
+-- Generation Time: Oct 25, 2019 at 10:20 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -55,9 +55,27 @@ CREATE TABLE IF NOT EXISTS `roms` (
 DROP TABLE IF EXISTS `site`;
 CREATE TABLE IF NOT EXISTS `site` (
   `logo` text NOT NULL,
+  `email` text NOT NULL,
+  `url` text NOT NULL,
   `site-name` text NOT NULL,
   `description` text NOT NULL,
   `maintainance` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rom_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `confirmed` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
