@@ -30,6 +30,8 @@
 ## Site
 
 * logo
+* Url
+* Email
 * site name
 * description
 * maintainance
