@@ -23,12 +23,20 @@
                                 <label class="label">Confirm password</label>
                                 <div class="control"><input type="password" class="input"></div>
                             </div>
+                            <div class="field">
+                                <div class="control">
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        I agree to the <a href="#">terms and conditions</a>
+                                    </label>
+                                </div>
+                            </div>
                             <button type="submit" class="button is-link">Sign up</button>
                         </div>
                     </form>
                     <div class="card-footer">
                         <div class="card-footer-item">
-                            Already have an account? <a style='margin-left:.2em' href="login.php">Log in</a>
+                            Already have an account? <a style='margin-left:.2em' href="login">Log in</a>
                         </div>
                     </div>
                 </div>

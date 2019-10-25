@@ -13,10 +13,6 @@
                     </span>
                 </button></div>
         </div>
-    </div>
-</section>
-<section class="section">
-    <div class="container">
         <div class="scrollable-table">
             <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
                 <thead>

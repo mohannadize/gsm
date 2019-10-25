@@ -21,7 +21,7 @@
                     </form>
                     <div class="card-footer">
                         <div class="card-footer-item">
-                            Don't have an account? <a style='margin-left:.2em' href="signup.php">Sign up</a>
+                            Don't have an account? <a style='margin-left:.2em' href="signup">Sign up</a>
                         </div>
                     </div>
                 </div>

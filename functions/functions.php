@@ -1,6 +1,6 @@
 <?php
 
-function print_web_page($section, $head_append="")
+function print_web_page($action, $section, $head_append="")
 {
     ?>
 

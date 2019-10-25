@@ -26,8 +26,9 @@ switch ($action) {
         $page = "./components/admin.php";
         break;
     default:
+        $action = "404";
         $page = "./components/404.php";
         break;
 }
 
-print_web_page($page);
+print_web_page($action,$page);

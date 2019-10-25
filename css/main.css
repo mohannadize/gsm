@@ -2,3 +2,10 @@
     width: 100%;
     overflow-x: auto;
 }
+
+.tab.is-active {
+    display: block;
+}
+.tab {
+    display: none;
+}
