@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 25, 2019 at 10:20 PM
+-- Generation Time: Oct 26, 2019 at 03:58 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -59,6 +59,8 @@ CREATE TABLE IF NOT EXISTS `site` (
   `url` text NOT NULL,
   `site-name` text NOT NULL,
   `description` text NOT NULL,
+  `daily_free` int(11) NOT NULL,
+  `increment_daily` int(11) NOT NULL,
   `maintainance` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -93,6 +95,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` text NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `balance` int(11) NOT NULL,
+  `daily_balance` int(11) NOT NULL,
+  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `admin` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

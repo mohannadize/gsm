@@ -5,11 +5,15 @@
 ## Users
 
 * id
+* name
 * username
 * password
-* created at
+* email
+* last_login
+* created_date
 * balance
-* admin
+* daily_balance
+* admin?
 
 ## Roms
 
@@ -34,7 +38,9 @@
 * Email
 * site name
 * description
-* maintainance
+* maintainance?
+* daily_free
+* increment_daily?
 
 ## Transactions
 

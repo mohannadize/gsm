@@ -14,21 +14,45 @@
                         <span>Website Settings</span>
                     </a>
                 </li>
+                <li>
+                    <a onclick='tabchange(this)' data-target="users">
+                        <span class="icon is-small"><i class="fas fa-users" aria-hidden="true"></i></span>
+                        <span>Users</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
     <br>
     <div class="container tab is-active" id="manage-roms">
         <div class="columns">
-            <div class="column is-5-tablet is-offset-3-tablet">
+            <div class="column is-3-tablet is-4-desktop">
+                <div class="field">
+                    <div class="file is-danger">
+                        <label for="file" class="file-label">
+                            <input type="file" name="file" class="file-input">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Add a new rom
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-3-tablet is-9-mobile is-inline-block">
                 <input type="text" placeholder="Search" class="input">
             </div>
-            <div class="column"><button class="button is-link">
-                    <span>Search</span>
+            <div class="column is-2-mobile is-inline-block">
+                <button class="button is-link">
                     <span class="icon">
                         <i class="fa fa-search"></i>
                     </span>
-                </button></div>
+                </button>
+            </div>
         </div>
         <div class="scrollable-table">
             <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
@@ -135,5 +159,8 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="container tab" id="users">
+        <div class="title">All users</div>
     </div>
 </section>
