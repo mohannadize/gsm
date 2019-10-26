@@ -1,0 +1,58 @@
+.switch > input[type=checkbox] {
+    opacity: 0;
+    display: inline;
+    position: absolute;
+}
+
+.switch > input:checked + .switch-body::before {
+    left: 20%;
+}
+
+.switch > .switch-body {
+    width: 50px;
+    height: 30px;
+    background-color: grey;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 100px;
+    margin-right:10px;
+    transition: all 150ms;
+}
+
+.switch > .switch-body::before {
+    width: 25px;
+    height: 25px;
+    transform: translate(50%,50%);
+    content: "";
+    box-shadow: 0 0 7px -3px rgba(0,0,0,0.7);
+    display: inline-block;
+    border-radius: 100px;
+    background-color: white;
+    top: -35%;
+    left: -20%;
+    transition: all 150ms ease-out;
+    z-index: 10;
+    position: relative;
+}
+
+.switch > input:checked + .switch-body {
+    background-color: #3273dc;
+}
+.switch.is-link > input:checked + .switch-body {
+    background-color: #3273dc;
+}
+.switch.is-warning > input:checked + .switch-body {
+    background-color: #ffdd57;
+}
+.switch.is-danger > input:checked + .switch-body {
+    background-color: #f14668;
+}
+.switch.info > input:checked + .switch-body {
+    background-color: #3298dc;
+}
+.switch.is-success > input:checked + .switch-body {
+    background-color: #48c774;
+}
+.switch.is-black > input:checked + .switch-body {
+    background-color: #000;
+}

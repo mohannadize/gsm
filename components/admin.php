@@ -24,7 +24,7 @@
         </div>
     </div>
     <br>
-    <div class="container tab is-active" id="manage-roms">
+    <div class="container tab" id="manage-roms">
         <div class="columns">
             <div class="column is-3-tablet is-4-desktop">
                 <div class="field">
@@ -86,12 +86,20 @@
             </table>
         </div>
     </div>
-    <div class="container tab" id="website-settings">
+    <div class="container tab is-active" id="website-settings">
         <h2 class="title">Website Settings</h2>
 
         <form action="#" method="post">
             <div class="columns">
                 <div class="column is-6-tablet">
+                    <div class="field">
+                        <label class="switch is-warning">
+                            <input type="checkbox">
+                            <div class="switch-body"></div>
+                            <span>Development mode</span>
+                        </label>
+                    </div>
+
                     <div class="field">
                         <label class="label">Website Name</label>
                         <div class="control">
@@ -126,26 +134,43 @@
                         </div>
                     </div>
 
+                    <label class="label">Logo </label>
                     <div class="field">
-                        <label class="label">Logo</label>
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="file" placeholder="Email input" value="hello@">
+                        <label class="switch is-info">
+                            <input type="checkbox" checked="checked">
+                            <div class="switch-body"></div>
+                            <span>Logo as text</span>
+                        </label>
+                    </div>
+
+                    <div class="field">
+                        <div class="file is-danger">
+                            <label for="file" class="file-label">
+                                <input type="file" name="file" class="file-input">
+                                <span class="file-cta">
+                                    <span class="file-icon">
+                                        <i class="fas fa-image"></i>
+                                    </span>
+                                    <span class="file-label">
+                                        Logo upload
+                                    </span>
+                                </span>
+                            </label>
                         </div>
                     </div>
 
-
-
                     <div class="field">
+                        <label class="label">Daily rewards amount</label>
                         <div class="control">
-                            <label class="radio">
-                                <input type="radio" name="question">
-                                Yes
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="question">
-                                No
-                            </label>
+                            <input class="input" type="number" value="GSMGood">
                         </div>
+                    </div>
+                    <div class="field">
+                        <label class="switch is-info">
+                            <input type="checkbox">
+                            <div class="switch-body"></div>
+                            <span>Accumulate daily rewards</span>
+                        </label>
                     </div>
 
                     <div class="field is-grouped">
