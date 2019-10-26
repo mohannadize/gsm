@@ -20,15 +20,15 @@
 }
 
 .switch > .switch-body::before {
-    width: 25px;
-    height: 25px;
+    width: 50%;
+    height: 80%;
     transform: translate(50%,50%);
     content: "";
     box-shadow: 0 0 7px -3px rgba(0,0,0,0.7);
     display: inline-block;
     border-radius: 100px;
     background-color: white;
-    top: -35%;
+    top: -30%;
     left: -20%;
     transition: all 150ms ease-out;
     z-index: 10;
