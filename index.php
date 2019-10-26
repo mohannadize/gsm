@@ -1,5 +1,6 @@
 <?php
 
+include "./functions/database.php";
 include "./functions/functions.php";
 
 if (isset($_GET['a'])) {
@@ -24,6 +25,10 @@ switch ($action) {
         break;
     case "admin":
         $page = "./components/admin.php";
+        break;
+    case "test":
+        // $page = "./components/error.php";
+        include "./test.php";
         break;
     default:
         $action = "404";

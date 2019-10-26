@@ -45,6 +45,17 @@ class MySQLDatabase {
         return $result;
     }
 
+    public function add_user($name,$username,$password,$email) {
+        $settings = $this->query("SELECT daily_free,maintainance from `site`");
+        $settings = $this->fetch_array($settings);
+        if ($settings['maintainance']) return false;
+
+        return $this->query("INSERT INTO users (name,username,password,email,daily_balance) 
+        VALUES
+            ('$name','$username','$password','$email','$settings[daily_free]')
+         ");
+    }
+
     private function confirm_query($result) {
         if (!$result) {
             die(mysqli_error($this->connection));

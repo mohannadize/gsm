@@ -4,29 +4,29 @@
         <div class="columns">
             <div class="column is-4 is-offset-2">
                 <div class="card">
-                    <form action="#" method="post">
+                    <form action="signup" method="post">
 
                         <div class="card-content">
                             <div class="field">
                                 <label class="label">Username</label>
-                                <div class="control"><input type="text" class="input"></div>
+                                <div class="control"><input name="username" type="text" class="input"></div>
                             </div>
                             <div class="field">
                                 <label class="label">Email</label>
-                                <div class="control"><input type="email" class="input"></div>
+                                <div class="control"><input name="email" type="email" class="input"></div>
                             </div>
                             <div class="field">
                                 <label class="label">Password</label>
-                                <div class="control"><input type="password" class="input"></div>
+                                <div class="control"><input name="password" type="password" class="input"></div>
                             </div>
                             <div class="field">
                                 <label class="label">Confirm password</label>
-                                <div class="control"><input type="password" class="input"></div>
+                                <div class="control"><input name="cpassword" type="password" class="input"></div>
                             </div>
                             <div class="field">
                                 <div class="control">
-                                    <label class="checkbox">
-                                        <input type="checkbox">
+                                    <label required class="checkbox">
+                                        <input name='terms' type="checkbox">
                                         I agree to the <a href="#">terms and conditions</a>
                                     </label>
                                 </div>

@@ -14,17 +14,11 @@
                         <span>Website Settings</span>
                     </a>
                 </li>
-                <li>
-                    <a onclick='tabchange(this)' data-target="users">
-                        <span class="icon is-small"><i class="fas fa-users" aria-hidden="true"></i></span>
-                        <span>Users</span>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
     <br>
-    <div class="container tab" id="manage-roms">
+    <div class="container tab is-active" id="manage-roms">
         <div class="columns">
             <div class="column is-3-tablet is-4-desktop">
                 <div class="field">
@@ -86,7 +80,7 @@
             </table>
         </div>
     </div>
-    <div class="container tab is-active" id="website-settings">
+    <div class="container tab" id="website-settings">
         <h2 class="title">Website Settings</h2>
 
         <form action="#" method="post">
@@ -130,6 +124,16 @@
                             <input class="input" type="email" value="example@email.com">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Paypal Email</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input" type="email" value="example@paypal.com">
+                            <span class="icon is-small is-left">
+                                <i class="fab fa-paypal"></i>
                             </span>
                         </div>
                     </div>
@@ -184,8 +188,5 @@
                 </div>
             </div>
         </form>
-    </div>
-    <div class="container tab" id="users">
-        <div class="title">All users</div>
     </div>
 </section>
