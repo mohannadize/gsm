@@ -1,6 +1,6 @@
 <?php
 
-function print_web_page($action, $section, $head_append="")
+function print_web_page($action, $section,$logged_in,$db, $head_append="")
 {
     ?>
 
@@ -104,7 +104,7 @@ function login_user($data,$db) {
     $username = trim($data['username']);
     $password = trim($data['password']);
 
-    $result = $db->query("SELECT id,username,password from users WHERE username='$username'");
+    $result = $db->query("SELECT id,username,password,admin from users WHERE username='$username'");
     
     if ($db->num_rows($result)) {
         $result = $db->fetch_array($result);
@@ -113,6 +113,9 @@ function login_user($data,$db) {
             $_SESSION['loggedin'] = true;
             $_SESSION['id'] = $result['id'];
             $_SESSION['username'] = $result['username'];
+            if ($result['admin']) {
+                $_SESSION['admin'] = true;
+            };
 
             return true;
         } else {
@@ -123,4 +126,9 @@ function login_user($data,$db) {
     }
 
     return false;
+}
+
+function update_site_settings($data,$db) {
+
+    var_dump($data);
 }

@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true;
+
 include "./functions/database.php";
 include "./functions/functions.php";
 
@@ -25,7 +27,12 @@ switch ($action) {
         $page = "./components/users.php";
         break;
     case "admin":
-        $page = "./components/admin.php";
+        if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+            $page = "./components/admin.php";
+        } else {
+            $action = '404';
+            $page = "./components/404.php";
+        }
         break;
     case "test":
         // $page = "./components/error.php";
@@ -37,4 +44,4 @@ switch ($action) {
         break;
 }
 
-print_web_page($action,$page);
+print_web_page($action,$page,$logged_in,$db);

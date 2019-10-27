@@ -27,28 +27,39 @@
             <a class="navbar-item <?php echo $action == "roms" ? "is-active" : ""; ?>" href="roms">
                 Roms
             </a>
-            <a class="navbar-item <?php echo $action == "admin" ? "is-active" : ""; ?>" href="admin">
-                Admin Panel
-            </a>
-            <a class="navbar-item <?php echo $action == "404" ? "is-active" : ""; ?>" href="404">
-                404
-            </a>
         </div>
 
         <div class="navbar-end">
             <?php
 
-            if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+            if (isset($logged_in)) {
                 ?>
 
-                <a class="navbar-item <?php echo $action == "profile" ? "is-active" : ""; ?>" href="profile">
-                    Welcome, <?php echo $_SESSION['username']; ?>
-                </a>
-                
+                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+
+                        ?>
+
+                    <a class="navbar-item <?php echo $action == "admin" ? "is-active" : ""; ?>" href="admin">
+                        Admin Panel
+                    </a>
+
+                <?php } else {
+                        ?>
+
+                    <a class="navbar-item <?php echo $action == "profile" ? "is-active" : ""; ?>" href='profile'>
+                        <?php echo $_SESSION['username']; ?>
+                    </a>
+
+                    <a class="navbar-item <?php echo $action == "balance" ? "is-active" : ""; ?>" href='balance'>
+                        <!-- TODO: Points system  -->
+                        <?php echo 22; ?> Pts
+                    </a>
+
+                <?php
+                    } ?>
                 <a class="navbar-item" href="logout.php">
                     Logout
                 </a>
-
             <?php
             } else {
 

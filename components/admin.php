@@ -1,3 +1,10 @@
+<?php
+
+$settings = $db->query("SELECT * from site");
+$settings = $db->fetch_array($settings);
+
+?>
+
 <section class="section">
     <div class="container">
         <div class="tabs is-boxed">
@@ -12,6 +19,12 @@
                     <a onclick='tabchange(this)' data-target="website-settings">
                         <span class="icon is-small"><i class="fas fa-cog" aria-hidden="true"></i></span>
                         <span>Website Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick='tabchange(this)' data-target="account-settings">
+                        <span class="icon is-small"><i class="fas fa-user" aria-hidden="true"></i></span>
+                        <span>Account settings</span>
                     </a>
                 </li>
             </ul>
@@ -83,12 +96,13 @@
     <div class="container tab" id="website-settings">
         <h2 class="title">Website Settings</h2>
 
-        <form action="#" method="post">
+        <form action="action.php" method="post">
+            <input type="hidden" name="action" value='update_site'>
             <div class="columns">
                 <div class="column is-6-tablet">
                     <div class="field">
                         <label class="switch is-warning">
-                            <input type="checkbox">
+                            <input name="maintainance" type="checkbox" <?php echo $settings['maintainance'] ? "checked":0; ?>>
                             <div class="switch-body"></div>
                             <span>Development mode</span>
                         </label>
@@ -97,31 +111,21 @@
                     <div class="field">
                         <label class="label">Website Name</label>
                         <div class="control">
-                            <input class="input" type="text" value="GSMGood">
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label class="label">Site URL</label>
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="text">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-link"></i>
-                            </span>
+                            <input class="input" name='site-name' type="text" value="<?php echo $settings['site-name']; ?>">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">Site Description</label>
                         <div class="control">
-                            <textarea class="textarea" placeholder="..."></textarea>
+                            <textarea name='description' class="textarea"><?php echo $settings['description']; ?></textarea>
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">Email</label>
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="email" value="example@email.com">
+                            <input name="email" class="input" type="email" value="<?php echo $settings['email']; ?>">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                             </span>
@@ -131,7 +135,7 @@
                     <div class="field">
                         <label class="label">Paypal Email</label>
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="email" value="example@paypal.com">
+                            <input class="input" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
                             <span class="icon is-small is-left">
                                 <i class="fab fa-paypal"></i>
                             </span>
@@ -141,19 +145,19 @@
                     <label class="label">Logo </label>
                     <div class="field">
                         <label class="switch is-info">
-                            <input type="checkbox" checked="checked">
+                            <input name='logo_as_text' type="checkbox" <?php echo $settings['logo_as_text'] ? "checked":0; ?>>
                             <div class="switch-body"></div>
                             <span>Logo as text</span>
                         </label>
                     </div>
 
                     <div class="field">
-                        <div class="file is-danger">
+                        <div class="file is-warning">
                             <label for="file" class="file-label">
-                                <input type="file" name="file" class="file-input">
+                                <input name='logo' type="file" class="file-input">
                                 <span class="file-cta">
                                     <span class="file-icon">
-                                        <i class="fas fa-image"></i>
+                                        <i class="fas fa-upload"></i>
                                     </span>
                                     <span class="file-label">
                                         Logo upload
@@ -166,12 +170,12 @@
                     <div class="field">
                         <label class="label">Daily rewards amount</label>
                         <div class="control">
-                            <input class="input" type="number" value="GSMGood">
+                            <input class="input" name="daily_free" type="number" value="<?php echo $settings['daily_free']; ?>">
                         </div>
                     </div>
                     <div class="field">
                         <label class="switch is-info">
-                            <input type="checkbox">
+                            <input name='increment_daily' type="checkbox" <?php echo $settings['increment_daily'] ? "checked":0; ?>>
                             <div class="switch-body"></div>
                             <span>Accumulate daily rewards</span>
                         </label>
@@ -188,5 +192,8 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="container tab" id="account-settings">
+        
     </div>
 </section>

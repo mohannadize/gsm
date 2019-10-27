@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include "./functions/database.php";
 include "./functions/functions.php";
 
@@ -21,19 +23,24 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 die();
             };
             break;
+            
         case "login":
-            session_start();
-            if (login_user($_POST,$db)) {
+            if (login_user($_POST, $db)) {
                 header("location: index.php");
             } else {
-
+                $message = "The username or password is incorrect";
+                $page = "./components/error.php";
+                print_notice_page('login', $page, $message, $section = "./components/login.php");
             }
             break;
+
+        case "update_site":
+            update_site_settings($_POST,$db);
+            break;
+
         default:
             break;
     }
-
-    // Case Loggin in
 
 
     // Case Changing user data
