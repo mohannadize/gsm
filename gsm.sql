@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 26, 2019 at 03:58 PM
+-- Generation Time: Oct 27, 2019 at 11:43 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -54,8 +54,10 @@ CREATE TABLE IF NOT EXISTS `roms` (
 
 DROP TABLE IF EXISTS `site`;
 CREATE TABLE IF NOT EXISTS `site` (
-  `logo` text NOT NULL,
+  `logo_as_text` int(11) NOT NULL,
+  `logo_file` text NOT NULL,
   `email` text NOT NULL,
+  `paypal` text NOT NULL,
   `url` text NOT NULL,
   `site-name` text NOT NULL,
   `description` text NOT NULL,
@@ -63,6 +65,13 @@ CREATE TABLE IF NOT EXISTS `site` (
   `increment_daily` int(11) NOT NULL,
   `maintainance` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `site`
+--
+
+INSERT INTO `site` (`logo_as_text`, `logo_file`, `email`, `paypal`, `url`, `site-name`, `description`, `daily_free`, `increment_daily`, `maintainance`) VALUES
+(1, '', 'mohannad@condize.com', 'mohannad@condize.com', 'http://localhost/gsm', 'GSMGood', 'This is the site description', 400, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -94,12 +103,22 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` text NOT NULL,
   `email` text NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `balance` int(11) NOT NULL,
+  `balance` int(11) NOT NULL DEFAULT '0',
   `daily_balance` int(11) NOT NULL,
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `admin` int(11) NOT NULL,
+  `admin` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`) VALUES
+(1, 'Admin User', 'admin', 'admin', 'mohannad@condize.com', '2019-10-26 20:26:38', 9999, 500, '2019-10-26 20:26:38', 1),
+(2, '', '', '', '', '2019-10-26 20:57:19', 0, 500, '2019-10-26 20:57:19', 0),
+(3, 'Mohannad Hisham', 'mohannadize', 'asd', 'mohannadize15@gmail.com', '2019-10-27 17:54:20', 0, 500, '2019-10-27 17:54:20', 0),
+(4, 'bedo hisham', 'bedo', 'poop', 'mohannadize15@gmail.com', '2019-10-27 23:36:25', 0, 400, '2019-10-27 23:36:25', 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
