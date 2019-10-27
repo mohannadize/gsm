@@ -28,19 +28,11 @@
         <div class="columns">
             <div class="column is-3-tablet is-4-desktop">
                 <div class="field">
-                    <div class="file is-danger">
-                        <label for="file" class="file-label">
-                            <input type="file" name="file" class="file-input">
-                            <span class="file-cta">
-                                <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">
-                                    Add a new rom
-                                </span>
-                            </span>
-                        </label>
-                    </div>
+                    <button class="button is-danger" onclick="toggle_modal(this)" data-target="add_rom"><span class="icon">
+                        <i class="fa fa-upload"></i>
+                    </span><span>
+                        Add a new rom
+                    </span></button>
                 </div>
             </div>
             <div class="column is-3-tablet is-9-mobile is-inline-block">
@@ -145,19 +137,11 @@
                     </div>
 
                     <div class="field">
-                        <div class="file is-warning">
-                            <label for="file" class="file-label">
-                                <input name='logo' type="file" class="file-input">
-                                <span class="file-cta">
-                                    <span class="file-icon">
-                                        <i class="fas fa-upload"></i>
-                                    </span>
-                                    <span class="file-label">
-                                        Logo upload
-                                    </span>
-                                </span>
-                            </label>
-                        </div>
+                        <a class="button is-warning" onclick="toggle_modal(this)" data-target="upload_logo">
+                            <span class="icon"><i class="fa fa-upload"></i></span>
+                            <span>
+                            Logo upload
+                        </span></a>
                     </div>
 
                     <div class="field">
@@ -198,7 +182,7 @@
     <div class="modal-card">
         <header class="modal-card-head">
             <p class="modal-card-title">Upload Site Logo</p>
-            <button class="delete" aria-label="close"></button>
+            <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="upload_logo"></button>
         </header>
         <section class="modal-card-body">
             <form action="action.php" method="post">
@@ -225,7 +209,7 @@
         </section>
         <footer class="modal-card-foot">
             <button class="button is-info" type="submit">Upload</button>
-            <button class="button">Cancel</button>
+            <button class="button" onclick="toggle_modal(this)" data-target="upload_logo">Cancel</button>
         </footer>
     </div>
 </div>
@@ -235,7 +219,7 @@
     <div class="modal-card">
         <header class="modal-card-head">
             <p class="modal-card-title">Add a new rom</p>
-            <button class="delete" aria-label="close"></button>
+            <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="add_rom"></button>
         </header>
         <section class="modal-card-body">
             <form action="action.php" method="post">
@@ -300,7 +284,7 @@
             <button class="button is-info">
                 <span class="icon"><i class="fa fa-plus"></i></span><span>Add</span>
             </button>
-            <button class="button">Cancel</button>
+            <button class="button" onclick="toggle_modal(this)" data-target="add_rom">Cancel</button>
         </footer>
     </div>
 </div>

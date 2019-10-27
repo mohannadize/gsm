@@ -28,3 +28,8 @@ function verifypass(elem) {
         help_text.textContent = "";
     }
 }
+
+function toggle_modal(elem) {
+    let target = document.getElementById(elem.dataset.target);
+    target.classList.toggle("is-active");
+}
