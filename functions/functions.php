@@ -131,7 +131,10 @@ function login_user($data, $db)
 
 function update_site_settings($data, $db)
 {
-    if (!$_SESSION['admin']) {
+    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+    $admin_check = $db->fetch_array($admin_check);
+    $admin_check = (int) $admin_check["admin"];
+    if ($admin_check === 0) {
         return false;
     }
     $site_name = strip_tags(trim($data['site-name']));
