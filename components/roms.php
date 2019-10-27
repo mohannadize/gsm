@@ -6,7 +6,7 @@
             <div class="column is-5-tablet is-offset-3-tablet">
                 <input type="text" placeholder="Search" class="input">
             </div>
-            <div class="column"><button class="button is-link">
+            <div class="column"><button class="button is-link is-light">
                     <span>Search</span>
                     <span class="icon">
                         <i class="fa fa-search"></i>

@@ -20,32 +20,52 @@
 
     <div id="navmenu" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item <?php echo $action == "index" ? "is-active":""; ?>" href=".">
+            <a class="navbar-item <?php echo $action == "index" ? "is-active" : ""; ?>" href=".">
                 Home
             </a>
 
-            <a class="navbar-item <?php echo $action == "roms" ? "is-active":""; ?>" href="roms">
+            <a class="navbar-item <?php echo $action == "roms" ? "is-active" : ""; ?>" href="roms">
                 Roms
             </a>
-            <a class="navbar-item <?php echo $action == "admin" ? "is-active":""; ?>" href="admin">
+            <a class="navbar-item <?php echo $action == "admin" ? "is-active" : ""; ?>" href="admin">
                 Admin Panel
             </a>
-            <a class="navbar-item <?php echo $action == "404" ? "is-active":""; ?>" href="404">
+            <a class="navbar-item <?php echo $action == "404" ? "is-active" : ""; ?>" href="404">
                 404
             </a>
         </div>
 
         <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a href='signup' class="button is-danger">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a href='login' class="button is-light">
-                        Log in
-                    </a>
+            <?php
+
+            if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+                ?>
+
+                <a class="navbar-item <?php echo $action == "profile" ? "is-active" : ""; ?>" href="profile">
+                    Welcome, <?php echo $_SESSION['username']; ?>
+                </a>
+                
+                <a class="navbar-item" href="logout.php">
+                    Logout
+                </a>
+
+            <?php
+            } else {
+
+                ?>
+
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a href='signup' class="button is-danger">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a href='login' class="button is-light">
+                            Log in
+                        </a>
+                    </div>
                 </div>
-            </div>
+
+            <?php } ?>
         </div>
     </div>
 </nav>

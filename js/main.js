@@ -13,3 +13,18 @@ function tabchange(e) {
     elem_target.classList.toggle("is-active");
     console.log(elem_target);
 }
+
+function verifypass(elem) {
+    let elem_target = document.getElementById("password");
+    let help_text = document.getElementById("passhelper");
+
+    if (elem.value != elem_target.value) {
+        elem.classList.add("is-danger");
+        elem.classList.remove("is-success");
+        help_text.textContent = "Passwords do not match.";
+    } else {
+        elem.classList.remove("is-danger");
+        elem.classList.add("is-success");
+        help_text.textContent = "";
+    }
+}

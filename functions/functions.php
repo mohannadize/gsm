@@ -81,6 +81,46 @@ function print_notice_page($action, $notification, $message, $section=false, $he
 }
 
 function verify_signup($data) {
-    var_dump($data);
-    return true;
+    if ($data["name"] == "" || $data["username"] == "" || $data["password"] == "" || $data["email"] == "")
+        return false;
+
+    $data["name"] = strip_tags(trim($data["name"]));
+
+    if (preg_match( "/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/", $data[ 'email' ] )) 
+    $data['email'] = trim($data['email']); 
+    else return false;
+
+    if (strlen($data['name']) > 40) return false;
+
+    if (!preg_match("/^\w+$/",$data['username']) || strlen($data['username']) > 30) return false;
+
+    if ($data['password'] != $data['cpassword'] || !isset($data['terms'])) return false;
+
+    return $data;
+}
+
+function login_user($data,$db) {
+    
+    $username = trim($data['username']);
+    $password = trim($data['password']);
+
+    $result = $db->query("SELECT id,username,password from users WHERE username='$username'");
+    
+    if ($db->num_rows($result)) {
+        $result = $db->fetch_array($result);
+        if ($password == $result['password']) {
+            session_start();
+            $_SESSION['loggedin'] = true;
+            $_SESSION['id'] = $result['id'];
+            $_SESSION['username'] = $result['username'];
+
+            return true;
+        } else {
+            return false;
+        };
+    } else {
+        return false;
+    }
+
+    return false;
 }

@@ -41,7 +41,7 @@
                 <input type="text" placeholder="Search" class="input">
             </div>
             <div class="column is-2-mobile is-inline-block">
-                <button class="button is-link">
+                <button class="button is-link is-light">
                     <span class="icon">
                         <i class="fa fa-search"></i>
                     </span>
