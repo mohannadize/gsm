@@ -1,10 +1,3 @@
-<?php
-
-$settings = $db->query("SELECT * from site");
-$settings = $db->fetch_array($settings);
-
-?>
-
 <section class="section">
     <div class="container">
         <div class="tabs is-boxed">
@@ -102,7 +95,7 @@ $settings = $db->fetch_array($settings);
                 <div class="column is-6-tablet">
                     <div class="field">
                         <label class="switch is-warning">
-                            <input name="maintainance" type="checkbox" <?php echo $settings['maintainance'] ? "checked":0; ?>>
+                            <input name="maintainance" type="checkbox" <?php echo $settings['maintainance'] ? "checked" : 0; ?>>
                             <div class="switch-body"></div>
                             <span>Development mode</span>
                         </label>
@@ -145,7 +138,7 @@ $settings = $db->fetch_array($settings);
                     <label class="label">Logo </label>
                     <div class="field">
                         <label class="switch is-info">
-                            <input name='logo_as_text' type="checkbox" <?php echo $settings['logo_as_text'] ? "checked":0; ?>>
+                            <input name='logo_as_text' type="checkbox" <?php echo $settings['logo_as_text'] ? "checked" : 0; ?>>
                             <div class="switch-body"></div>
                             <span>Logo as text</span>
                         </label>
@@ -175,7 +168,7 @@ $settings = $db->fetch_array($settings);
                     </div>
                     <div class="field">
                         <label class="switch is-info">
-                            <input name='increment_daily' type="checkbox" <?php echo $settings['increment_daily'] ? "checked":0; ?>>
+                            <input name='increment_daily' type="checkbox" <?php echo $settings['increment_daily'] ? "checked" : 0; ?>>
                             <div class="switch-body"></div>
                             <span>Accumulate daily rewards</span>
                         </label>
@@ -194,6 +187,120 @@ $settings = $db->fetch_array($settings);
         </form>
     </div>
     <div class="container tab" id="account-settings">
-        
+
     </div>
 </section>
+
+
+<!-- TODO: Modals -->
+<div class="modal" id='upload_logo'>
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Upload Site Logo</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form action="action.php" method="post">
+                <input type="hidden" name="action" value="update_logo">
+                <div class="field">
+                    <div class="file has-name">
+                        <label class="file-label">
+                            <input class="file-input" name="logo" type="file" name="resume">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose a file…
+                                </span>
+                            </span>
+                            <span class="file-name">
+                                No file selected...
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-info" type="submit">Upload</button>
+            <button class="button">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+<div class="modal" id="add_rom">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Add a new rom</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form action="action.php" method="post">
+                <input type="hidden" name="action" value="add_rom">
+                <div class="field">
+                    <div class="file has-name">
+                        <label class="file-label">
+                            <input class="file-input" name="logo" type="file" name="resume">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose a file…
+                                </span>
+                            </span>
+                            <span class="file-name">
+                                No file selected...
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Brand</label>
+                    <div class="control">
+                        <input class="input" name="brand" type="text" value="Samsung">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Country</label>
+                    <div class="control">
+                        <input class="input" name="brand" type="text" value="Egypt">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Model</label>
+                    <div class="control">
+                        <input class="input" name="brand" type="text" value="SM-3242">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Build Version</label>
+                    <div class="control">
+                        <input class="input" name="brand" type="text" value="7.22.18">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Android Version</label>
+                    <div class="control">
+                        <input class="input" name="brand" type="text" value="7.22.18">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Price</label>
+                    <div class="control">
+                        <input class="input" name="brand" type="number" value="50">
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-info">
+                <span class="icon"><i class="fa fa-plus"></i></span><span>Add</span>
+            </button>
+            <button class="button">Cancel</button>
+        </footer>
+    </div>
+</div>

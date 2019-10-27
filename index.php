@@ -23,8 +23,8 @@ switch ($action) {
     case "signup":
         $page = "./components/signup.php";
         break;
-    case "user":
-        $page = "./components/users.php";
+    case "profile":
+        $page = "./components/user.php";
         break;
     case "admin":
         if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {

@@ -1,4 +1,4 @@
-<section class="section">
+<section class="section" style="padding-bottom:0;">
     <div class="container">
         <div class="notification is-success">
             <h3 class="title">Success</h3>

@@ -6,7 +6,7 @@
                     <i class="fa fa-mobile-alt"></i>
                 </span>
                 <span>
-                    GSMGood
+                    <?php echo $settings['site-name']; ?>
                 </span>
             </h1>
         </a>
@@ -32,7 +32,7 @@
         <div class="navbar-end">
             <?php
 
-            if (isset($logged_in)) {
+            if ($logged_in) {
                 ?>
 
                 <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
@@ -52,7 +52,7 @@
 
                     <a class="navbar-item <?php echo $action == "balance" ? "is-active" : ""; ?>" href='balance'>
                         <!-- TODO: Points system  -->
-                        <?php echo 22; ?> Pts
+                        <?php echo $user_data['balance'] + $user_data['daily_balance']; ?> Pts
                     </a>
 
                 <?php
