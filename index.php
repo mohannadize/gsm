@@ -24,7 +24,13 @@ switch ($action) {
         $page = "./components/signup.php";
         break;
     case "profile":
-        $page = "./components/user.php";
+        if ($logged_in) {
+            $page = "./components/user.php";
+        } else {
+            $message = 'Please log in';
+            $page = "./components/error.php";
+            print_notice_page("login", $page, $message, "./components/login.php", $db);
+        }
         break;
     case "admin":
         if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
