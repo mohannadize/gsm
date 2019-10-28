@@ -41,7 +41,6 @@ switch ($action) {
         }
         break;
     case "test":
-        // $page = "./components/error.php";
         include "./test.php";
         break;
     default:

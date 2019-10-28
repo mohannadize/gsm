@@ -39,7 +39,7 @@ function print_web_page($action, $section, $logged_in, $db, $head_append = "")
 <?php
 }
 
-function print_notice_page($action, $notification, $message,  $section = false, $db = null, $logged_in=false)
+function print_notice_page($action, $page, $message,  $section = false, $db = null, $logged_in=false)
 {
     ?>
 
@@ -61,8 +61,8 @@ function print_notice_page($action, $notification, $message,  $section = false, 
 
             include "components/header.php";
 
-            // Notification 
-            include $notification;
+            // Component 
+            include $page;
             // Page Content
             if ($section) include $section;
 
