@@ -86,7 +86,7 @@ function verify_signup($data)
 
     $data["name"] = strip_tags(trim($data["name"]));
 
-    if (preg_match("/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/", $data['email']))
+    if (filter_var($data['email'], FILTER_VALIDATE_EMAIL))
         $data['email'] = trim($data['email']);
     else return false;
 
@@ -147,11 +147,11 @@ function update_site_settings($data, $db)
     $increment_daily = isset($data['increment_daily']) ? 1:0;
 
     if (
-        !preg_match("/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/", $email)
-        || !preg_match("/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/", $paypal)
+        !filter_var($email, FILTER_VALIDATE_EMAIL)
+        || !filter_var($paypal, FILTER_VALIDATE_EMAIL)
     ) return false;
 
-    $db->query("UPDATE `site` SET 
+    return $db->query("UPDATE `site` SET 
      `site-name`='$site_name',
      `description`='$description',
      `daily_free`='$daily_free',
@@ -160,8 +160,6 @@ function update_site_settings($data, $db)
      `increment_daily`='$increment_daily',
      `logo_as_text`='$logo_as_text',
      `maintainance`='$maintainance' ");
-
-    return true;
 }
 
 function add_rom($data, $file, $db)
