@@ -2,4 +2,4 @@
 
 RewriteEngine on
 
-RewriteRule ^([^/.]+)/?$          index.php?a=$1 [L]
+RewriteRule ^([^/.]+)/?$          index.php?a=$1 [QSA]

@@ -1,17 +1,19 @@
 <section class="section">
     <div class="container">
         <h3 class="title">Rom Paradise</h3>
-        <div class="columns">
+        <form class='columns' action="roms" method="get">
             <div class="column is-5-tablet is-offset-3-tablet">
-                <input type="text" placeholder="Search" class="input">
+                <input required name='s' type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"]:''; ?>">
             </div>
-            <div class="column"><button class="button is-link is-light">
+            <div class="column">
+                <button type='submit' class="button is-link is-light">
                     <span>Search</span>
                     <span class="icon">
                         <i class="fa fa-search"></i>
                     </span>
-                </button></div>
-        </div>
+                </button>
+            </div>
+        </form>
         <div class="scrollable-table">
             <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
                 <thead>
@@ -30,7 +32,11 @@
 
                     <?php
 
-                    $roms = $db->query("SELECT * FROM roms limit 20");
+                    if (isset($_GET['s'])) {
+                        $roms = $db->query("SELECT * FROM roms where `search_text` like '%$_GET[s]%' limit 20");
+                    } else {
+                        $roms = $db->query("SELECT * FROM roms limit 20");
+                    }
                     while ($row = $db->fetch_array($roms)) {
                         echo "
                         <tr>

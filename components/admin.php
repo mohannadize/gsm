@@ -25,27 +25,27 @@
     </div>
     <br>
     <div class="container tab is-active" id="manage-roms">
-        <div class="columns">
+        <form class="columns" method="get" action="admin">
             <div class="column is-3-tablet is-4-desktop">
                 <div class="field">
-                    <button class="button is-danger" onclick="toggle_modal(this)" data-target="add_rom"><span class="icon">
+                    <a class="button is-danger" onclick="toggle_modal(this)" data-target="add_rom"><span class="icon">
                             <i class="fa fa-upload"></i>
                         </span><span>
                             Add a new rom
-                        </span></button>
+                        </span></a>
                 </div>
             </div>
             <div class="column is-3-tablet is-9-mobile is-inline-block">
-                <input type="text" placeholder="Search" class="input">
+                <input required name="s" type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"]:''; ?>">
             </div>
             <div class="column is-2-mobile is-inline-block">
-                <button class="button is-link is-light">
+                <button type="submit" class="button is-link is-light">
                     <span class="icon">
                         <i class="fa fa-search"></i>
                     </span>
                 </button>
             </div>
-        </div>
+        </form>
         <div class="scrollable-table">
             <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
                 <thead>
@@ -65,7 +65,11 @@
 
                     <?php
 
-                    $roms = $db->query("SELECT * FROM roms limit 20");
+                    if (isset($_GET['s'])) {
+                        $roms = $db->query("SELECT * FROM roms where `search_text` like '%$_GET[s]%' limit 20");
+                    } else {
+                        $roms = $db->query("SELECT * FROM roms limit 20");
+                    }
                     while ($row = $db->fetch_array($roms)) {
                         echo "
                         <tr>
