@@ -33,3 +33,12 @@ function toggle_modal(elem) {
     let target = document.getElementById(elem.dataset.target);
     target.classList.toggle("is-active");
 }
+
+function handle_files(elem, files) {
+    debugger;
+    let file_name = files[0].name;
+    let label = document.getElementById(elem.dataset.target);
+    label.textContent = file_name;
+
+    
+}

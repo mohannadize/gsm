@@ -27,24 +27,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>Sasmsung</th>
-                        <td>Egypt</td>
-                        <td>SM-8123</td>
-                        <td>8.02.213</td>
-                        <td>10</td>
-                        <td>21-2-2022</td>
-                        <td>15</td>
-                        <td>40</td>
-                        <td><a href="" class="button is-info">
-                            <span class="icon">
-                                <i class="fa fa-download"></i>
-                            </span>
-                            <span>
-                            100 Pts
-                            </span>
-                        </a></td>
-                    </tr>
+
+                    <?php
+
+                    $roms = $db->query("SELECT * FROM roms limit 20");
+                    while ($row = $db->fetch_array($roms)) {
+                        echo "
+                        <tr>
+                        <th>$row[brand]</th>
+                        <td>$row[country]</td>
+                        <td>$row[model]</td>
+                        <td>$row[build_v]</td>
+                        <td>$row[android_v]</td>
+                        <td>$row[created]</td>
+                        <td>$row[views]</td>
+                        <td>$row[downloads]</td>
+                        <td><a href=\"\" class=\"button is-info\">
+                                <span class=\"icon\">
+                                    <i class=\"fa fa-download\"></i>
+                                </span>
+                                <span>
+                                    $row[price] Pts
+                                </span>
+                            </a></td>
+                        </tr>
+                        ";
+                    }
+
+
+
+                    ?>
                 </tbody>
             </table>
         </div>

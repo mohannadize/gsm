@@ -39,7 +39,7 @@ function print_web_page($action, $section, $logged_in, $db, $head_append = "")
 <?php
 }
 
-function print_notice_page($action, $page, $message,  $section = false, $db = null, $logged_in=false)
+function print_notice_page($action, $page, $message,  $section = false, $db = null, $logged_in = false)
 {
     ?>
 
@@ -142,9 +142,9 @@ function update_site_settings($data, $db)
     $daily_free = (int) $data['daily_free'];
     $email = trim($data['email']);
     $paypal = trim($data['paypal']);
-    $logo_as_text = isset($data['logo_as_text']) ? 1:0;
-    $maintainance = isset($data['maintainance']) ? 1:0;
-    $increment_daily = isset($data['increment_daily']) ? 1:0;
+    $logo_as_text = isset($data['logo_as_text']) ? 1 : 0;
+    $maintainance = isset($data['maintainance']) ? 1 : 0;
+    $increment_daily = isset($data['increment_daily']) ? 1 : 0;
 
     if (
         !filter_var($email, FILTER_VALIDATE_EMAIL)
@@ -163,7 +163,59 @@ function update_site_settings($data, $db)
 }
 
 function add_rom($data, $file, $db)
-{ }
+{
+    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+    $admin_check = $db->fetch_array($admin_check);
+    $admin_check = (int) $admin_check["admin"];
+    if ($admin_check === 0) return false;
+
+    $ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+    if ($ext == 'php') return false;
+    if ($file['size'] == 0) return false;
+
+    $file_name = strip_tags(trim($file['name']));
+    $brand = strip_tags(trim($data['brand']));
+    $model = strip_tags(trim($data['model']));
+    $country = strip_tags(trim($data['country']));
+    $build = strip_tags(trim($data['build']));
+    $android = strip_tags(trim($data['android']));
+    $price = strip_tags(trim($data['price']));
+    $size = $file['size'];
+    $search = "$brand $model $build $country $file_name";
+
+    $target_dir = "./uploads/";
+    $target_file = $target_dir . generateRandomString(11);
+    $query = "INSERT INTO roms (brand,model,country,build_v,file_name,tmp_name,size,android_v,price,`search_text`) 
+    VALUES ('$brand','$model','$country','$build','$file_name','$target_file','$size','$android','$price','$search')";
+
+    is_dir($target_dir) ? 0 : mkdir($target_dir);
+    if ($db->query($query) && move_uploaded_file($file["tmp_name"], $target_file)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function change_logo_image($file, $db)
+{
+    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+    $admin_check = $db->fetch_array($admin_check);
+    $admin_check = (int) $admin_check["admin"];
+    if ($admin_check === 0) return false;
+
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    if ($ext == 'php') return false;
+    if ($file['size'] == 0) return false;
+
+    $target_dir = "./imgs/";
+    $target_file = $target_dir . "logo.$ext";
+    $query = "UPDATE `site` SET `logo_file`='$target_file'";
+    is_dir($target_dir) ? 0 : mkdir($target_dir);
+    if ($db->query($query) && move_uploaded_file($file["tmp_name"], $target_file)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function modify_rom($data, $db)
 { }
@@ -175,7 +227,27 @@ function download_rom($data, $db)
 { }
 
 function modify_user($data, $db)
-{ }
+{
+    $username = trim($data["username"]);
+    $email = trim($data['email']);
+    if (!preg_match("/^\w+$/", $username) || strlen($username) > 30) return false;
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) return false;
+
+    $user_exists = $db->query("SELECT username from users WHERE `username`='$username'");
+    if ($db->num_rows($user_exists)) return false;
+
+    $_SESSION['username'] = $username;
+    if ($data['password'] != "") {
+        if ($data['password'] != $data['cpassword']) {
+            return false;
+        } else {
+            return $db->query("UPDATE users SET `username`='$username',`email`='$email',`password`='$data[password]' WHERE `id`='$_SESSION[id]'");
+        }
+    } else {
+        return $db->query("UPDATE users SET `username`='$username',`email`='$email' WHERE `id`='$_SESSION[id]'");
+    }
+}
 
 function add_admin_account($data, $db)
 {
@@ -197,6 +269,14 @@ function add_admin_account($data, $db)
     return $data;
 }
 
-function change_logo_image($data,$file,$db) {
+function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGHJKLZXCVBNM1234567890qwertyuiopasdfghjkzxcvbnm')
+{
+    $s = '';
+    $lettersLength = strlen($letters) - 1;
 
+    for ($i = 0; $i < $length; $i++) {
+        $s .= $letters[rand(0, $lettersLength)];
+    }
+
+    return $s;
 }

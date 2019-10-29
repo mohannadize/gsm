@@ -40,25 +40,45 @@
                         ?>
 
                     <a class="navbar-item <?php echo $action == "admin" ? "is-active" : ""; ?>" href="admin">
-                        Admin Panel
+                        <span class="icon" style="padding-right:5px;">
+                            <i class="fa fa-cog"></i>
+                        </span>
+                        <span>
+                            Admin Panel
+                        </span>
                     </a>
 
                 <?php } else {
                         ?>
 
                     <a class="navbar-item <?php echo $action == "profile" ? "is-active" : ""; ?>" href='profile'>
-                        <?php echo $_SESSION['username']; ?>
+                        <span class="icon" style="padding-right:5px;">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <span>
+                            <?php echo $_SESSION['username']; ?>
+                        </span>
                     </a>
 
                     <a class="navbar-item <?php echo $action == "balance" ? "is-active" : ""; ?>" href='balance'>
                         <!-- TODO: Points system  -->
-                        <?php echo $user_data['balance'] + $user_data['daily_balance']; ?> Pts
+                        <span class="icon" style="padding-right:5px;">
+                            <i class="fa fa-wallet"></i>
+                        </span>
+                        <span>
+                            <?php echo $user_data['balance'] + $user_data['daily_balance']; ?> Pts
+                        </span>
                     </a>
 
                 <?php
                     } ?>
                 <a class="navbar-item" href="logout.php">
-                    Logout
+                    <span>
+                        Logout
+                    </span>
+                    <span class="icon" style="padding-left:5px;">
+                        <i class="fa fa-sign-out-alt"></i>
+                    </span>
                 </a>
             <?php
             } else {

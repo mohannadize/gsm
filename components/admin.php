@@ -29,10 +29,10 @@
             <div class="column is-3-tablet is-4-desktop">
                 <div class="field">
                     <button class="button is-danger" onclick="toggle_modal(this)" data-target="add_rom"><span class="icon">
-                        <i class="fa fa-upload"></i>
-                    </span><span>
-                        Add a new rom
-                    </span></button>
+                            <i class="fa fa-upload"></i>
+                        </span><span>
+                            Add a new rom
+                        </span></button>
                 </div>
             </div>
             <div class="column is-3-tablet is-9-mobile is-inline-block">
@@ -55,25 +55,46 @@
                         <th>Model</th>
                         <th>Version</th>
                         <th>Android</th>
-                        <th>Pirce</th>
+                        <th>Price</th>
                         <th>Updated</th>
                         <th>Views</th>
                         <th>Downloads</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>Sasmsung</th>
-                        <td>Egypt</td>
-                        <td>SM-8123</td>
-                        <td>8.02.213</td>
-                        <td>10</td>
-                        <td>100 Pts</td>
-                        <td>21-2-2022</td>
-                        <td>15</td>
-                        <td>40</td>
-                        <td><a href="" class="button is-warning"><strong>Manage</strong></a></td>
-                    </tr>
+
+                    <?php
+
+                    $roms = $db->query("SELECT * FROM roms limit 20");
+                    while ($row = $db->fetch_array($roms)) {
+                        echo "
+                        <tr>
+                        <th>$row[brand]</th>
+                        <td>$row[country]</td>
+                        <td>$row[model]</td>
+                        <td>$row[build_v]</td>
+                        <td>$row[android_v]</td>
+                        <td>$row[price]</td>
+                        <td>$row[created]</td>
+                        <td>$row[views]</td>
+                        <td>$row[downloads]</td>
+                        <td><a href=\"\" class=\"button is-warning\">
+                                <span class=\"icon\">
+                                    <i class=\"fa fa-edit\"></i>
+                                </span>
+                                <span>
+                                <strong>
+                                    Manage
+                                </strong>
+                                </span>
+                            </a></td>
+                        </tr>
+                        ";
+                    }
+
+
+
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -140,8 +161,8 @@
                         <a class="button is-warning" onclick="toggle_modal(this)" data-target="upload_logo">
                             <span class="icon"><i class="fa fa-upload"></i></span>
                             <span>
-                            Logo upload
-                        </span></a>
+                                Logo upload
+                            </span></a>
                     </div>
 
                     <div class="field">
@@ -171,7 +192,7 @@
         </form>
     </div>
     <div class="container tab" id="account-settings">
-
+        <?php include "account-settings.php"; ?>
     </div>
 </section>
 
@@ -185,12 +206,12 @@
             <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="upload_logo"></button>
         </header>
         <section class="modal-card-body">
-            <form action="action.php" method="post">
+            <form action="action.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="update_logo">
                 <div class="field">
                     <div class="file has-name">
                         <label class="file-label">
-                            <input class="file-input" name="logo" type="file" name="resume">
+                            <input required class="file-input" data-target="logo-name" onchange="handle_files(this,this.files)" name="file" type="file">
                             <span class="file-cta">
                                 <span class="file-icon">
                                     <i class="fas fa-upload"></i>
@@ -199,16 +220,16 @@
                                     Choose a file…
                                 </span>
                             </span>
-                            <span class="file-name">
+                            <span class="file-name" id='logo-name'>
                                 No file selected...
                             </span>
                         </label>
                     </div>
                 </div>
-            </form>
         </section>
         <footer class="modal-card-foot">
             <button class="button is-info" type="submit">Upload</button>
+            </form>
             <button class="button" onclick="toggle_modal(this)" data-target="upload_logo">Cancel</button>
         </footer>
     </div>
@@ -222,21 +243,21 @@
             <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="add_rom"></button>
         </header>
         <section class="modal-card-body">
-            <form action="action.php" method="post">
+            <form action="action.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="add_rom">
                 <div class="field">
                     <div class="file has-name">
                         <label class="file-label">
-                            <input class="file-input" name="logo" type="file" name="resume">
+                            <input required class="file-input" onchange="handle_files(this,this.files)" data-target='rom-name' name="file" type="file" name="resume">
                             <span class="file-cta">
                                 <span class="file-icon">
                                     <i class="fas fa-upload"></i>
                                 </span>
                                 <span class="file-label">
-                                    Choose a file…
+                                    Choose a file
                                 </span>
                             </span>
-                            <span class="file-name">
+                            <span class="file-name" id='rom-name'>
                                 No file selected...
                             </span>
                         </label>
@@ -251,39 +272,39 @@
                 <div class="field">
                     <label class="label">Country</label>
                     <div class="control">
-                        <input class="input" name="brand" type="text" value="Egypt">
+                        <input class="input" name="country" type="text" value="Egypt">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Model</label>
                     <div class="control">
-                        <input class="input" name="brand" type="text" value="SM-3242">
+                        <input class="input" name="model" type="text" value="SM-3242">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Build Version</label>
                     <div class="control">
-                        <input class="input" name="brand" type="text" value="7.22.18">
+                        <input class="input" name="build" type="text" value="7.22.18">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Android Version</label>
                     <div class="control">
-                        <input class="input" name="brand" type="text" value="7.22.18">
+                        <input class="input" name="android" type="text" value="10">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Price</label>
                     <div class="control">
-                        <input class="input" name="brand" type="number" value="50">
+                        <input class="input" name="price" type="number" value="100">
                     </div>
                 </div>
-            </form>
         </section>
         <footer class="modal-card-foot">
-            <button class="button is-info">
+            <button class="button is-info" type="submit">
                 <span class="icon"><i class="fa fa-plus"></i></span><span>Add</span>
             </button>
+            </form>
             <button class="button" onclick="toggle_modal(this)" data-target="add_rom">Cancel</button>
         </footer>
     </div>
