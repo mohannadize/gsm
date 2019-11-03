@@ -27,6 +27,9 @@
             <a class="navbar-item <?php echo $action == "roms" ? "is-active" : ""; ?>" href="roms">
                 Roms
             </a>
+            <a class="navbar-item <?php echo $action == "combinations" ? "is-active" : ""; ?>" href="combinations">
+                Combinations
+            </a>
         </div>
 
         <div class="navbar-end">

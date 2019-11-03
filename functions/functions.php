@@ -3,7 +3,6 @@
 function print_web_page($action, $section, $logged_in, $db, $head_append = "")
 {
     ?>
-
     <!DOCTYPE html>
     <html lang="en" class="has-navbar-fixed-top">
 
@@ -162,39 +161,48 @@ function update_site_settings($data, $db)
      `maintainance`='$maintainance' ");
 }
 
-function add_rom($data, $file, $db)
+function add_rom($data, $db)
 {
     $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
     $admin_check = $db->fetch_array($admin_check);
     $admin_check = (int) $admin_check["admin"];
     if ($admin_check === 0) return false;
 
-    $ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
-    if ($ext == 'php') return false;
-    if ($file['size'] == 0) return false;
-
-    $file_name = strip_tags(trim($file['name']));
-    $brand = strip_tags(trim($data['brand']));
     $model = strip_tags(trim($data['model']));
-    $country = strip_tags(trim($data['country']));
     $build = strip_tags(trim($data['build']));
     $android = strip_tags(trim($data['android']));
-    $price = strip_tags(trim($data['price']));
-    $size = $file['size'];
-    $search = "$brand $model $build $country $file_name";
+    $country = strip_tags(trim($data['country']));
+    $size = trim($data['size']);
+    $url = trim($data['url']);
+    $search = "$model $build $country";
 
-    $target_dir = "./uploads/";
-    $target_file = $target_dir . generateRandomString(11);
-    $query = "INSERT INTO roms (brand,model,country,build_v,file_name,tmp_name,size,android_v,price,`search_text`) 
-    VALUES ('$brand','$model','$country','$build','$file_name','$target_file','$size','$android','$price','$search')";
+    $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, search_text) 
+    VALUES ('$model', '$build', '$android', '$country', '$size', '$url', '$search')";
 
-    is_dir($target_dir) ? 0 : mkdir($target_dir);
-    if ($db->query($query) && move_uploaded_file($file["tmp_name"], $target_file)) {
-        return true;
-    } else {
-        return false;
-    }
+    return $db->query($query);
 }
+
+function add_comb($data, $db)
+{
+    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+    $admin_check = $db->fetch_array($admin_check);
+    $admin_check = (int) $admin_check["admin"];
+    if ($admin_check === 0) return false;
+
+    $model = strip_tags(trim($data['model']));
+    $build = strip_tags(trim($data['build']));
+    $android = strip_tags(trim($data['android']));
+    $country = strip_tags(trim($data['country']));
+    $size = trim($data['size']);
+    $url = trim($data['url']);
+    $search = "$model $build $country";
+
+    $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, search_text) 
+    VALUES ('$model', '$build', '$android', '$country', '$size', '$url', '$search')";
+
+    return $db->query($query);
+}
+
 function change_logo_image($file, $db)
 {
     $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
@@ -279,4 +287,15 @@ function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGH
     }
 
     return $s;
+}
+
+function bytes_to_human($bytes) {
+    $mapping = ["B","KB","MB","GB","TB"];
+    $counter = 0;
+    while ((+$bytes / 1024) > 1) {
+        $bytes = +$bytes / 1024;
+        $counter++;
+    }
+    $bytes = round($bytes,2);
+    return "$bytes $mapping[$counter]";
 }

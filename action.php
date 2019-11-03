@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             };
             break;
         case "add_rom":
-            if (add_rom($_POST, $_FILES['file'], $db)) {
+            if (add_rom($_POST, $db)) {
                 $message = "Rom uplaoded successfully";
                 $page = "./components/success.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);

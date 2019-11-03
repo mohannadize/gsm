@@ -42,6 +42,9 @@ switch ($action) {
         break;
     case "test":
         include "./test.php";
+        exit;
+    case "combinations":
+        $page = "./components/combinations.php";
         break;
     default:
         $action = "404";

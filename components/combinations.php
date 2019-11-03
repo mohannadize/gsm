@@ -19,7 +19,8 @@
                 <thead>
                     <tr>
                         <th>Model</th>
-                        <th>Build Version</th>
+                        <th>Combination Version</th>
+                        <th>Security Level</th>
                         <th>Android Version</th>
                         <th>Country</th>
                         <th>Uploaded</th>
