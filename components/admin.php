@@ -4,8 +4,14 @@
             <ul>
                 <li class="is-active">
                     <a onclick='tabchange(this)' data-target="manage-roms">
-                        <span class="icon is-small"><i class="fas fa-edit" aria-hidden="true"></i></span>
+                        <span class="icon is-small"><i class="fas fa-bars" aria-hidden="true"></i></span>
                         <span>Manage Roms</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick='tabchange(this)' data-target="manage-comb">
+                        <span class="icon is-small"><i class="fas fa-bars" aria-hidden="true"></i></span>
+                        <span>Manage Combinations</span>
                     </a>
                 </li>
                 <li>
@@ -26,26 +32,6 @@
     <br>
     <div class="container tab is-active" id="manage-roms">
         <form class="columns" method="get" action="admin">
-            <div class="column is-one-quarter-tablet">
-                <div class="field">
-                    <a class="button is-danger" onclick="toggle_modal(this)" data-target="add_rom"><span class="icon">
-                            <i class="fa fa-plus"></i>
-                        </span><span>
-                            Add a new rom
-                        </span></a>
-                </div>
-            </div>
-            <div class="column">
-                <div class="field">
-                    <a class="button is-success" onclick="toggle_modal(this)" data-target="add_comb"><span class="icon">
-                            <i class="fa fa-plus"></i>
-                        </span><span>
-                            Add a new combination
-                        </span></a>
-                </div>
-            </div>
-        </form>
-        <div class="columns">
             <div class="column is-3-tablet is-9-mobile is-inline-block">
                 <input required name="s" type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
             </div>
@@ -56,7 +42,17 @@
                     </span>
                 </button>
             </div>
-        </div>
+            <div class="column is-inline-block">
+                <div class="field">
+                    <a class="button is-danger is-light" onclick="toggle_modal(this)" data-target="add_rom"><span class="icon">
+                            <i class="fa fa-plus"></i>
+                        </span><span>
+                            Add a new rom
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </form>
         <div class="scrollable-table">
             <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
                 <thead>
@@ -75,18 +71,94 @@
                     <?php
 
                     if (isset($_GET['s'])) {
-                        $roms = $db->query("SELECT * FROM roms where `search_text` like '%$_GET[s]%' limit 20");
+                        $files = $db->query("SELECT * FROM files where `type`='0' AND `search_text` like '%$_GET[s]%' limit 20");
                     } else {
-                        $roms = $db->query("SELECT * FROM roms limit 20");
+                        $files = $db->query("SELECT * FROM files where `type`='0' limit 20");
                     }
-                    while ($row = $db->fetch_array($roms)) {
+                    while ($row = $db->fetch_array($files)) {
                         echo "
                         <tr>
                         <td>$row[model]</td>
                         <td>$row[build_v]</td>
                         <td>$row[android_v]</td>
                         <td>$row[country]</td>
-                        <td>".bytes_to_human($row["size"])."</td>
+                        <td>" . bytes_to_human($row["size"]) . "</td>
+                        <td>$row[created]</td>
+                        <td>$row[downloads]</td>
+                        <td><a href=\"$row[url]\" class=\"button is-warning\">
+                                <span class=\"icon\">
+                                    <i class=\"fa fa-edit\"></i>
+                                </span>
+                                <span>
+                                    Modify
+                                </span>
+                            </a></td>
+                        </tr>
+                        ";
+                    }
+
+
+
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container tab" id="manage-comb">
+        <form class="columns" method="get" action="admin">
+            <div class="column is-3-tablet is-9-mobile is-inline-block">
+                <input required name="s" type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
+            </div>
+            <div class="column is-2-mobile is-inline-block">
+                <button type="submit" class="button is-link is-light">
+                    <span class="icon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="column is-inline-block">
+                <div class="field">
+                    <a class="button is-success is-light" onclick="toggle_modal(this)" data-target="add_comb"><span class="icon">
+                            <i class="fa fa-plus"></i>
+                        </span><span>
+                            Add a new combination
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </form>
+        <div class="scrollable-table">
+            <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Build Version</th>
+                        <th>Android Version</th>
+                        <th>Security Level</th>
+                        <th>Country</th>
+                        <th>Size</th>
+                        <th>Uploaded</th>
+                        <th>Downloads</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php
+
+                    if (isset($_GET['s'])) {
+                        $files = $db->query("SELECT * FROM files where `type`='1' AND `search_text` like '%$_GET[s]%' limit 20");
+                    } else {
+                        $files = $db->query("SELECT * FROM files where `type`='1' limit 20");
+                    }
+                    while ($row = $db->fetch_array($files)) {
+                        echo "
+                        <tr>
+                        <td>$row[model]</td>
+                        <td>$row[build_v]</td>
+                        <td>$row[android_v]</td>
+                        <td>$row[security_level]</td>
+                        <td>$row[country]</td>
+                        <td>" . bytes_to_human($row["size"]) . "</td>
                         <td>$row[created]</td>
                         <td>$row[downloads]</td>
                         <td><a href=\"\" class=\"button is-warning\">
@@ -301,7 +373,7 @@
     </div>
 </div>
 
-<div class="modal is-active" id="add_comb">
+<div class="modal" id="add_comb">
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
@@ -311,7 +383,6 @@
         <section class="modal-card-body">
             <form action="action.php" method="post">
                 <input type="hidden" name="action" value="add_comb">
-                <input type="hidden" name="type" value="1">
                 <div class="field">
                     <label class="label">Model</label>
                     <div class="control">
@@ -333,7 +404,7 @@
                 <div class="field">
                     <label class="label">Security Level</label>
                     <div class="control">
-                        <input class="input" name="security" type="number" placeholder="0">
+                        <input class="input" name="security" type="text" placeholder="0">
                     </div>
                 </div>
                 <div class="field">

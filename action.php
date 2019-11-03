@@ -60,7 +60,18 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             break;
         case "add_rom":
             if (add_rom($_POST, $db)) {
-                $message = "Rom uplaoded successfully";
+                $message = "Rom added successfully";
+                $page = "./components/success.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            } else {
+                $message = "An error has occured";
+                $page = "./components/error.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            }
+            break;
+        case "add_comb":
+            if (add_comb($_POST, $db)) {
+                $message = "Combination added successfully";
                 $page = "./components/success.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             } else {

@@ -193,12 +193,14 @@ function add_comb($data, $db)
     $build = strip_tags(trim($data['build']));
     $android = strip_tags(trim($data['android']));
     $country = strip_tags(trim($data['country']));
+    $security = strip_tags(trim($data['security']));
+    $type = 1;
     $size = trim($data['size']);
     $url = trim($data['url']);
     $search = "$model $build $country";
 
-    $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, search_text) 
-    VALUES ('$model', '$build', '$android', '$country', '$size', '$url', '$search')";
+    $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, security_level, `type`, search_text) 
+    VALUES ('$model', '$build', '$android', '$country', '$size', '$url', '$security', '$type', '$search')";
 
     return $db->query($query);
 }
