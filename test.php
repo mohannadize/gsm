@@ -1,12 +1,10 @@
 <?php
 
-$search = "sau";
-$res = $db->query("SELECT * from roms where `search_text` LIKE '%$search%'");
+$res = $db->query("SELECT * from files where `id`='2'");
+$res = $db->fetch_array($res);
 
-// $res = $db->fetch_array($res);
-while ($row = $db->fetch_array($res)){
-    var_dump($row);
-}
+// date_create()
+var_dump(gmdate("Y-m-d",date_timestamp_get(date_create($res['created']))));
 
 
 exit;

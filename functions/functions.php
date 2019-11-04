@@ -172,7 +172,7 @@ function add_rom($data, $db)
     $build = strip_tags(trim($data['build']));
     $android = strip_tags(trim($data['android']));
     $country = strip_tags(trim($data['country']));
-    $size = trim($data['size']);
+    $size = trim($data['size']) * 1024 * 1024;
     $url = trim($data['url']);
     $search = "$model $build $country";
 
@@ -195,7 +195,7 @@ function add_comb($data, $db)
     $country = strip_tags(trim($data['country']));
     $security = strip_tags(trim($data['security']));
     $type = 1;
-    $size = trim($data['size']);
+    $size = trim($data['size']) * 1024 * 1024;
     $url = trim($data['url']);
     $search = "$model $build $country";
 
@@ -244,7 +244,7 @@ function modify_file($data, $db)
     } else {
         $security = null;
     }
-    $size = trim($data['size']);
+    $size = trim($data['size']) * 1024 * 1024;
     $url = trim($data['url']);
     $search = "$model $build $country";
 

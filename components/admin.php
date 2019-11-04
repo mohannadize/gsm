@@ -70,11 +70,17 @@
 
                     <?php
 
+                    $query = "SELECT * FROM files where `type`='0'";
                     if (isset($_GET['s'])) {
-                        $files = $db->query("SELECT * FROM files where `type`='0' AND `search_text` like '%$_GET[s]%' limit 20");
-                    } else {
-                        $files = $db->query("SELECT * FROM files where `type`='0' limit 20");
+                        $query .= " AND `search_text` like '%$_GET[s]%'";
                     }
+                    if (isset($_GET['pr'])) {
+                        $offset = 15 * ($_GET['pr'] - 1);
+                    } else {
+                        $offset = 0;
+                    }
+                    $query .= " limit 15 offset $offset";
+                    $files = $db->query($query);
                     while ($row = $db->fetch_array($files)) {
                         echo "
                         <tr>
@@ -83,7 +89,7 @@
                         <td>$row[android_v]</td>
                         <td>$row[country]</td>
                         <td>" . bytes_to_human($row["size"]) . "</td>
-                        <td>$row[created]</td>
+                        <td>" . gmdate("Y-m-d", date_timestamp_get(date_create($row['created']))) . "</td>
                         <td>$row[downloads]</td>
                         <td><a onclick='toggle_modify(\"rom\",this)' data-id='$row[id]' class=\"button is-warning\">
                                 <span class=\"icon\">
@@ -149,11 +155,17 @@
 
                     <?php
 
+                    $query = "SELECT * FROM files where `type`='1'";
                     if (isset($_GET['s'])) {
-                        $files = $db->query("SELECT * FROM files where `type`='1' AND `search_text` like '%$_GET[s]%' limit 20");
-                    } else {
-                        $files = $db->query("SELECT * FROM files where `type`='1' limit 20");
+                        $query .= " AND `search_text` like '%$_GET[s]%'";
                     }
+                    if (isset($_GET['pc'])) {
+                        $offset = 15 * ($_GET['pc'] - 1);
+                    } else {
+                        $offset = 0;
+                    }
+                    $query .= " limit 15 offset $offset";
+                    $files = $db->query($query);
                     while ($row = $db->fetch_array($files)) {
                         echo "
                         <tr>
@@ -163,7 +175,7 @@
                         <td>$row[security_level]</td>
                         <td>$row[country]</td>
                         <td>" . bytes_to_human($row["size"]) . "</td>
-                        <td>$row[created]</td>
+                        <td>" . gmdate("Y-m-d", date_timestamp_get(date_create($row['created']))) . "</td>
                         <td>$row[downloads]</td>
                         <td>
                             <a onclick='toggle_modify(\"comb\",this)' data-id='$row[id]' class=\"button is-warning\">
@@ -334,41 +346,42 @@
         </header>
         <section class="modal-card-body">
             <form action="action.php" method="post">
-                <input type="hidden" name="action" value="add_rom">
+                <input type="hidden" required name="action" value="add_rom">
                 <div class="field">
                     <label class="label">Model</label>
                     <div class="control">
-                        <input class="input" name="model" type="text" placeholder="SM-3242">
+                        <input required class="input" name="model" type="text" placeholder="SM-3242">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Build Version</label>
                     <div class="control">
-                        <input class="input" name="build" type="text" placeholder="7.22.18">
+                        <input required class="input" name="build" type="text" placeholder="7.22.18">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Android Version</label>
                     <div class="control">
-                        <input class="input" name="android" type="text" placeholder="8.1">
+                        <input required class="input" name="android" type="text" placeholder="8.1">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Country</label>
                     <div class="control">
-                        <input class="input" name="country" type="text" placeholder="Egypt">
+                        <input required class="input" name="country" type="text" placeholder="Egypt">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Size</label>
                     <div class="control">
-                        <input class="input" name="size" type="number" placeholder="0">
+                        <input required class="input" name="size" type="number" placeholder="0">
                     </div>
+                    <p class="help is-link">in MegaBytes</p>
                 </div>
                 <div class="field">
                     <label class="label">Download URL</label>
                     <div class="control">
-                        <input class="input" name="url" type="text" placeholder="https://">
+                        <input required class="input" name="url" type="text" placeholder="https://">
                     </div>
                 </div>
         </section>
@@ -391,47 +404,48 @@
         </header>
         <section class="modal-card-body">
             <form action="action.php" method="post">
-                <input type="hidden" name="action" value="add_comb">
+                <input required type="hidden" name="action" value="add_comb">
                 <div class="field">
                     <label class="label">Model</label>
                     <div class="control">
-                        <input class="input" name="model" type="text" placeholder="SM-3242">
+                        <input required class="input" name="model" type="text" placeholder="SM-3242">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Combination Version</label>
                     <div class="control">
-                        <input class="input" name="build" type="text" placeholder="7.22.18">
+                        <input required class="input" name="build" type="text" placeholder="7.22.18">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Android Version</label>
                     <div class="control">
-                        <input class="input" name="android" type="text" placeholder="8.1">
+                        <input required class="input" name="android" type="text" placeholder="8.1">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Security Level</label>
                     <div class="control">
-                        <input class="input" name="security" type="text" placeholder="0">
+                        <input required class="input" name="security" type="text" placeholder="0">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Country</label>
                     <div class="control">
-                        <input class="input" name="country" type="text" placeholder="Egypt">
+                        <input required class="input" name="country" type="text" placeholder="Egypt">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Size</label>
                     <div class="control">
-                        <input class="input" name="size" type="number" placeholder="0">
+                        <input required class="input" name="size" type="number" placeholder="0">
                     </div>
+                    <p class="help is-link">in MegaBytes</p>
                 </div>
                 <div class="field">
                     <label class="label">Download URL</label>
                     <div class="control">
-                        <input class="input" name="url" type="text" placeholder="https://">
+                        <input required class="input" name="url" type="text" placeholder="https://">
                     </div>
                 </div>
         </section>
@@ -459,37 +473,38 @@
                 <div class="field">
                     <label class="label">Model</label>
                     <div class="control">
-                        <input class="input" name="model" type="text" placeholder="SM-3242">
+                        <input required class="input" name="model" type="text" placeholder="SM-3242">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Build Version</label>
                     <div class="control">
-                        <input class="input" name="build" type="text" placeholder="7.22.18">
+                        <input required class="input" name="build" type="text" placeholder="7.22.18">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Android Version</label>
                     <div class="control">
-                        <input class="input" name="android" type="text" placeholder="8.1">
+                        <input required class="input" name="android" type="text" placeholder="8.1">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Country</label>
                     <div class="control">
-                        <input class="input" name="country" type="text" placeholder="Egypt">
+                        <input required class="input" name="country" type="text" placeholder="Egypt">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Size</label>
                     <div class="control">
-                        <input class="input" name="size" type="number" placeholder="0">
+                        <input required class="input" name="size" type="number" placeholder="0">
                     </div>
+                    <p class="help is-link">in MegaBytes</p>
                 </div>
                 <div class="field">
                     <label class="label">Download URL</label>
                     <div class="control">
-                        <input class="input" name="url" type="text" placeholder="https://">
+                        <input required class="input" name="url" type="text" placeholder="https://">
                     </div>
                 </div>
         </section>
@@ -517,43 +532,44 @@
                 <div class="field">
                     <label class="label">Model</label>
                     <div class="control">
-                        <input class="input" name="model" type="text" placeholder="SM-3242">
+                        <input required class="input" name="model" type="text" placeholder="SM-3242">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Combination Version</label>
                     <div class="control">
-                        <input class="input" name="build" type="text" placeholder="7.22.18">
+                        <input required class="input" name="build" type="text" placeholder="7.22.18">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Android Version</label>
                     <div class="control">
-                        <input class="input" name="android" type="text" placeholder="8.1">
+                        <input required class="input" name="android" type="text" placeholder="8.1">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Security Level</label>
                     <div class="control">
-                        <input class="input" name="security" type="text" placeholder="0">
+                        <input required class="input" name="security" type="text" placeholder="0">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Country</label>
                     <div class="control">
-                        <input class="input" name="country" type="text" placeholder="Egypt">
+                        <input required class="input" name="country" type="text" placeholder="Egypt">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Size</label>
                     <div class="control">
-                        <input class="input" name="size" type="number" placeholder="0">
+                        <input required class="input" name="size" type="number" placeholder="0">
                     </div>
+                    <p class="help is-link">in MegaBytes</p>
                 </div>
                 <div class="field">
                     <label class="label">Download URL</label>
                     <div class="control">
-                        <input class="input" name="url" type="text" placeholder="https://">
+                        <input required class="input" name="url" type="text" placeholder="https://">
                     </div>
                 </div>
         </section>

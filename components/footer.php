@@ -18,7 +18,7 @@ $num_users = $db->fetch_array($num_users);
             <div class="column">
                 <div class="card" style="margin-top:25px">
                     <div class="card-image has-text-centered">
-                        <span class="icon" style="font-size:75px;"><i class="fa fa-compact-disc"></i></span>
+                        <span class="icon has-text-primary" style="font-size:75px;"><i class="fa fa-compact-disc"></i></span>
                     </div>
                     <div class="card-content has-text-centered">
                         <div class="content" style="font-size:20px">
@@ -31,7 +31,7 @@ $num_users = $db->fetch_array($num_users);
             <div class="column">
                 <div class="card" style="margin-top:25px">
                     <div class="card-image has-text-centered">
-                        <span class="icon" style="font-size:75px;"><i class="fa fa-hdd"></i></span>
+                        <span class="icon has-text-warning" style="font-size:75px;"><i class="fa fa-hdd"></i></span>
                     </div>
                     <div class="card-content has-text-centered">
                         <div class="content" style="font-size:20px">
@@ -44,7 +44,7 @@ $num_users = $db->fetch_array($num_users);
             <div class="column">
                 <div class="card" style="margin-top:25px">
                     <div class="card-image has-text-centered">
-                        <span class="icon" style="font-size:75px;"><i class="fa fa-database"></i></span>
+                        <span class="icon has-text-danger" style="font-size:75px;"><i class="fa fa-database"></i></span>
                     </div>
                     <div class="card-content has-text-centered">
                         <div class="content" style="font-size:20px">
@@ -57,7 +57,7 @@ $num_users = $db->fetch_array($num_users);
             <div class="column">
                 <div class="card" style="margin-top:25px">
                     <div class="card-image has-text-centered">
-                        <span class="icon" style="font-size:75px;"><i class="fa fa-users"></i></span>
+                        <span class="icon has-text-link" style="font-size:75px;"><i class="fa fa-users"></i></span>
                     </div>
                     <div class="card-content has-text-centered">
                         <div class="content" style="font-size:20px">
