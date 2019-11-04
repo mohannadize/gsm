@@ -14,6 +14,8 @@ if (isset($_GET['a'])) {
 
 switch ($action) {
     case 'index':
+        $page = './components/home.php';
+        break;
     case 'roms':
         $page = "./components/roms.php";
         break;
