@@ -1,3 +1,17 @@
+<?php 
+
+$downloads = $db->query("SELECT SUM(downloads) from files");
+$downloads = $db->fetch_array($downloads);
+$storage  = $db->query("SELECT SUM(size) from files");
+$storage = $db->fetch_array($storage);
+$num_files  = $db->query("SELECT COUNT(*) from files");
+$num_files = $db->fetch_array($num_files);
+$num_users  = $db->query("SELECT COUNT(*) from users");
+$num_users = $db->fetch_array($num_users);
+
+
+?>
+
 <footer class="footer">
     <div class="container">
         <div class="columns">
@@ -8,7 +22,7 @@
                     </div>
                     <div class="card-content has-text-centered">
                         <div class="content" style="font-size:20px">
-                            33605 <br>
+                            <?php echo $downloads['SUM(downloads)']; ?> <br>
                             Downloads
                         </div>
                     </div>
@@ -21,7 +35,7 @@
                     </div>
                     <div class="card-content has-text-centered">
                         <div class="content" style="font-size:20px">
-                            29085 GB <br>
+                            <?php echo bytes_to_human($storage['SUM(size)']); ?> <br>
                             Storage
                         </div>
                     </div>
@@ -34,7 +48,7 @@
                     </div>
                     <div class="card-content has-text-centered">
                         <div class="content" style="font-size:20px">
-                            18091 <br>
+                            <?php echo $num_files['COUNT(*)']; ?> <br>
                             Files
                         </div>
                     </div>
@@ -47,7 +61,7 @@
                     </div>
                     <div class="card-content has-text-centered">
                         <div class="content" style="font-size:20px">
-                            4436 <br>
+                            <?php echo $num_users['COUNT(*)']; ?> <br>
                             Members
                         </div>
                     </div>
