@@ -64,7 +64,8 @@ function toggle_modify(type, elem) {
             }
             android.value = x.android_v;
             country.value = x.country;
-            size.value = x.size;
+            let size_mb = x.size / 1048576;
+            size.value = size_mb;
             url.value = x.url;
 
             modal.classList.toggle("is-active");

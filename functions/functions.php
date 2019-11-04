@@ -319,7 +319,7 @@ function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGH
 function bytes_to_human($bytes) {
     $mapping = ["B","KB","MB","GB","TB"];
     $counter = 0;
-    while ((+$bytes / 1024) > 1) {
+    while ((+$bytes / 1024) >= 1) {
         $bytes = +$bytes / 1024;
         $counter++;
     }

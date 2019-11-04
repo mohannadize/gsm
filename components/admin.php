@@ -374,7 +374,7 @@
                 <div class="field">
                     <label class="label">Size</label>
                     <div class="control">
-                        <input required class="input" name="size" type="number" placeholder="0">
+                        <input required class="input" name="size" step="0.0001" type="number" placeholder="0">
                     </div>
                     <p class="help is-link">in MegaBytes</p>
                 </div>
@@ -438,7 +438,7 @@
                 <div class="field">
                     <label class="label">Size</label>
                     <div class="control">
-                        <input required class="input" name="size" type="number" placeholder="0">
+                        <input required class="input" name="size" step="0.0001" type="number" placeholder="0">
                     </div>
                     <p class="help is-link">in MegaBytes</p>
                 </div>
@@ -497,7 +497,7 @@
                 <div class="field">
                     <label class="label">Size</label>
                     <div class="control">
-                        <input required class="input" name="size" type="number" placeholder="0">
+                        <input required class="input" name="size" step="0.0001" type="number" placeholder="0">
                     </div>
                     <p class="help is-link">in MegaBytes</p>
                 </div>
@@ -562,7 +562,7 @@
                 <div class="field">
                     <label class="label">Size</label>
                     <div class="control">
-                        <input required class="input" name="size" type="number" placeholder="0">
+                        <input required class="input" name="size" step="0.0001" type="number" placeholder="0">
                     </div>
                     <p class="help is-link">in MegaBytes</p>
                 </div>
