@@ -85,14 +85,18 @@
                         <td>" . bytes_to_human($row["size"]) . "</td>
                         <td>$row[created]</td>
                         <td>$row[downloads]</td>
-                        <td><a href=\"$row[url]\" class=\"button is-warning\">
+                        <td><a onclick='toggle_modify(\"rom\",this)' data-id='$row[id]' class=\"button is-warning\">
                                 <span class=\"icon\">
                                     <i class=\"fa fa-edit\"></i>
                                 </span>
                                 <span>
                                     Modify
                                 </span>
-                            </a></td>
+                            </a>
+                            <a href=\"\" class=\"button is-rounded is-danger\">
+                                <span class='icon'><i class='fa fa-trash-alt'></i></span>
+                            </a>
+                            </td>
                         </tr>
                         ";
                     }
@@ -161,14 +165,19 @@
                         <td>" . bytes_to_human($row["size"]) . "</td>
                         <td>$row[created]</td>
                         <td>$row[downloads]</td>
-                        <td><a href=\"\" class=\"button is-warning\">
+                        <td>
+                            <a onclick='toggle_modify(\"comb\",this)' data-id='$row[id]' class=\"button is-warning\">
                                 <span class=\"icon\">
                                     <i class=\"fa fa-edit\"></i>
                                 </span>
                                 <span>
                                     Modify
                                 </span>
-                            </a></td>
+                            </a>
+                            <a href=\"\" class=\"button is-rounded is-danger\">
+                                <span class='icon'><i class='fa fa-trash-alt'></i></span>
+                            </a>
+                        </td>
                         </tr>
                         ";
                     }
@@ -432,6 +441,128 @@
             </button>
             </form>
             <button class="button" onclick="toggle_modal(this)" data-target="add_comb">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+<div class="modal" id="modify_rom">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Modify rom</p>
+            <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="modify_rom"></button>
+        </header>
+        <section class="modal-card-body">
+            <form action="action.php" method="post">
+                <input type="hidden" name="action" value="modify_file">
+                <input type="hidden" name="id">
+                <div class="field">
+                    <label class="label">Model</label>
+                    <div class="control">
+                        <input class="input" name="model" type="text" placeholder="SM-3242">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Build Version</label>
+                    <div class="control">
+                        <input class="input" name="build" type="text" placeholder="7.22.18">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Android Version</label>
+                    <div class="control">
+                        <input class="input" name="android" type="text" placeholder="8.1">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Country</label>
+                    <div class="control">
+                        <input class="input" name="country" type="text" placeholder="Egypt">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Size</label>
+                    <div class="control">
+                        <input class="input" name="size" type="number" placeholder="0">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Download URL</label>
+                    <div class="control">
+                        <input class="input" name="url" type="text" placeholder="https://">
+                    </div>
+                </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-warning" type="submit">
+                <span class="icon"><i class="fa fa-edit"></i></span><span>Submit</span>
+            </button>
+            </form>
+            <button class="button" onclick="toggle_modal(this)" data-target="modify_rom">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+<div class="modal" id="modify_comb">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Modify combination</p>
+            <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="modify_comb"></button>
+        </header>
+        <section class="modal-card-body">
+            <form action="action.php" method="post">
+                <input type="hidden" name="action" value="modify_file">
+                <input type="hidden" name="id">
+                <div class="field">
+                    <label class="label">Model</label>
+                    <div class="control">
+                        <input class="input" name="model" type="text" placeholder="SM-3242">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Combination Version</label>
+                    <div class="control">
+                        <input class="input" name="build" type="text" placeholder="7.22.18">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Android Version</label>
+                    <div class="control">
+                        <input class="input" name="android" type="text" placeholder="8.1">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Security Level</label>
+                    <div class="control">
+                        <input class="input" name="security" type="text" placeholder="0">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Country</label>
+                    <div class="control">
+                        <input class="input" name="country" type="text" placeholder="Egypt">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Size</label>
+                    <div class="control">
+                        <input class="input" name="size" type="number" placeholder="0">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Download URL</label>
+                    <div class="control">
+                        <input class="input" name="url" type="text" placeholder="https://">
+                    </div>
+                </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-warning" type="submit">
+                <span class="icon"><i class="fa fa-edit"></i></span><span>Submit</span>
+            </button>
+            </form>
+            <button class="button" onclick="toggle_modal(this)" data-target="modify_comb">Cancel</button>
         </footer>
     </div>
 </div>

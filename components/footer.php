@@ -2,7 +2,7 @@
     <div class="container">
         <div class="columns">
             <div class="column">
-                <div class="card">
+                <div class="card" style="margin-top:25px">
                     <div class="card-image has-text-centered">
                         <span class="icon" style="font-size:75px;"><i class="fa fa-compact-disc"></i></span>
                     </div>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="column">
-                <div class="card">
+                <div class="card" style="margin-top:25px">
                     <div class="card-image has-text-centered">
                         <span class="icon" style="font-size:75px;"><i class="fa fa-hdd"></i></span>
                     </div>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="column">
-                <div class="card">
+                <div class="card" style="margin-top:25px">
                     <div class="card-image has-text-centered">
                         <span class="icon" style="font-size:75px;"><i class="fa fa-database"></i></span>
                     </div>
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="column">
-                <div class="card">
+                <div class="card" style="margin-top:25px">
                     <div class="card-image has-text-centered">
                         <span class="icon" style="font-size:75px;"><i class="fa fa-users"></i></span>
                     </div>

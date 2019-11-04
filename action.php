@@ -80,6 +80,17 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
+        case "modify_file":
+            if (modify_file($_POST, $db)) {
+                $message = "Modified successfully";
+                $page = "./components/success.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            } else {
+                $message = "An error has occured";
+                $page = "./components/error.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            }
+            break;
         case "update_logo";
             if (change_logo_image($_FILES['file'], $db)) {
                 $message = "Logo updated";
@@ -108,11 +119,5 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     }
 
 
-    // Case Changing user data
-
-    // Case Uplaoding Rom
-
-    // Case Modifing Rom
-
-    // Case Deletin Rom
+    // Case Deleting Rom
 }

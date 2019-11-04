@@ -227,11 +227,36 @@ function change_logo_image($file, $db)
     }
 }
 
-function modify_rom($data, $db)
-{ }
+function modify_file($data, $db)
+{
+    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+    $admin_check = $db->fetch_array($admin_check);
+    $admin_check = (int) $admin_check["admin"];
+    if ($admin_check === 0) return false;
+    
+    $id = (int) (trim($data['id']));
+    $model = strip_tags(trim($data['model']));
+    $build = strip_tags(trim($data['build']));
+    $android = strip_tags(trim($data['android']));
+    $country = strip_tags(trim($data['country']));
+    if (isset($data['security'])) {
+        $security = strip_tags(trim($data['security']));
+    } else {
+        $security = null;
+    }
+    $size = trim($data['size']);
+    $url = trim($data['url']);
+    $search = "$model $build $country";
+
+    $query = "UPDATE files SET model='$model', build_v='$build', android_v='$android', country='$country', security_level='$security', size='$size', `url`='$url', search_text='$search' WHERE id='$id'";
+
+    return $db->query($query);
+}
 
 function delete_rom($data, $db)
-{ }
+{
+
+}
 
 function download_rom($data, $db)
 { }

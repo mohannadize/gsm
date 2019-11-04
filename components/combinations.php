@@ -6,7 +6,7 @@
                 <input required name='s' type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"]:''; ?>">
             </div>
             <div class="column">
-                <button type='submit' class="button is-danger is-light">
+                <button type='submit' class="button is-link is-light">
                     <span>Search</span>
                     <span class="icon">
                         <i class="fa fa-search"></i>
