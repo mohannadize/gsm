@@ -1,9 +1,13 @@
+<script>
+let type = 0;
+</script>
+
 <section class="section">
     <div class="container">
         <h3 class="title">Roms</h3>
-        <form class='columns' action="roms" method="get">
+        <form class='columns' onsubmit="table_search('table-container',event)">
             <div class="column is-5-tablet is-offset-3-tablet">
-                <input required name='s' type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
+                <input name='s' type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
             </div>
             <div class="column">
                 <button type='submit' class="button is-link is-light">
@@ -14,57 +18,42 @@
                 </button>
             </div>
         </form>
-        <div class="scrollable-table">
-            <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
-                <thead>
-                    <tr>
-                        <th>Model</th>
-                        <th>Build Version</th>
-                        <th>Android Version</th>
-                        <th>Country</th>
-                        <th>Uploaded</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <?php
-
-                    $query = "SELECT * FROM files where `type`='0'";
-                    if (isset($_GET['s'])) {
-                        $query .= " AND `search_text` like '%$_GET[s]%'";
-                    }
-                    if (isset($_GET['pr'])) {
-                        $offset = 15 * ($_GET['pr'] - 1);
-                    } else {
-                        $offset = 0;
-                    }
-                    $query .= " limit 15 offset $offset";
-                    $files = $db->query($query);
-                    while ($row = $db->fetch_array($files)) {
-                        echo "
-                        <tr>
-                        <td>$row[model]</td>
-                        <td>$row[build_v]</td>
-                        <td>$row[android_v]</td>
-                        <td>$row[country]</td>
-                        <td>" . gmdate("Y-m-d", date_timestamp_get(date_create($row['created']))) . "</td>
-                        <td><a target='_blank' href=\"$row[url]\" class=\"button is-link\">
-                                <span class=\"icon\">
-                                    <i class=\"fa fa-download\"></i>
-                                </span>
-                                <span>
-                                    Download
-                                </span>
-                            </a></td>
-                        </tr>
-                        ";
-                    }
-
-
-
-                    ?>
-                </tbody>
-            </table>
+        <div class="scrollable-table" id='table-container'>
+            <div class="has-text-centered">
+                <button class="button is-link is-loading is-large" style="width:100px;"></button>
+            </div>
         </div>
+        <!-- <nav class="pagination" style="padding:40px" role="navigation" aria-label="pagination">
+            <a class="pagination-previous" title="This is the first page" disabled>Previous</a>
+            <a class="pagination-next">Next page</a>
+            <ul class="pagination-list">
+                <?php
+                // $pages = $db->query("SELECT COUNT(id) from files where `type`='1'");
+                // $pages = $db->fetch_array($pages);
+                // $pages = ceil($pages['COUNT(id)'] / 15);
+                // for ($i = 1; $i <= $pages; $i++) {
+                //     $current = '';
+                //     $href = 'javascript:void(0)';
+                //     if (1 == $i) $current = "is-current";
+                //     else $href = "?pr=$i";
+                //     echo "
+                //     <li>
+                //         <a href='$href' class='pagination-link $current' aria-label='Page $i'>$i</a>
+                //     </li>
+                //     ";
+                // }
+
+                ?>
+                <li>
+                    <a class="pagination-link is-current" aria-label="Page 1" aria-current="page">1</a>
+                </li>
+                <li>
+                    <a class="pagination-link" aria-label="Goto page 2">2</a>
+                </li>
+                <li>
+                    <a class="pagination-link" aria-label="Goto page 3">3</a>
+                </li>
+            </ul>
+        </nav> -->
     </div>
 </section>

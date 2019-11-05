@@ -1,16 +1,49 @@
 <?php
 include "./functions/database.php";
 include "./functions/functions.php";
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    $id = (int) $_GET['id'];
+header("content-type: application/json");
+// var_dump($_SERVER, $_POST);
+$_POST = json_decode(file_get_contents("php://input"), true);
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["action"])) $action = $_POST['action'];
+else {
+    echo "null";
+    exit;
+};
 
-    $query = $db->query("SELECT * from files where id='$id'");
-    $query = $db->fetch_array($query);
+switch ($action) {
+    case 'details':
+        $id = (int) $_POST['id'];
+        $query = $db->query("SELECT * from files where id='$id'");
+        $query = $db->fetch_array($query);
+        $json = json_encode($query);
+        break;
+    case 'get':
+        $type = (isset($_POST['type']) && $_POST['type'] == '1') ? 1 : 0; 
+        $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
+        $search = isset($_POST['search']) ? $_POST['search'] : null;
+        $offset = 15 * ($page - 1);
 
-    if ($query) {
-        header("content-type: application/json");
-        echo json_encode($query);
-    } else {
-        echo "null";
-    }
+        $query = "SELECT * FROM files where `type`='$type'";
+        if ($search) $query .= " AND `search_text` like '%$search%'";
+        $query .= " ORDER BY id DESC limit 15 offset $offset";
+        $query = $db->query($query);
+        $array = [];
+
+        while ($row = $db->fetch_array($query)) {
+            $row['size'] = bytes_to_human($row['size']);
+            array_push($array, $row);
+        }
+        $json = json_encode($array);
+        break;
+    case "test":
+        $json = json_encode($_SESSION);
+        break;
+    default:
+        $json = null;
+        break;
 }
+
+
+
+
+echo $json ? $json : "null";

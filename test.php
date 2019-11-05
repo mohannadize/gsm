@@ -1,10 +1,12 @@
 <?php
 
-$res = $db->query("SELECT * from files where `id`='2'");
-$res = $db->fetch_array($res);
+$res = $db->query("SELECT model,build_v,android_v,security_level,size,country,created,downloads from files");
 
-// date_create()
-var_dump(gmdate("Y-m-d",date_timestamp_get(date_create($res['created']))));
+$array = [];
 
+while ($row = $db->fetch_array($res)) {
+    array_push($array,$row);
+}
 
+echo json_encode($array);
 exit;
