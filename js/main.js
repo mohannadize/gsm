@@ -40,8 +40,6 @@ function handle_files(elem, files) {
 }
 
 function toggle_modify(type, elem) {
-    let target = (type == 'rom') ? "modify_rom" : "modify_comb";
-    let modal = document.getElementById(target);
 
     let body = {};
     body.id = elem.dataset.id;
@@ -52,11 +50,13 @@ function toggle_modify(type, elem) {
     })
         .then(x => x.json())
         .then(x => {
+            let target = (Number(x.type)) ? "modify_comb" : "modify_rom";
+            let modal = document.getElementById(target);
             let id, model, build, security, android, country, size, url;
             id = modal.querySelector("input[name=id]");
             model = modal.querySelector("input[name=model]");
             build = modal.querySelector("input[name=build]");
-            security = (type == 'comb') ? modal.querySelector('input[name=security]') : null;
+            security = (Number(x.type)) ? modal.querySelector('input[name=security]') : null;
             android = modal.querySelector("input[name=android]");
             country = modal.querySelector("input[name=country]");
             size = modal.querySelector("input[name=size]");
@@ -80,7 +80,12 @@ function toggle_modify(type, elem) {
             alert("An error has occured, please contact webmaster");
         });
 }
-function fetch_rows(type = 0, search = null, page = 1) {
+function fetch_rows(target, search = null, page = 1) {
+    if (!target) return;
+
+    let type, expanded;
+    type = (target.startsWith("roms")) ? 0 : 1;
+    expanded = target.endsWith("admin");
     let params = { type, page, search };
     params.action = "get";
     fetch("api.php", {
@@ -88,8 +93,10 @@ function fetch_rows(type = 0, search = null, page = 1) {
         body: JSON.stringify(params)
     })
         .then(res => res.json())
-        .then(rows => {
-            populate_table("table-container", rows);
+        .then(res => {
+
+            populate_table(target, res.rows, expanded);
+            update_table_pagination(target, page, res.pages, search);
         })
         .catch(err => {
             console.error(err);
@@ -114,7 +121,7 @@ function populate_table(target, rows, expanded = 0, err = 0) {
     let thead = document.createElement("thead");
     thead.innerHTML = `
         <tr>
-            <th>Model</th>x
+            <th>Model</th>
             <th>Build Version</th>
             <th>Android Version</th>
             ${security_level}
@@ -155,13 +162,16 @@ function populate_table(target, rows, expanded = 0, err = 0) {
             downloads.textContent = row.downloads;
             tr.append(size, downloads);
             last.innerHTML = `
-            <a target='_blank' href="download?id=${row.id}" class="button is-warning">
-                <span class="icon">
-                    <i class="fa fa-edit"></i>
+            <a onclick='toggle_modify(\"rom\",this)' data-id='${row.id}' class=\"button is-warning\">
+                <span class=\"icon\">
+                    <i class=\"fa fa-edit\"></i>
                 </span>
                 <span>
                     Modify
                 </span>
+            </a>
+            <a href=\"\" class=\"button is-rounded is-danger\">
+                <span class='icon'><i class='fa fa-trash-alt'></i></span>
             </a>
             `
         } else {
@@ -186,17 +196,60 @@ function populate_table(target, rows, expanded = 0, err = 0) {
 }
 
 function table_search(target, event) {
-    target = document.getElementById(target);
-    target.innerHTML = `
+    event.preventDefault();
+    let container = document.getElementById(target);
+    container.innerHTML = `
             <div class="has-text-centered">
                 <button class="button is-link is-loading is-large" style="width:100px;"></button>
             </div>
             `
     let search = event.currentTarget[0].value;
-    fetch_rows(type, search);
-    event.preventDefault();
+    debugger;
+    fetch_rows(target, search);
 }
 
-window.onload = () => {
-    fetch_rows(type);
+function update_table_pagination(target, page, pages, search) {
+    let table_container = document.getElementById(target);
+
+    let pagination = document.createElement('nav');
+    pagination.style.margin = "10px";
+    pagination.classList.add("pagination");
+    let prev = document.createElement("a");
+    prev.className = "pagination-previous";
+    prev.textContent = "Previous";
+    if (page == 1) prev.setAttribute("disabled", true); else {
+        prev.onclick = () => {
+            fetch_rows(target,search,page-1)
+        }
+    }
+    let next = document.createElement('a');
+    next.className = "pagination-next";
+    next.textContent = "Next page";
+    if (page == pages) next.setAttribute("disabled", true); else {
+        next.onclick = () => {
+            fetch_rows(target,search,page+1)
+        }
+    }
+    pagination.append(prev, next);
+    let pagination_list = document.createElement("ul");
+    pagination_list.className = "pagination-list";
+
+    for (let i = 1; i <= pages; i++) {
+        let li = document.createElement("li");
+        let a = document.createElement('a');
+        a.textContent = i;
+        a.className = "pagination-link";
+        if (page == i) a.classList.add("is-current");
+        a.onclick = () => {
+            fetch_rows(target,search,i)
+        };
+        li.append(a);
+        pagination_list.append(li);
+    }
+
+    pagination.append(pagination_list);
+    table_container.append(pagination);
+
+
+    return true;
 }

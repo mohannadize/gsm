@@ -1,3 +1,10 @@
+<script>
+    window.onload = () => {
+        fetch_rows("roms-table-admin");
+        fetch_rows("combs-table-admin");
+    }
+</script>
+
 <section class="section">
     <div class="container">
         <div class="tabs is-boxed">
@@ -31,9 +38,9 @@
     </div>
     <br>
     <div class="container tab is-active" id="manage-roms">
-        <form class="columns" method="get" action="admin">
+        <form class="columns" onsubmit="table_search('roms-table-admin',event)">
             <div class="column is-3-tablet is-9-mobile is-inline-block">
-                <input required name="s" type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
+                <input type="text" placeholder="Search" class="input">
             </div>
             <div class="column is-2-mobile is-inline-block">
                 <button type="submit" class="button is-link is-light">
@@ -53,71 +60,13 @@
                 </div>
             </div>
         </form>
-        <div class="scrollable-table">
-            <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
-                <thead>
-                    <tr>
-                        <th>Model</th>
-                        <th>Build Version</th>
-                        <th>Android Version</th>
-                        <th>Country</th>
-                        <th>Size</th>
-                        <th>Uploaded</th>
-                        <th>Downloads</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <?php
-
-                    $query = "SELECT * FROM files where `type`='0'";
-                    if (isset($_GET['s'])) {
-                        $query .= " AND `search_text` like '%$_GET[s]%'";
-                    }
-                    if (isset($_GET['pr'])) {
-                        $offset = 15 * ($_GET['pr'] - 1);
-                    } else {
-                        $offset = 0;
-                    }
-                    $query .= " limit 15 offset $offset";
-                    $files = $db->query($query);
-                    while ($row = $db->fetch_array($files)) {
-                        echo "
-                        <tr>
-                        <td>$row[model]</td>
-                        <td>$row[build_v]</td>
-                        <td>$row[android_v]</td>
-                        <td>$row[country]</td>
-                        <td>" . bytes_to_human($row["size"]) . "</td>
-                        <td>" . gmdate("Y-m-d", date_timestamp_get(date_create($row['created']))) . "</td>
-                        <td>$row[downloads]</td>
-                        <td><a onclick='toggle_modify(\"rom\",this)' data-id='$row[id]' class=\"button is-warning\">
-                                <span class=\"icon\">
-                                    <i class=\"fa fa-edit\"></i>
-                                </span>
-                                <span>
-                                    Modify
-                                </span>
-                            </a>
-                            <a href=\"\" class=\"button is-rounded is-danger\">
-                                <span class='icon'><i class='fa fa-trash-alt'></i></span>
-                            </a>
-                            </td>
-                        </tr>
-                        ";
-                    }
-
-
-
-                    ?>
-                </tbody>
-            </table>
+        <div class="scrollable-table" id='roms-table-admin'>
         </div>
     </div>
     <div class="container tab" id="manage-comb">
-        <form class="columns" method="get" action="admin">
+        <form class="columns" onsubmit="table_search('combs-table-admin',event)">
             <div class="column is-3-tablet is-9-mobile is-inline-block">
-                <input required name="s" type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
+                <input type="text" placeholder="Search" class="input">
             </div>
             <div class="column is-2-mobile is-inline-block">
                 <button type="submit" class="button is-link is-light">
@@ -137,68 +86,7 @@
                 </div>
             </div>
         </form>
-        <div class="scrollable-table">
-            <table class="table is-fullwidth is-bordered is-striped is-rounded is-hoverable">
-                <thead>
-                    <tr>
-                        <th>Model</th>
-                        <th>Build Version</th>
-                        <th>Android Version</th>
-                        <th>Security Level</th>
-                        <th>Country</th>
-                        <th>Size</th>
-                        <th>Uploaded</th>
-                        <th>Downloads</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <?php
-
-                    $query = "SELECT * FROM files where `type`='1'";
-                    if (isset($_GET['s'])) {
-                        $query .= " AND `search_text` like '%$_GET[s]%'";
-                    }
-                    if (isset($_GET['pc'])) {
-                        $offset = 15 * ($_GET['pc'] - 1);
-                    } else {
-                        $offset = 0;
-                    }
-                    $query .= " limit 15 offset $offset";
-                    $files = $db->query($query);
-                    while ($row = $db->fetch_array($files)) {
-                        echo "
-                        <tr>
-                        <td>$row[model]</td>
-                        <td>$row[build_v]</td>
-                        <td>$row[android_v]</td>
-                        <td>$row[security_level]</td>
-                        <td>$row[country]</td>
-                        <td>" . bytes_to_human($row["size"]) . "</td>
-                        <td>" . gmdate("Y-m-d", date_timestamp_get(date_create($row['created']))) . "</td>
-                        <td>$row[downloads]</td>
-                        <td>
-                            <a onclick='toggle_modify(\"comb\",this)' data-id='$row[id]' class=\"button is-warning\">
-                                <span class=\"icon\">
-                                    <i class=\"fa fa-edit\"></i>
-                                </span>
-                                <span>
-                                    Modify
-                                </span>
-                            </a>
-                            <a href=\"\" class=\"button is-rounded is-danger\">
-                                <span class='icon'><i class='fa fa-trash-alt'></i></span>
-                            </a>
-                        </td>
-                        </tr>
-                        ";
-                    }
-
-
-
-                    ?>
-                </tbody>
-            </table>
+        <div class="scrollable-table" id='combs-table-admin'>
         </div>
     </div>
     <div class="container tab" id="website-settings">

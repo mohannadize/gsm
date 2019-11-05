@@ -2,7 +2,7 @@
 include "./functions/database.php";
 include "./functions/functions.php";
 header("content-type: application/json");
-// var_dump($_SERVER, $_POST);
+
 $_POST = json_decode(file_get_contents("php://input"), true);
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["action"])) $action = $_POST['action'];
 else {
@@ -22,17 +22,21 @@ switch ($action) {
         $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
         $search = isset($_POST['search']) ? $_POST['search'] : null;
         $offset = 15 * ($page - 1);
-
         $query = "SELECT * FROM files where `type`='$type'";
         if ($search) $query .= " AND `search_text` like '%$search%'";
+        $pages = $db->query($query);
+        $pages = ceil($db->num_rows($pages) / 15);
         $query .= " ORDER BY id DESC limit 15 offset $offset";
         $query = $db->query($query);
         $array = [];
+        $array['rows'] = [];
+        $array['pages'] = $pages;
 
         while ($row = $db->fetch_array($query)) {
             $row['size'] = bytes_to_human($row['size']);
-            array_push($array, $row);
+            array_push($array['rows'], $row);
         }
+
         $json = json_encode($array);
         break;
     case "test":
