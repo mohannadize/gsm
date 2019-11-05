@@ -253,9 +253,21 @@ function modify_file($data, $db)
     return $db->query($query);
 }
 
-function delete_rom($data, $db)
+function delete_file($data, $db)
 {
+    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+    $admin_check = $db->fetch_array($admin_check);
+    $admin_check = (int) $admin_check["admin"];
+    if ($admin_check === 0) return false;
 
+    if (isset($data['id'])) {
+        $id = (int) (trim($data['id']));
+        return $db->query("DELETE FROM files WHERE id='$id'");
+    } else {
+        return false;
+    }
+    
+    
 }
 
 function download_rom($data, $db)

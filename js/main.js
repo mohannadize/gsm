@@ -39,7 +39,7 @@ function handle_files(elem, files) {
     label.textContent = file_name;
 }
 
-function toggle_modify(type, elem) {
+function toggle_modify(elem) {
 
     let body = {};
     body.id = elem.dataset.id;
@@ -80,6 +80,28 @@ function toggle_modify(type, elem) {
             alert("An error has occured, please contact webmaster");
         });
 }
+function toggle_delete(elem) {
+    let target = 'delete_file';
+    let body = {};
+    body.id = elem.dataset.id;
+    body.action = "details";
+    fetch("./api.php", {
+        method: "POST",
+        body: JSON.stringify(body)
+    })
+        .then(x => x.json())
+        .then(x => {
+
+            let modal = document.getElementById(target);
+            let id;
+            id = modal.querySelector("input[name=id]");
+            id.value = x.id;
+            modal.classList.toggle("is-active");
+        }).catch(x => {
+            console.log(x);
+            alert("An error has occured, please contact webmaster");
+        });
+}
 function fetch_rows(target, search = null, page = 1) {
     if (!target) return;
 
@@ -96,7 +118,7 @@ function fetch_rows(target, search = null, page = 1) {
         .then(res => {
 
             populate_table(target, res.rows, expanded);
-            update_table_pagination(target, page, res.pages, search);
+            if (Number(res.pages)) update_table_pagination(target, page, res.pages, search);
         })
         .catch(err => {
             console.error(err);
@@ -162,7 +184,7 @@ function populate_table(target, rows, expanded = 0, err = 0) {
             downloads.textContent = row.downloads;
             tr.append(size, downloads);
             last.innerHTML = `
-            <a onclick='toggle_modify(\"rom\",this)' data-id='${row.id}' class=\"button is-warning\">
+            <a onclick='toggle_modify(this)' data-id='${row.id}' class=\"button is-warning\">
                 <span class=\"icon\">
                     <i class=\"fa fa-edit\"></i>
                 </span>
@@ -170,7 +192,7 @@ function populate_table(target, rows, expanded = 0, err = 0) {
                     Modify
                 </span>
             </a>
-            <a href=\"\" class=\"button is-rounded is-danger\">
+            <a onclick='toggle_delete(this)' data-id='${row.id}' class=\"button is-rounded is-danger\">
                 <span class='icon'><i class='fa fa-trash-alt'></i></span>
             </a>
             `
@@ -219,7 +241,7 @@ function update_table_pagination(target, page, pages, search) {
     prev.textContent = "Previous";
     if (page == 1) prev.setAttribute("disabled", true); else {
         prev.onclick = () => {
-            fetch_rows(target,search,page-1)
+            fetch_rows(target, search, page - 1)
         }
     }
     let next = document.createElement('a');
@@ -227,7 +249,7 @@ function update_table_pagination(target, page, pages, search) {
     next.textContent = "Next page";
     if (page == pages) next.setAttribute("disabled", true); else {
         next.onclick = () => {
-            fetch_rows(target,search,page+1)
+            fetch_rows(target, search, page + 1)
         }
     }
     pagination.append(prev, next);
@@ -241,10 +263,11 @@ function update_table_pagination(target, page, pages, search) {
         a.className = "pagination-link";
         if (page == i) a.classList.add("is-current");
         a.onclick = () => {
-            fetch_rows(target,search,i)
+            fetch_rows(target, search, i)
         };
         li.append(a);
         pagination_list.append(li);
+
     }
 
     pagination.append(pagination_list);

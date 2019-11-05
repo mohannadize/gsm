@@ -102,6 +102,17 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
+        case "delete_file":
+            if (delete_file($_POST, $db)) {
+                $message = "Successfully deleted!";
+                $page = "./components/success.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            } else {
+                $message = "An error has occured";
+                $page = "./components/error.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            }
+            break;
         case "modify_user":
             if (modify_user($_POST, $db)) {
                 $message = "User Updated Successfully!";
@@ -113,7 +124,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 print_notice_page("profile", $page, $message, null, $db, $logged_in);
             }
             break;
-
         default:
             break;
     }

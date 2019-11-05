@@ -61,6 +61,9 @@
             </div>
         </form>
         <div class="scrollable-table" id='roms-table-admin'>
+            <div class="has-text-centered">
+                <button class="button is-link is-loading is-large" style="width:100px;"></button>
+            </div>
         </div>
     </div>
     <div class="container tab" id="manage-comb">
@@ -87,6 +90,9 @@
             </div>
         </form>
         <div class="scrollable-table" id='combs-table-admin'>
+            <div class="has-text-centered">
+                <button class="button is-link is-loading is-large" style="width:100px;"></button>
+            </div>
         </div>
     </div>
     <div class="container tab" id="website-settings">
@@ -187,7 +193,6 @@
 </section>
 
 
-<!-- TODO: Modals -->
 <div class="modal" id='upload_logo'>
     <div class="modal-background"></div>
     <div class="modal-card">
@@ -467,6 +472,31 @@
             </button>
             </form>
             <button class="button" onclick="toggle_modal(this)" data-target="modify_comb">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+<div class="modal" id='delete_file'>
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">
+            Caution
+        </p>
+            <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="delete_file"></button>
+        </header>
+        <section class="modal-card-body">
+            <form action="action.php" method="post">
+                <input type="hidden" name="action" value="delete_file">
+                <input type="hidden" name="id">
+                <div class="title is-5">
+                    Are you sure you want to delete this file?
+                </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button" type="submit">Delete</button>
+            </form>
+            <button class="button is-danger" onclick="toggle_modal(this)" data-target="delete_file">Cancel</button>
         </footer>
     </div>
 </div>
