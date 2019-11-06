@@ -198,7 +198,7 @@ function populate_table(target, rows, expanded = 0, err = 0) {
             `
         } else {
             last.innerHTML = `
-            <a target='_blank' href="download?id=${row.id}" class="button is-link">
+            <a href="download?id=${row.id}" class="button is-link">
                 <span class="icon">
                     <i class="fa fa-download"></i>
                 </span>
