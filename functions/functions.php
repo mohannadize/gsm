@@ -104,7 +104,9 @@ function login_user($data, $db)
     $username = trim($data['username']);
     $password = trim($data['password']);
 
-    $result = $db->query("SELECT id,username,password,admin from users WHERE username='$username'");
+    $result = $db->query("SELECT id,username,password,admin,last_login from users WHERE username='$username'");
+    $settings = $db->query("SELECT daily_free from `site`");
+    $settings = $db->fetch_array($settings);
 
     if ($db->num_rows($result)) {
         $result = $db->fetch_array($result);
@@ -116,6 +118,10 @@ function login_user($data, $db)
             if ($result['admin']) {
                 $_SESSION['admin'] = true;
             };
+            $new_rewards = time()-date_timestamp_get(date_create($result['last_login']));
+            if ($new_rewards > 86400) {
+                $db->query("UPDATE users SET daily_balance='$settings[daily_free]',last_login=CURRENT_TIMESTAMP where id='$result[id]'");
+            }
 
             return true;
         } else {
@@ -138,7 +144,7 @@ function update_site_settings($data, $db)
     }
     $site_name = strip_tags(trim($data['site-name']));
     $description = strip_tags(trim($data['description']));
-    $daily_free = (int) $data['daily_free'];
+    $daily_free = (int) $data['daily_free'] * 1024 * 1024;
     $email = trim($data['email']);
     $paypal = trim($data['paypal']);
     $logo_as_text = isset($data['logo_as_text']) ? 1 : 0;
@@ -329,7 +335,7 @@ function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGH
 }
 
 function bytes_to_human($bytes) {
-    $mapping = ["B","KB","MB","GB","TB"];
+    $mapping = ["Bytes","KBs","MBs","GBs","TBs"];
     $counter = 0;
     while ((+$bytes / 1024) >= 1) {
         $bytes = +$bytes / 1024;

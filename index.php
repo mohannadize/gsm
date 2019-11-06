@@ -32,6 +32,17 @@ switch ($action) {
             $message = 'Please log in';
             $page = "./components/error.php";
             print_notice_page("login", $page, $message, "./components/login.php", $db);
+            exit;
+        }
+        break;
+    case "balance":
+        if ($logged_in) {
+            $page = "./components/balance.php";
+        } else {
+            $message = 'Please log in';
+            $page = "./components/error.php";
+            print_notice_page("login", $page, $message, "./components/login.php", $db);
+            exit;
         }
         break;
     case "admin":
@@ -45,6 +56,16 @@ switch ($action) {
     case "test":
         include "./test.php";
         exit;
+    case "download":
+        if ($logged_in) {
+            include "download.php";
+        } else {
+            $message = 'Please sign up or log in to download this file';
+            $page = "./components/error.php";
+            print_notice_page("login", $page, $message, "./components/login.php", $db);
+            exit;
+        }
+        break;
     case "combinations":
         $page = "./components/combinations.php";
         break;
@@ -54,4 +75,4 @@ switch ($action) {
         break;
 }
 
-print_web_page($action,$page,$logged_in,$db);
+print_web_page($action, $page, $logged_in, $db);

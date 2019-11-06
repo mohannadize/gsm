@@ -18,11 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 print_notice_page('signup', $page, $message, null, $db);
                 die();
             } else {
-                $user_exists = $db->query("SELECT username from users WHERE `username`='$data[username]'");
+                $user_exists = $db->query("SELECT username from users WHERE `username`='$_POST[username]'");
                 if ($db->num_rows($user_exists)) {
                     $message = "This username is taken.";
                     $page = "./components/error.php";
                     print_notice_page('signup', $page, $message, null, $db);
+                    exit;
                 }
                 if ($db->add_user($user_data['name'], $user_data['username'], $user_data['password'], $user_data['email'])) {
                     $message = "Signed up successfully!";

@@ -276,3 +276,13 @@ function update_table_pagination(target, page, pages, search) {
 
     return true;
 }
+
+function calculate_paypal(elem) {
+    let amount = document.getElementById(elem.dataset.target);
+    let item_name = document.getElementById(elem.dataset.itemName);
+    let rate = elem.dataset.rate;
+
+    amount.value = elem.value / 1024 * rate;
+    item_name.value = `${amount.value} Megabytes at ${document.location.hostname}`;
+
+}

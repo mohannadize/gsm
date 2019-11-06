@@ -126,7 +126,7 @@
 
                     <div class="field">
                         <label class="label">Email</label>
-                        <div class="control has-icons-left has-icons-right">
+                        <div class="control has-icons-left">
                             <input name="email" class="input" type="email" value="<?php echo $settings['email']; ?>">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
@@ -136,7 +136,7 @@
 
                     <div class="field">
                         <label class="label">Paypal Email</label>
-                        <div class="control has-icons-left has-icons-right">
+                        <div class="control has-icons-left">
                             <input class="input" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
                             <span class="icon is-small is-left">
                                 <i class="fab fa-paypal"></i>
@@ -162,17 +162,11 @@
                     </div>
 
                     <div class="field">
-                        <label class="label">Daily rewards amount</label>
+                        <label class="label">Daily free download amount</label>
                         <div class="control">
-                            <input class="input" name="daily_free" type="number" value="<?php echo $settings['daily_free']; ?>">
+                            <input class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free']/1024/1024; ?>">
                         </div>
-                    </div>
-                    <div class="field">
-                        <label class="switch is-info">
-                            <input name='increment_daily' type="checkbox" <?php echo $settings['increment_daily'] ? "checked" : 0; ?>>
-                            <div class="switch-body"></div>
-                            <span>Accumulate daily rewards</span>
-                        </label>
+                        <div class="help is-link">in MegaBytes</div>
                     </div>
 
                     <div class="field is-grouped">

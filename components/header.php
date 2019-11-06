@@ -66,10 +66,10 @@
                     <a class="navbar-item <?php echo $action == "balance" ? "is-active" : ""; ?>" href='balance'>
                         <!-- TODO: Points system  -->
                         <span class="icon" style="padding-right:5px;">
-                            <i class="fa fa-wallet"></i>
+                            <i class="fa fa-tachometer-alt"></i>
                         </span>
                         <span>
-                            <?php echo $user_data['balance'] + $user_data['daily_balance']; ?> Pts
+                            <?php echo bytes_to_human($user_data['balance'] + $user_data['daily_balance']); ?> Left
                         </span>
                     </a>
 
