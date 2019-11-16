@@ -45,7 +45,7 @@ $securities = [
     "OO"
 ];
 
-for ($i=0; $i < 144; $i++) { 
+for ($i=0; $i < 244; $i++) { 
     $model = array_rand($models);
     $build = array_rand($builds);
     $android = array_rand($androids);
@@ -54,13 +54,13 @@ for ($i=0; $i < 144; $i++) {
     $size = rand(10000000,1000000000);
     $type = rand(0,1);
     $url = "https://google.com";
-    $search = "$models[$model] $builds[$build] $countries[$country]";
+    $search = "$models[$model] $countries[$country] $builds[$build]";
 
     $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, security_level, `type`, search_text) 
     VALUES ('$models[$model]', '$builds[$build]', '$androids[$android]', '$countries[$country]', '$size', '$url', '$securities[$security]', '$type', '$search')";
 
-    // $db->query($query);
-    echo "kaaaak!";
+    $db->query($query);
+    // echo "kaaaak!";
     
 }
 // $res = $db->query("SELECT model,build_v,android_v,security_level,size,country,created,downloads from files");

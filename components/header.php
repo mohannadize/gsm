@@ -24,7 +24,7 @@
                 Home
             </a> -->
 
-            <a class="navbar-item <?php echo $action == "index" ? "is-active" : ""; ?>" href=".">
+            <a class="navbar-item <?php echo $action == "roms" ? "is-active" : ""; ?>" href=".">
                 Roms
             </a>
 

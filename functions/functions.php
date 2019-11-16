@@ -178,7 +178,7 @@ function add_rom($data, $db)
     $country = strip_tags(trim($data['country']));
     $size = trim($data['size']) * 1024 * 1024;
     $url = trim($data['url']);
-    $search = "$model $build $country";
+    $search = "$model $country $build";
 
     $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, search_text) 
     VALUES ('$model', '$build', '$android', '$country', '$size', '$url', '$search')";
@@ -201,7 +201,7 @@ function add_comb($data, $db)
     $type = 1;
     $size = trim($data['size']) * 1024 * 1024;
     $url = trim($data['url']);
-    $search = "$model $build $country";
+    $search = "$model $country $build";
 
     $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, security_level, `type`, search_text) 
     VALUES ('$model', '$build', '$android', '$country', '$size', '$url', '$security', '$type', '$search')";
@@ -250,7 +250,7 @@ function modify_file($data, $db)
     }
     $size = trim($data['size']) * 1024 * 1024;
     $url = trim($data['url']);
-    $search = "$model $build $country";
+    $search = "$model $country $build";
 
     $query = "UPDATE files SET model='$model', build_v='$build', android_v='$android', country='$country', security_level='$security', size='$size', `url`='$url', search_text='$search' WHERE id='$id'";
 

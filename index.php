@@ -9,14 +9,14 @@ include "./functions/functions.php";
 if (isset($_GET['a'])) {
     $action = $_GET['a'];
 } else {
-    $action = "index";
+    $action = "roms";
 }
 
 switch ($action) {
     case 'index':
         // $page = './components/home.php';
         // break;
-    // case 'roms':
+    case 'roms':
         $page = "./components/roms.php";
         break;
     case "login":

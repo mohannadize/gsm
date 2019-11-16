@@ -1,6 +1,11 @@
 <script>
     window.onload = () => {
-        fetch_rows('roms-table')
+        let params = new URLSearchParams(location.href.split("?")[1]);
+        if (params.has("s")) {
+            fetch_rows('roms-table', params.get("s"));
+        } else {
+            fetch_rows('roms-table');
+        }
     }
 </script>
 
