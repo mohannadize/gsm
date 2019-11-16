@@ -192,7 +192,7 @@ function populate_table(target, rows, expanded = 0, err = 0) {
                     Modify
                 </span>
             </a>
-            <a onclick='toggle_delete(this)' data-id='${row.id}' class=\"button is-rounded is-danger\">
+            <a onclick='toggle_delete(this)' data-id='${row.id}' class=\"button is-danger\">
                 <span class='icon'><i class='fa fa-trash-alt'></i></span>
             </a>
             `
@@ -226,7 +226,6 @@ function table_search(target, event) {
             </div>
             `
     let search = event.currentTarget[0].value;
-    debugger;
     fetch_rows(target, search);
 }
 

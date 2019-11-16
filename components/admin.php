@@ -1,8 +1,94 @@
 <script>
     window.onload = () => {
         fetch_rows("roms-table-admin");
-        fetch_rows("combs-table-admin");
+        fetch_users("users-table-admin");
     }
+
+    function fetch_users(target, search = null, page = 1) {
+        if (!target) return;
+
+
+        let params = {
+            page,
+            search
+        };
+        params.action = "users";
+        fetch("api.php", {
+                method: "post",
+                body: JSON.stringify(params)
+            })
+            .then(res => res.json())
+            .then(res => {
+                debugger;
+                let table_container = document.getElementById(target);
+                let table = document.createElement("table");
+                table.className = "table is-fullwidth is-bordered is-striped is-hoverable";
+                let thead = document.createElement("thead");
+                thead.innerHTML = `
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Balance</th>
+                        <th>Account type</th>
+                    </tr>
+                `
+                let tbody = document.createElement("tbody");
+                let rows = res.rows;
+                rows.forEach(row => {
+                    let tr = document.createElement("tr");
+                    let name = document.createElement("td");
+                    name.textContent = row.name;
+                    let username = document.createElement("td");
+                    username.textContent = row.username;
+                    let email = document.createElement("td");
+                    email.textContent = row.email;
+                    let balance = document.createElement("td");
+                    balance.textContent = (+row.admin) ? "Infinite" : row.balance_string;
+                    let admin = document.createElement("td");
+                    admin.textContent = (+row.admin) ? "Admin" : "User";
+                    tr.append(name, username, email, balance, admin);
+
+                    let last = document.createElement("td");
+                    last.innerHTML = `
+                        <a onclick='modify_user(this)' data-id='${row.id}' class=\"button is-success is-light\">
+                            <span class=\"icon\">
+                                <i class=\"fa fa-plus\"></i>
+                            </span>
+                            <span>
+                                Add Balance
+                            </span>
+                        </a>
+                        <a onclick='modify_user(this)' data-id='${row.id}' class=\"button is-danger\">
+                            <span class=\"icon\">
+                                <i class=\"fa fa-trash-alt\"></i>
+                            </span>
+                        </a>
+                    `
+                    tr.append(last);
+                    tbody.append(tr);
+                });
+                table.append(thead, tbody);
+                table_container.innerHTML = (table.outerHTML);
+
+                return rows;
+                if (Number(res.pages)) update_table_pagination(target, page, res.pages, search);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+    function users_search(target, event) {
+    event.preventDefault();
+    let container = document.getElementById(target);
+    container.innerHTML = `
+            <div class="has-text-centered">
+                <button class="button is-link is-loading is-large" style="width:100px;"></button>
+            </div>
+            `
+    let search = event.currentTarget[0].value;
+    fetch_users(target, search);
+}
 </script>
 
 <section class="section">
@@ -15,12 +101,12 @@
                         <span>Manage Roms</span>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a onclick='tabchange(this)' data-target="manage-comb">
                         <span class="icon is-small"><i class="fas fa-bars" aria-hidden="true"></i></span>
                         <span>Manage Combinations</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a onclick='tabchange(this)' data-target="website-settings">
                         <span class="icon is-small"><i class="fas fa-cog" aria-hidden="true"></i></span>
@@ -33,6 +119,12 @@
                         <span>Account settings</span>
                     </a>
                 </li>
+                <li>
+                    <a onclick='tabchange(this)' data-target="manage-users">
+                        <span class="icon is-small"><i class="fas fa-users" aria-hidden="true"></i></span>
+                        <span>Manage Users</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -40,7 +132,7 @@
     <div class="container tab is-active" id="manage-roms">
         <form class="columns" onsubmit="table_search('roms-table-admin',event)">
             <div class="column is-3-tablet is-9-mobile is-inline-block">
-                <input type="text" placeholder="Search" class="input">
+                <input type="text" onkeyup='document.forms[0][1].click()' placeholder="Search" class="input">
             </div>
             <div class="column is-2-mobile is-inline-block">
                 <button type="submit" class="button is-link is-light">
@@ -66,10 +158,10 @@
             </div>
         </div>
     </div>
-    <div class="container tab" id="manage-comb">
-        <form class="columns" onsubmit="table_search('combs-table-admin',event)">
+    <div class="container tab" id="manage-users">
+        <form class="columns" onsubmit="users_search('users-table-admin',event)">
             <div class="column is-3-tablet is-9-mobile is-inline-block">
-                <input type="text" placeholder="Search" class="input">
+                <input type="text" onkeyup="document.forms[1][1].click();" placeholder="Search" class="input">
             </div>
             <div class="column is-2-mobile is-inline-block">
                 <button type="submit" class="button is-link is-light">
@@ -78,18 +170,8 @@
                     </span>
                 </button>
             </div>
-            <div class="column is-inline-block">
-                <div class="field">
-                    <a class="button is-success is-light" onclick="toggle_modal(this)" data-target="add_comb"><span class="icon">
-                            <i class="fa fa-plus"></i>
-                        </span><span>
-                            Add a new combination
-                        </span>
-                    </a>
-                </div>
-            </div>
         </form>
-        <div class="scrollable-table" id='combs-table-admin'>
+        <div class="scrollable-table" id='users-table-admin'>
             <div class="has-text-centered">
                 <button class="button is-link is-loading is-large" style="width:100px;"></button>
             </div>
@@ -164,7 +246,7 @@
                     <div class="field">
                         <label class="label">Daily free download amount</label>
                         <div class="control">
-                            <input class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free']/1024/1024; ?>">
+                            <input class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free'] / 1024 / 1024; ?>">
                         </div>
                         <div class="help is-link">in MegaBytes</div>
                     </div>
@@ -475,8 +557,8 @@
     <div class="modal-card">
         <header class="modal-card-head">
             <p class="modal-card-title">
-            Caution
-        </p>
+                Caution
+            </p>
             <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="delete_file"></button>
         </header>
         <section class="modal-card-body">

@@ -20,16 +20,17 @@
 
     <div id="navmenu" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item <?php echo $action == "index" ? "is-active" : ""; ?>" href=".">
+            <!-- <a class="navbar-item <?php //echo $action == "index" ? "is-active" : ""; ?>" href=".">
                 Home
-            </a>
+            </a> -->
 
-            <a class="navbar-item <?php echo $action == "roms" ? "is-active" : ""; ?>" href="roms">
+            <a class="navbar-item <?php echo $action == "index" ? "is-active" : ""; ?>" href=".">
                 Roms
             </a>
-            <a class="navbar-item <?php echo $action == "combinations" ? "is-active" : ""; ?>" href="combinations">
+
+            <!-- <a class="navbar-item <?php //echo $action == "combinations" ? "is-active" : ""; ?>" href="combinations">
                 Combinations
-            </a>
+            </a> -->
         </div>
 
         <div class="navbar-end">

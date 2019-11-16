@@ -18,7 +18,7 @@ switch ($action) {
         $json = json_encode($query);
         break;
     case 'get':
-        $type = (isset($_POST['type']) && $_POST['type'] == '1') ? 1 : 0; 
+        $type = (isset($_POST['type']) && $_POST['type'] == '1') ? 1 : 0;
         $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
         $search = isset($_POST['search']) ? $_POST['search'] : null;
         $offset = 15 * ($page - 1);
@@ -39,8 +39,34 @@ switch ($action) {
 
         $json = json_encode($array);
         break;
-    case "test":
-        $json = json_encode($_SESSION);
+    case "users":
+        session_start();
+        $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+        $admin_check = $db->fetch_array($admin_check);
+        $admin_check = (int) $admin_check["admin"];
+        if ($admin_check === 0) {
+            $json = null;
+            break;
+        }
+        $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
+        $search = isset($_POST['search']) ? $_POST['search'] : null;
+        $offset = 15 * ($page - 1);
+        $query = "SELECT `name`,username,email,balance,daily_balance,`admin` FROM users";
+        if ($search) $query .= " WHERE `username` like '%$search%'";
+        $pages = $db->query($query);
+        $pages = ceil($db->num_rows($pages) / 15);
+        $query .= " ORDER BY id DESC limit 15 offset $offset";
+        $query = $db->query($query);
+        $array = [];
+        $array['rows'] = [];
+        $array['pages'] = $pages;
+
+        while ($row = $db->fetch_array($query)) {
+            $row['balance_string'] = bytes_to_human($row['balance']+$row['daily_balance']);
+            array_push($array['rows'], $row);
+        }
+
+        $json = json_encode($array);
         break;
     default:
         $json = null;

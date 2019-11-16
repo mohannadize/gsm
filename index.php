@@ -14,9 +14,9 @@ if (isset($_GET['a'])) {
 
 switch ($action) {
     case 'index':
-        $page = './components/home.php';
-        break;
-    case 'roms':
+        // $page = './components/home.php';
+        // break;
+    // case 'roms':
         $page = "./components/roms.php";
         break;
     case "login":
@@ -58,7 +58,8 @@ switch ($action) {
         exit;
     case "download":
         if ($logged_in) {
-            include "download.php";
+            // include "download.php";
+            $page = './components/download.php';
         } else {
             $message = 'Please sign up or log in to download this file';
             $page = "./components/error.php";

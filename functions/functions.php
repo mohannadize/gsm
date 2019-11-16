@@ -149,7 +149,6 @@ function update_site_settings($data, $db)
     $paypal = trim($data['paypal']);
     $logo_as_text = isset($data['logo_as_text']) ? 1 : 0;
     $maintainance = isset($data['maintainance']) ? 1 : 0;
-    $increment_daily = isset($data['increment_daily']) ? 1 : 0;
 
     if (
         !filter_var($email, FILTER_VALIDATE_EMAIL)
@@ -162,7 +161,6 @@ function update_site_settings($data, $db)
      `daily_free`='$daily_free',
      `email`='$email',
      `paypal`='$paypal',
-     `increment_daily`='$increment_daily',
      `logo_as_text`='$logo_as_text',
      `maintainance`='$maintainance' ");
 }
