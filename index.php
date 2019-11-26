@@ -56,9 +56,8 @@ switch ($action) {
     case "test":
         include "./test.php";
         exit;
-    case "download":
+    case "get":
         if ($logged_in) {
-            // include "download.php";
             $page = './components/download.php';
         } else {
             $message = 'Please sign up or log in to download this file';
@@ -67,6 +66,17 @@ switch ($action) {
             exit;
         }
         break;
+    case "download":
+        if ($logged_in) {
+            include "download.php";
+        } else {
+            $message = 'Please sign up or log in to download this file';
+            $page = "./components/error.php";
+            print_notice_page("login", $page, $message, "./components/login.php", $db);
+            exit;
+        }
+        break;
+    break;
     case "combinations":
         $page = "./components/combinations.php";
         break;
