@@ -59,7 +59,7 @@
                                 Add Balance
                             </span>
                         </a>
-                        <a onclick='modify_user(this)' data-id='${row.id}' class=\"button is-danger\">
+                        <a onclick='toggle_delete_user(this)' data-id='${row.id}' class=\"button is-danger\">
                             <span class=\"icon\">
                                 <i class=\"fa fa-trash-alt\"></i>
                             </span>
@@ -78,17 +78,44 @@
                 console.error(err);
             });
     }
+
     function users_search(target, event) {
-    event.preventDefault();
-    let container = document.getElementById(target);
-    container.innerHTML = `
+        event.preventDefault();
+        let container = document.getElementById(target);
+        container.innerHTML = `
             <div class="has-text-centered">
                 <button class="button is-link is-loading is-large" style="width:100px;"></button>
             </div>
             `
-    let search = event.currentTarget[0].value;
-    fetch_users(target, search);
-}
+        let search = event.currentTarget[0].value;
+        fetch_users(target, search);
+    }
+
+    function toggle_delete_user(elem) {
+        let target = 'delete_user';
+        let body = {};
+        body.id = elem.dataset.id;
+        if (body.id === "1") {
+            return alert("You cannot delete the admin account.");
+        }
+        body.action = "user";
+        fetch("./api.php", {
+                method: "POST",
+                body: JSON.stringify(body)
+            })
+            .then(x => x.json())
+            .then(x => {
+
+                let modal = document.getElementById(target);
+                let id;
+                id = modal.querySelector("input[name=id]");
+                id.value = x.id;
+                modal.classList.toggle("is-active");
+            }).catch(x => {
+                console.log(x);
+                alert("An error has occured, please contact webmaster");
+            });
+    }
 </script>
 
 <section class="section">
@@ -195,7 +222,7 @@
                     <div class="field">
                         <label class="label">Website Name</label>
                         <div class="control">
-                            <input class="input" name='site-name' type="text" value="<?php echo $settings['site-name']; ?>">
+                            <input required class="input" name='site-name' type="text" value="<?php echo $settings['site-name']; ?>">
                         </div>
                     </div>
 
@@ -209,7 +236,7 @@
                     <div class="field">
                         <label class="label">Email</label>
                         <div class="control has-icons-left">
-                            <input name="email" class="input" type="email" value="<?php echo $settings['email']; ?>">
+                            <input required name="email" class="input" type="email" value="<?php echo $settings['email']; ?>">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                             </span>
@@ -219,11 +246,22 @@
                     <div class="field">
                         <label class="label">Paypal Email</label>
                         <div class="control has-icons-left">
-                            <input class="input" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
+                            <input required class="input" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
                             <span class="icon is-small is-left">
                                 <i class="fab fa-paypal"></i>
                             </span>
                         </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Price</label>
+                        <div class="control has-icons-left">
+                            <input required class="input" name='price' step="0.01" type="number" value="<?php echo $settings['price']; ?>">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-dollar-sign"></i>
+                            </span>
+                        </div>
+                        <div class="help is-primary">Per 1GB in USDs</div>
                     </div>
 
                     <label class="label">Logo </label>
@@ -246,7 +284,7 @@
                     <div class="field">
                         <label class="label">Daily free download amount</label>
                         <div class="control">
-                            <input class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free'] / 1024 / 1024; ?>">
+                            <input required class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free'] / 1024 / 1024; ?>">
                         </div>
                         <div class="help is-link">in MegaBytes</div>
                     </div>
@@ -573,6 +611,31 @@
             <button class="button" type="submit">Delete</button>
             </form>
             <button class="button is-danger" onclick="toggle_modal(this)" data-target="delete_file">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+<div class="modal" id='delete_user'>
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">
+                Caution
+            </p>
+            <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="delete_user"></button>
+        </header>
+        <section class="modal-card-body">
+            <form action="action.php" method="post">
+                <input type="hidden" name="action" value="delete_user">
+                <input type="hidden" name="id">
+                <div class="title is-5">
+                    Are you sure you want to delete this account?
+                </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button" type="submit">Delete</button>
+            </form>
+            <button class="button is-danger" onclick="toggle_modal(this)" data-target="delete_user">Cancel</button>
         </footer>
     </div>
 </div>

@@ -17,6 +17,12 @@ switch ($action) {
         $query = $db->fetch_array($query);
         $json = json_encode($query);
         break;
+    case "user":
+        $id = (int) $_POST['id'];
+        $query = $db->query("SELECT id from users where id='$id'");
+        $query = $db->fetch_array($query);
+        $json = json_encode($query);
+        break;
     case 'get':
         $type = (isset($_POST['type']) && $_POST['type'] == '1') ? 1 : 0;
         $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
@@ -51,7 +57,7 @@ switch ($action) {
         $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
         $search = isset($_POST['search']) ? $_POST['search'] : null;
         $offset = 15 * ($page - 1);
-        $query = "SELECT `name`,username,email,balance,daily_balance,`admin` FROM users";
+        $query = "SELECT id,`name`,username,email,balance,daily_balance,`admin` FROM users";
         if ($search) $query .= " WHERE `username` like '%$search%'";
         $pages = $db->query($query);
         $pages = ceil($db->num_rows($pages) / 15);

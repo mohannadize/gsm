@@ -147,6 +147,7 @@ function update_site_settings($data, $db)
     $daily_free = (int) $data['daily_free'] * 1024 * 1024;
     $email = trim($data['email']);
     $paypal = trim($data['paypal']);
+    $price = (float) $data['price'];
     $logo_as_text = isset($data['logo_as_text']) ? 1 : 0;
     $maintainance = isset($data['maintainance']) ? 1 : 0;
 
@@ -160,6 +161,7 @@ function update_site_settings($data, $db)
      `description`='$description',
      `daily_free`='$daily_free',
      `email`='$email',
+     `price`='$price',
      `paypal`='$paypal',
      `logo_as_text`='$logo_as_text',
      `maintainance`='$maintainance' ");
@@ -267,6 +269,22 @@ function delete_file($data, $db)
     if (isset($data['id'])) {
         $id = (int) (trim($data['id']));
         return $db->query("DELETE FROM files WHERE id='$id'");
+    } else {
+        return false;
+    }
+    
+    
+}
+function delete_user($data, $db)
+{
+    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+    $admin_check = $db->fetch_array($admin_check);
+    $admin_check = (int) $admin_check["admin"];
+    if ($admin_check === 0) return false;
+
+    if (isset($data['id'])) {
+        $id = (int) (trim($data['id']));
+        return $db->query("DELETE FROM users WHERE id='$id'");
     } else {
         return false;
     }
