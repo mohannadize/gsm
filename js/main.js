@@ -132,23 +132,23 @@ function populate_table(target, rows, expanded = 0, err = 0) {
     let extra_thead = '';
     let security_level = '';
     if (rows[0] && Number(rows[0].type)) {
-        security_level = '<th>Security Level</th>';
+        security_level = '<th>مستوى الحماية</th>';
     }
     if (expanded) {
         extra_thead = `
-            <th>Size</th>
-            <th>Downloads</th>
+            <th>الحجم</th>
+            <th>مرات التنزيل</th>
         `;
     }
     let thead = document.createElement("thead");
     thead.innerHTML = `
         <tr>
-            <th>Model</th>
-            <th>Build Version</th>
-            <th>Android Version</th>
+            <th>موديل الجهاز</th>
+            <th>رقم الاصدار</th>
+            <th>اندرويد</th>
             ${security_level}
-            <th>Country</th>
-            <th>Uploaded</th>
+            <th>البلد</th>
+            <th>تم الرفع</th>
             ${extra_thead}
         </tr>
     `
@@ -189,7 +189,7 @@ function populate_table(target, rows, expanded = 0, err = 0) {
                     <i class=\"fa fa-edit\"></i>
                 </span>
                 <span>
-                    Modify
+                    تعديل
                 </span>
             </a>
             <a onclick='toggle_delete(this)' data-id='${row.id}' class=\"button is-danger\">
@@ -203,7 +203,7 @@ function populate_table(target, rows, expanded = 0, err = 0) {
                     <i class="fa fa-download"></i>
                 </span>
                 <span>
-                    Get
+                    تحميل
                 </span>
             </a>
             `
@@ -237,7 +237,7 @@ function update_table_pagination(target, page, pages, search) {
     pagination.classList.add("pagination");
     let prev = document.createElement("a");
     prev.className = "pagination-previous";
-    prev.textContent = "Previous";
+    prev.textContent = "السابقة";
     if (page == 1) prev.setAttribute("disabled", true); else {
         prev.onclick = () => {
             fetch_rows(target, search, page - 1)
@@ -245,7 +245,7 @@ function update_table_pagination(target, page, pages, search) {
     }
     let next = document.createElement('a');
     next.className = "pagination-next";
-    next.textContent = "Next page";
+    next.textContent = "الصفحة التالية";
     if (page == pages) next.setAttribute("disabled", true); else {
         next.onclick = () => {
             fetch_rows(target, search, page + 1)

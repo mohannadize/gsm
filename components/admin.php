@@ -153,25 +153,25 @@
                 <li class="is-active">
                     <a onclick='tabchange(this)' data-target="manage-roms">
                         <span class="icon is-small"><i class="fas fa-bars" aria-hidden="true"></i></span>
-                        <span>Manage Roms</span>
+                        <span>ادارة الرومات</span>
                     </a>
                 </li>
                 <li>
                     <a onclick='tabchange(this)' data-target="website-settings">
                         <span class="icon is-small"><i class="fas fa-cog" aria-hidden="true"></i></span>
-                        <span>Website Settings</span>
+                        <span>اعدادات الموقع</span>
                     </a>
                 </li>
                 <li>
                     <a onclick='tabchange(this)' data-target="account-settings">
                         <span class="icon is-small"><i class="fas fa-user" aria-hidden="true"></i></span>
-                        <span>Account settings</span>
+                        <span>اعدادات الحساب</span>
                     </a>
                 </li>
                 <li>
                     <a onclick='tabchange(this)' data-target="manage-users">
                         <span class="icon is-small"><i class="fas fa-users" aria-hidden="true"></i></span>
-                        <span>Manage Users</span>
+                        <span>ادارة الحسابات</span>
                     </a>
                 </li>
             </ul>
@@ -181,7 +181,7 @@
     <div class="container tab is-active" id="manage-roms">
         <form class="columns" onsubmit="table_search('roms-table-admin',event)">
             <div class="column is-3-tablet is-9-mobile is-inline-block">
-                <input type="text" onkeyup='document.forms[0][1].click()' placeholder="Search" class="input">
+                <input type="text" onkeyup='document.forms[0][1].click()' placeholder="بحث" class="input">
             </div>
             <div class="column is-2-mobile is-inline-block">
                 <button type="submit" class="button is-link is-light">
@@ -195,7 +195,7 @@
                     <a class="button is-danger is-light" onclick="toggle_modal(this)" data-target="add_rom"><span class="icon">
                             <i class="fa fa-plus"></i>
                         </span><span>
-                            Add a new rom
+                            اضافة روم جديد
                         </span>
                     </a>
                 </div>
@@ -227,7 +227,7 @@
         </div>
     </div>
     <div class="container tab" id="website-settings">
-        <h2 class="title">Website Settings</h2>
+        <h2 class="title">لوحة اعدادات الموقع</h2>
 
         <form action="action.php" method="post">
             <input type="hidden" name="action" value='update_site'>
@@ -237,26 +237,26 @@
                         <label class="switch is-warning">
                             <input name="maintainance" type="checkbox" <?php echo $settings['maintainance'] ? "checked" : 0; ?>>
                             <div class="switch-body"></div>
-                            <span>Development mode</span>
+                            <span>طور التطوير</span>
                         </label>
                     </div>
 
                     <div class="field">
-                        <label class="label">Website Name</label>
+                        <label class="label">عنوان الموقع</label>
                         <div class="control">
                             <input required class="input" name='site-name' type="text" value="<?php echo $settings['site-name']; ?>">
                         </div>
                     </div>
 
                     <div class="field">
-                        <label class="label">Site Description</label>
+                        <label class="label">نبذه عن الموقع</label>
                         <div class="control">
                             <textarea name='description' class="textarea"><?php echo $settings['description']; ?></textarea>
                         </div>
                     </div>
 
                     <div class="field">
-                        <label class="label">Email</label>
+                        <label class="label">البريد الالكتروني</label>
                         <div class="control has-icons-left">
                             <input required name="email" class="input" type="email" value="<?php echo $settings['email']; ?>">
                             <span class="icon is-small is-left">
@@ -266,7 +266,7 @@
                     </div>
 
                     <div class="field">
-                        <label class="label">Paypal Email</label>
+                        <label class="label">Paypal بريد</label>
                         <div class="control has-icons-left">
                             <input required class="input" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
                             <span class="icon is-small is-left">
@@ -276,22 +276,22 @@
                     </div>
 
                     <div class="field">
-                        <label class="label">Price</label>
+                        <label class="label">السعر</label>
                         <div class="control has-icons-left">
                             <input required class="input" name='price' step="0.01" type="number" value="<?php echo $settings['price']; ?>">
                             <span class="icon is-small is-left">
                                 <i class="fa fa-dollar-sign"></i>
                             </span>
                         </div>
-                        <div class="help is-primary">Per 1GB in USDs</div>
+                        <div style="text-align:left" class="help is-primary rtl">لكل 1GB بالدولار</div>
                     </div>
 
-                    <label class="label">Logo </label>
+                    <label class="label">لوجو الموقع </label>
                     <div class="field">
                         <label class="switch is-info">
                             <input name='logo_as_text' type="checkbox" <?php echo $settings['logo_as_text'] ? "checked" : 0; ?>>
                             <div class="switch-body"></div>
-                            <span>Logo as text</span>
+                            <span>استخدام عنوان الموقع كلوجو</span>
                         </label>
                     </div>
 
@@ -299,12 +299,12 @@
                         <a class="button is-warning" onclick="toggle_modal(this)" data-target="upload_logo">
                             <span class="icon"><i class="fa fa-upload"></i></span>
                             <span>
-                                Logo upload
+                                ارفع
                             </span></a>
                     </div>
 
                     <div class="field">
-                        <label class="label">Daily free download amount</label>
+                        <label class="label">الحد المجاني اليومي</label>
                         <div class="control">
                             <input required class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free'] / 1024 / 1024; ?>">
                         </div>
@@ -313,10 +313,10 @@
 
                     <div class="field is-grouped">
                         <div class="control">
-                            <button class="button is-link">Submit</button>
+                            <button class="button is-link" type="submit">حفظ</button>
                         </div>
                         <div class="control">
-                            <button class="button is-link is-light">Cancel</button>
+                            <a href="#" class="button is-link is-light">الغاء</a>
                         </div>
                     </div>
                 </div>

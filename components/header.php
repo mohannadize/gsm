@@ -48,7 +48,7 @@
                             <i class="fa fa-cog"></i>
                         </span>
                         <span>
-                            Admin Panel
+                            لوحة الادارة
                         </span>
                     </a>
 
@@ -78,7 +78,7 @@
                     } ?>
                 <a class="navbar-item" href="logout.php">
                     <span>
-                        Logout
+                        تسجيل خروج
                     </span>
                     <span class="icon" style="padding-left:5px;">
                         <i class="fa fa-sign-out-alt"></i>
