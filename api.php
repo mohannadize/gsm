@@ -18,9 +18,18 @@ switch ($action) {
         $json = json_encode($query);
         break;
     case "user":
+        session_start();
+        $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+        $admin_check = $db->fetch_array($admin_check);
+        $admin_check = (int) $admin_check["admin"];
+        if ($admin_check === 0) {
+            $json = null;
+            break;
+        }
         $id = (int) $_POST['id'];
-        $query = $db->query("SELECT id from users where id='$id'");
+        $query = $db->query("SELECT id,balance from users where id='$id'");
         $query = $db->fetch_array($query);
+        $query["balance"] = bytes_to_human($query["balance"]);
         $json = json_encode($query);
         break;
     case 'get':

@@ -9,3 +9,7 @@
 .tab {
     display: none;
 }
+
+.rtl {
+    direction: rtl;
+}

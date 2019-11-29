@@ -118,22 +118,32 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             if (modify_user($_POST, $db)) {
                 $message = "User Updated Successfully!";
                 $page = "./components/success.php";
-                print_notice_page("profile", $page, $message, null, $db, $logged_in);
+                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
                 $message = "An error has occured";
                 $page = "./components/error.php";
-                print_notice_page("profile", $page, $message, null, $db, $logged_in);
+                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
         case "delete_user":
             if (delete_user($_POST, $db)) {
                 $message = "User Updated Successfully!";
                 $page = "./components/success.php";
-                print_notice_page("profile", $page, $message, null, $db, $logged_in);
+                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
                 $message = "An error has occured";
                 $page = "./components/error.php";
-                print_notice_page("profile", $page, $message, null, $db, $logged_in);
+                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
+            }
+        case "admin_add_balance":
+            if (admin_add_balance($_POST, $db)) {
+                $message = "User Updated Successfully!";
+                $page = "./components/success.php";
+                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
+            } else {
+                $message = "An error has occured";
+                $page = "./components/error.php";
+                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             }
         default:
             break;

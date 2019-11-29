@@ -288,9 +288,26 @@ function delete_user($data, $db)
     } else {
         return false;
     }
-    
-    
 }
+
+function admin_add_balance($data, $db)
+{
+    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+    $admin_check = $db->fetch_array($admin_check);
+    $admin_check = (int) $admin_check["admin"];
+    if ($admin_check === 0) return false;
+
+    if (!isset($data['id']) || !isset($data['add_balance'])) {
+        return false;
+    }
+
+    $id = (int) $data['id'];
+    $add = $data["add_balance"] * 1024 * 1024;
+
+    return $db->query("UPDATE users set `balance`=`balance`+'$add' WHERE id='$id'");
+
+}
+
 
 function download_rom($data, $db)
 { }
@@ -316,26 +333,6 @@ function modify_user($data, $db)
     } else {
         return $db->query("UPDATE users SET `username`='$username',`email`='$email' WHERE `id`='$_SESSION[id]'");
     }
-}
-
-function add_admin_account($data, $db)
-{
-    if ($data["name"] == "" || $data["username"] == "" || $data["password"] == "" || $data["email"] == "")
-        return false;
-
-    $data["name"] = strip_tags(trim($data["name"]));
-
-    if (preg_match("/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/", $data['email']))
-        $data['email'] = trim($data['email']);
-    else return false;
-
-    if (strlen($data['name']) > 40) return false;
-
-    if (!preg_match("/^\w+$/", $data['username']) || strlen($data['username']) > 30) return false;
-
-    if ($data['password'] != $data['cpassword'] || !isset($data['terms'])) return false;
-
-    return $data;
 }
 
 function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGHJKLZXCVBNM1234567890qwertyuiopasdfghjkzxcvbnm')

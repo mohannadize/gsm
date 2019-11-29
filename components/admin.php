@@ -51,7 +51,7 @@
 
                     let last = document.createElement("td");
                     last.innerHTML = `
-                        <a onclick='modify_user(this)' data-id='${row.id}' class=\"button is-success is-light\">
+                        <a onclick='toggle_add_balance(this)' data-id='${row.id}' class=\"button is-success is-light\">
                             <span class=\"icon\">
                                 <i class=\"fa fa-plus\"></i>
                             </span>
@@ -116,6 +116,34 @@
                 alert("An error has occured, please contact webmaster");
             });
     }
+    
+    function toggle_add_balance(elem) {
+        let target = 'admin_add_balance';
+        let body = {};
+        body.id = elem.dataset.id;
+        if (body.id === "1") {
+            return alert("You cannot add balance to an admin account.");
+        }
+        body.action = "user";
+        fetch("./api.php", {
+                method: "POST",
+                body: JSON.stringify(body)
+            })
+            .then(x => x.json())
+            .then(x => {
+
+                let modal = document.getElementById(target);
+                let id,balance;
+                id = modal.querySelector("input[name=id]");
+                id.value = x.id;
+                balance = modal.querySelector("input[name=balance]");
+                balance.value = x.balance;
+                modal.classList.toggle("is-active");
+            }).catch(x => {
+                console.log(x);
+                alert("An error has occured, please contact webmaster");
+            });
+    }
 </script>
 
 <section class="section">
@@ -128,12 +156,6 @@
                         <span>Manage Roms</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a onclick='tabchange(this)' data-target="manage-comb">
-                        <span class="icon is-small"><i class="fas fa-bars" aria-hidden="true"></i></span>
-                        <span>Manage Combinations</span>
-                    </a>
-                </li> -->
                 <li>
                     <a onclick='tabchange(this)' data-target="website-settings">
                         <span class="icon is-small"><i class="fas fa-cog" aria-hidden="true"></i></span>
@@ -636,6 +658,48 @@
             <button class="button" type="submit">Delete</button>
             </form>
             <button class="button is-danger" onclick="toggle_modal(this)" data-target="delete_user">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+<div class="modal" id='admin_add_balance'>
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">
+                Caution
+            </p>
+            <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="admin_add_balance"></button>
+        </header>
+        <section class="modal-card-body">
+            <form action="action.php" method="post">
+                <input type="hidden" name="action" value="admin_add_balance">
+                <input type="hidden" name="id">
+                <div class="field">
+                    <label class="label">Current Balance</label>
+                    <div class="control">
+                        <input readonly class="input is-static" name="balance" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Add balance</label>
+                    <div class="control">
+                        <input required class="input" name="add_balance" type="number" step="0.001" placeholder="">
+                        <p class="help is-link">in MegaBytes</p>
+                    </div>
+                </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" type="submit">
+                <span class="icon">
+                    <i class="fa fa-plus"></i>
+                </span>
+                <span>
+                    Add
+                </span>
+            </button>
+            </form>
+            <button class="button" onclick="toggle_modal(this)" data-target="admin_add_balance">Cancel</button>
         </footer>
     </div>
 </div>

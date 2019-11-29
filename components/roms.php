@@ -11,14 +11,14 @@
 
 <section class="section">
     <div class="container">
-        <h3 class="title">Roms</h3>
+        <h3 class="title rtl">الرومات</h3>
         <form class='columns' onsubmit="table_search('roms-table',event)">
             <div class="column is-5-tablet is-offset-3-tablet">
                 <input name='s' onkeyup="document.forms[0][1].click()" type="text" placeholder="Search" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
             </div>
             <div class="column">
                 <button type='submit' class="button is-link is-light">
-                    <span>Search</span>
+                    <span>بحث</span>
                     <span class="icon">
                         <i class="fa fa-search"></i>
                     </span>

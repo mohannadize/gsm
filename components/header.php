@@ -25,7 +25,7 @@
             </a> -->
 
             <a class="navbar-item <?php echo $action == "roms" ? "is-active" : ""; ?>" href=".">
-                Roms
+                الرومات
             </a>
 
             <!-- <a class="navbar-item <?php //echo $action == "combinations" ? "is-active" : ""; ?>" href="combinations">
