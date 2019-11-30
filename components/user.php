@@ -1,10 +1,3 @@
-<?php 
-
-$user_data = $db->query("SELECT username,email from users WHERE id='$_SESSION[id]'");
-$user_data = $db->fetch_array($user_data);
-
-?>
-
 <section class="section">
     <div class="container">
         <div class="tabs flipx is-boxed">

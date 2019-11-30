@@ -23,7 +23,7 @@ if ($verified) {
         "GET" => $_GET,
         "SESSION" => $_SESSION
     ];
-    file_put_contents("log.json", json_encode($arraii).PHP_EOL, FILE_APPEND);
+    file_put_contents("log.json", json_encode($arraii).PHP_EOL.PHP_EOL, FILE_APPEND);
 }
 
 // // Reply with an empty 200 response to indicate to paypal the IPN was received correctly.

@@ -285,21 +285,19 @@ function admin_add_balance($data, $db)
 
 }
 
-
-function download_rom($data, $db)
-{ }
-
 function modify_user($data, $db)
 {
+    // ini_set("display_errors",1);
     $username = trim($data["username"]);
     $email = trim($data['email']);
     if (!preg_match("/^\w+$/", $username) || strlen($username) > 30) return false;
+    $id = (int) $data['id'];
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) return false;
-
-    $user_exists = $db->query("SELECT username from users WHERE `username`='$username'");
+    
+    $user_exists = $db->query("SELECT username from users WHERE `username`='$username' AND id!='$id'");
     if ($db->num_rows($user_exists)) return false;
-
+    
     $_SESSION['username'] = $username;
     if ($data['password'] != "") {
         if ($data['password'] != $data['cpassword']) {
