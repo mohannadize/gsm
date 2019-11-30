@@ -13,24 +13,24 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         case 'signup':
             $user_data = verify_signup($_POST);
             if (!$user_data) {
-                $message = "Sorry, an error has occured. Please try again later.";
+                $message = "حدث خطأ، الرجاء اعادة المحاولة لاحقاََ";
                 $page = "./components/error.php";
                 print_notice_page('signup', $page, $message, null, $db);
                 die();
             } else {
                 $user_exists = $db->query("SELECT username from users WHERE `username`='$_POST[username]'");
                 if ($db->num_rows($user_exists)) {
-                    $message = "This username is taken.";
+                    $message = "اسم المستخدم مسنخدم من قبل.";
                     $page = "./components/error.php";
                     print_notice_page('signup', $page, $message, null, $db);
                     exit;
                 }
                 if ($db->add_user($user_data['name'], $user_data['username'], $user_data['password'], $user_data['email'])) {
-                    $message = "Signed up successfully!";
+                    $message = "تم تسجيل الحساب بنجاح!";
                     $page = './components/success.php';
                     print_notice_page('signup', $page, $message, "./components/login.php", $db);
                 } else {
-                    $message = "Sorry, the server does not allow signing up now.";
+                    $message = "نعتذر، الموقع لا يستقبل حسابات جديدة حالياََ.";
                     $page = "./components/error.php";
                     print_notice_page('signup', $page, $message, null, $db);
                 };
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             if (login_user($_POST, $db)) {
                 header("location: index.php");
             } else {
-                $message = "The username or password is incorrect";
+                $message = "اسم المستخدم او كلمة المرور غير صحيحة";
                 $page = "./components/error.php";
                 print_notice_page('login', $page, $message, "./components/login.php", $db);
             }
@@ -50,105 +50,91 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
         case "update_site":
             if (update_site_settings($_POST, $db, $logged_in)) {
-                $message = "Settings Update Successfully!";
+                $message = "تم حفظ الاعدادات الجديدة بنجاح!";
                 $page = "./components/success.php";
                 print_notice_page('admin', $page, $message, "./components/admin.php", $db, $logged_in);
             } else {
-                $message = "Please log in";
+                $message = "الرجاء تسجيل الدخول";
                 $page = "./components/error.php";
                 print_notice_page("login", $page, $message, "./components/login.php", $db);
             };
             break;
         case "add_rom":
             if (add_rom($_POST, $db)) {
-                $message = "Rom added successfully";
+                $message = "تم اضافة الروم بنجاح";
                 $page = "./components/success.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
-                $message = "An error has occured";
-                $page = "./components/error.php";
-                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
-            }
-            break;
-        case "add_comb":
-            if (add_comb($_POST, $db)) {
-                $message = "Combination added successfully";
-                $page = "./components/success.php";
-                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
-            } else {
-                $message = "An error has occured";
+                $message = "حدث خطأ ما";
                 $page = "./components/error.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
         case "modify_file":
             if (modify_file($_POST, $db)) {
-                $message = "Modified successfully";
+                $message = "تم تعديل الملف بنجاح";
                 $page = "./components/success.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
-                $message = "An error has occured";
+                $message = "حدث خطأ ما";
                 $page = "./components/error.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
         case "update_logo";
             if (change_logo_image($_FILES['file'], $db)) {
-                $message = "Logo updated";
+                $message = "تم تجديد اللوجو بنجاح";
                 $page = "./components/success.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
-                $message = "An error has occured";
+                $message = "حدث خطأ ما";
                 $page = "./components/error.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
         case "delete_file":
             if (delete_file($_POST, $db)) {
-                $message = "Successfully deleted!";
+                $message = "تم مسح الملف بنجاح!";
                 $page = "./components/success.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
-                $message = "An error has occured";
+                $message = "حدث خطأ ما";
                 $page = "./components/error.php";
                 print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
         case "modify_user":
             if (modify_user($_POST, $db)) {
-                $message = "User Updated Successfully!";
+                $message = "تم تجديد بيانات الحساب!";
                 $page = "./components/success.php";
                 print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
-                $message = "An error has occured";
+                $message = "حدث خطأ ما";
                 $page = "./components/error.php";
                 print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
         case "delete_user":
             if (delete_user($_POST, $db)) {
-                $message = "User Updated Successfully!";
+                $message = "تم مسح الحساب!";
                 $page = "./components/success.php";
                 print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
-                $message = "An error has occured";
+                $message = "حدث خطأ ما";
                 $page = "./components/error.php";
                 print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             }
         case "admin_add_balance":
             if (admin_add_balance($_POST, $db)) {
-                $message = "User Updated Successfully!";
+                $message = "تمت اضافة الرصيد بنجاح!";
                 $page = "./components/success.php";
                 print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
-                $message = "An error has occured";
+                $message = "حدث خطأ ما";
                 $page = "./components/error.php";
                 print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             }
         default:
             break;
     }
-
-
-    // Case Deleting Rom
 }

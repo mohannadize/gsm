@@ -4,7 +4,7 @@ function print_web_page($action, $section, $logged_in, $db, $head_append = "")
 {
     ?>
     <!DOCTYPE html>
-    <html lang="en" class="has-navbar-fixed-top">
+    <html lang="ar" class="has-navbar-fixed-top">
 
     <head>
         <?php
@@ -43,7 +43,7 @@ function print_notice_page($action, $page, $message,  $section = false, $db = nu
     ?>
 
     <!DOCTYPE html>
-    <html lang="en" class="has-navbar-fixed-top">
+    <html lang="ar" class="has-navbar-fixed-top">
 
     <head>
         <?php
@@ -184,29 +184,6 @@ function add_rom($data, $db)
 
     $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, search_text) 
     VALUES ('$model', '$build', '$android', '$country', '$size', '$url', '$search')";
-
-    return $db->query($query);
-}
-
-function add_comb($data, $db)
-{
-    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-    $admin_check = $db->fetch_array($admin_check);
-    $admin_check = (int) $admin_check["admin"];
-    if ($admin_check === 0) return false;
-
-    $model = strip_tags(trim($data['model']));
-    $build = strip_tags(trim($data['build']));
-    $android = strip_tags(trim($data['android']));
-    $country = strip_tags(trim($data['country']));
-    $security = strip_tags(trim($data['security']));
-    $type = 1;
-    $size = trim($data['size']) * 1024 * 1024;
-    $url = trim($data['url']);
-    $search = "$model $country $build";
-
-    $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, security_level, `type`, search_text) 
-    VALUES ('$model', '$build', '$android', '$country', '$size', '$url', '$security', '$type', '$search')";
 
     return $db->query($query);
 }

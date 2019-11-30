@@ -185,11 +185,11 @@ function populate_table(target, rows, expanded = 0, err = 0) {
             tr.append(size, downloads);
             last.innerHTML = `
             <a onclick='toggle_modify(this)' data-id='${row.id}' class=\"button is-warning\">
-                <span class=\"icon\">
-                    <i class=\"fa fa-edit\"></i>
-                </span>
                 <span>
                     تعديل
+                </span>
+                <span class=\"icon\">
+                    <i class=\"fa fa-edit\"></i>
                 </span>
             </a>
             <a onclick='toggle_delete(this)' data-id='${row.id}' class=\"button is-danger\">

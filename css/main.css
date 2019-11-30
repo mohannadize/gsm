@@ -13,3 +13,25 @@
 .rtl {
     direction: rtl;
 }
+.ltr {
+    direction: ltr;
+}
+
+.flipx {
+    transform: scaleX(-1);
+}
+
+table {
+    direction: rtl;
+}
+
+table > * > * > * {
+    text-align: right !important;
+}
+table .button {
+    direction: ltr;
+}
+
+nav .buttons > * {
+    margin: 0 5px 0;
+}

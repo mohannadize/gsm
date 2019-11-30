@@ -1,5 +1,5 @@
-<nav class="navbar is-fixed-top is-link" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
+<nav class="navbar is-fixed-top is-dark flipx" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand flipx">
         <a class="navbar-item" href=".">
             <h1 class="title is-4 has-text-white">
                 <span class="icon">
@@ -19,7 +19,7 @@
     </div>
 
     <div id="navmenu" class="navbar-menu">
-        <div class="navbar-start">
+        <div class="navbar-start flipx">
             <!-- <a class="navbar-item <?php //echo $action == "index" ? "is-active" : ""; ?>" href=".">
                 Home
             </a> -->
@@ -33,7 +33,7 @@
             </a> -->
         </div>
 
-        <div class="navbar-end">
+        <div class="navbar-end flipx rtl">
             <?php
 
             if ($logged_in) {
@@ -44,33 +44,33 @@
                         ?>
 
                     <a class="navbar-item <?php echo $action == "admin" ? "is-active" : ""; ?>" href="admin">
-                        <span class="icon" style="padding-right:5px;">
-                            <i class="fa fa-cog"></i>
-                        </span>
                         <span>
                             لوحة الادارة
+                        </span>
+                        <span class="icon" style="padding-right:5px;">
+                            <i class="fa fa-cog"></i>
                         </span>
                     </a>
 
                 <?php } else {
                         ?>
 
-                    <a class="navbar-item <?php echo $action == "profile" ? "is-active" : ""; ?>" href='profile'>
-                        <span class="icon" style="padding-right:5px;">
-                            <i class="fa fa-user"></i>
-                        </span>
+                    <a class="navbar-item <?php echo $action == "profile" ? "is-active" : ""; ?> ltr" href='profile'>
                         <span>
                             <?php echo $_SESSION['username']; ?>
                         </span>
+                        <span class="icon" style="padding-left:5px;">
+                            <i class="fa fa-user"></i>
+                        </span>
                     </a>
 
-                    <a class="navbar-item <?php echo $action == "balance" ? "is-active" : ""; ?>" href='balance'>
+                    <a class="navbar-item <?php echo $action == "balance" ? "is-active" : ""; ?> ltr" href='balance'>
                         <!-- TODO: Points system  -->
-                        <span class="icon" style="padding-right:5px;">
-                            <i class="fa fa-tachometer-alt"></i>
-                        </span>
                         <span>
                             <?php echo bytes_to_human($user_data['balance'] + $user_data['daily_balance']); ?> Left
+                        </span>
+                        <span class="icon" style="padding-left:5px;">
+                            <i class="fa fa-tachometer-alt"></i>
                         </span>
                     </a>
 
@@ -80,7 +80,7 @@
                     <span>
                         تسجيل خروج
                     </span>
-                    <span class="icon" style="padding-left:5px;">
+                    <span class="icon flipx" style="padding-left:5px;">
                         <i class="fa fa-sign-out-alt"></i>
                     </span>
                 </a>
@@ -92,10 +92,10 @@
                 <div class="navbar-item">
                     <div class="buttons">
                         <a href='signup' class="button is-danger">
-                            <strong>Sign up</strong>
+                            <strong>إنشاء حساب</strong>
                         </a>
                         <a href='login' class="button is-light">
-                            Log in
+                            دخول
                         </a>
                     </div>
                 </div>
