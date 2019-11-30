@@ -91,11 +91,11 @@
 
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a href='signup' class="button is-danger">
+                        <a href='signup' class="button is-danger is-light">
                             <strong>إنشاء حساب</strong>
                         </a>
-                        <a href='login' class="button is-light">
-                            دخول
+                        <a href='login' class="button is-link is-light">
+                            <strong>دخول</strong>
                         </a>
                     </div>
                 </div>

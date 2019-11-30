@@ -29,7 +29,7 @@ switch ($action) {
         if ($logged_in) {
             $page = "./components/user.php";
         } else {
-            $message = 'Please log in';
+            $message = 'الرجاء تسجيل الدخول اولاََ';
             $page = "./components/error.php";
             print_notice_page("login", $page, $message, "./components/login.php", $db);
             exit;
@@ -39,7 +39,7 @@ switch ($action) {
         if ($logged_in) {
             $page = "./components/balance.php";
         } else {
-            $message = 'Please log in';
+            $message = 'الرجاء تسجيل الدخول اولاََ';
             $page = "./components/error.php";
             print_notice_page("login", $page, $message, "./components/login.php", $db);
             exit;
@@ -60,7 +60,7 @@ switch ($action) {
         if ($logged_in) {
             $page = './components/download.php';
         } else {
-            $message = 'Please sign up or log in to download this file';
+            $message = 'الرجاء تسجيل الدخول او انشئ حساب اولاََ';
             $page = "./components/error.php";
             print_notice_page("login", $page, $message, "./components/login.php", $db);
             exit;
@@ -70,7 +70,7 @@ switch ($action) {
         if ($logged_in) {
             include "download.php";
         } else {
-            $message = 'Please sign up or log in to download this file';
+            $message = 'الرجاء تسجيل الدخول او انشئ حساب اولاََ';
             $page = "./components/error.php";
             print_notice_page("login", $page, $message, "./components/login.php", $db);
             exit;
