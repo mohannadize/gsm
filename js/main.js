@@ -282,6 +282,6 @@ function calculate_paypal(elem) {
     let rate = elem.dataset.rate;
 
     amount.value = elem.value / 1024 * rate;
-    item_name.value = `${amount.value} Megabytes at ${document.location.hostname}`;
+    item_name.value = `${elem.value} Megabytes at ${document.location.hostname}`;
 
 }
