@@ -22,7 +22,7 @@ $file_info = $db->fetch_array($file_info);
                     </ul>
                 </nav>
                 <div class="card">
-                    <div class="card-content columns is-vcentered">
+                    <div class="rtl card-content columns is-vcentered">
                         <div class="column is-5-tablet">
 
                             <h2 class="title is-4"><?php echo "$file_info[model] / $file_info[build_v] <small style='font-weight:400;'>$file_info[android_v]</small>"; ?></h2>
@@ -45,7 +45,7 @@ $file_info = $db->fetch_array($file_info);
                                 الحجم: <span class="has-text-link"><?php echo bytes_to_human($file_info['size']); ?></span>
                             </p>
                         </div>
-                        <div class="column is-4-tablet is-offset-3-tablet">
+                        <div class="ltr column is-4-tablet">
                             <a href='download?id=<?php echo $file_info["id"]; ?>' target="_blank" class="button is-primary is-large">
                                 <span class="icon"><i class="fa fa-download"></i></span>
                                 <span>تنزيل</span>

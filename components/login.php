@@ -8,7 +8,7 @@
                         <input type="hidden" name="action" value="login">
                         <div class="card-content">
                             <div class="field">
-                                <label class="label">اسم المستخدم</label>
+                                <label class="label">اسم المستخدم او البريد الالكتروني</label>
                                 <div class="control"><input name='username' required type="text" class="input"></div>
                             </div>
                             <div class="field">

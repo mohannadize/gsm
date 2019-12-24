@@ -20,9 +20,6 @@
 
     <div id="navmenu" class="navbar-menu">
         <div class="navbar-start flipx">
-            <!-- <a class="navbar-item <?php //echo $action == "index" ? "is-active" : ""; ?>" href=".">
-                Home
-            </a> -->
 
             <a class="navbar-item <?php echo $action == "roms" ? "is-active" : ""; ?>" href=".">
                 الرومات

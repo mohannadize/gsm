@@ -137,12 +137,20 @@ function populate_table(target, rows, expanded = 0, err = 0) {
     if (expanded) {
         extra_thead = `
             <th>الحجم</th>
-            <th>مرات التنزيل</th>
+            <th>عدد التنزيلات</th>
+            <th>ادارة</th>
         `;
+    } else {
+        extra_thead = `
+            <th>رابط التحميل</th>
+        `
     }
     let thead = document.createElement("thead");
     thead.innerHTML = `
         <tr>
+            <th style="background-color:#363636;color:white">الرومات</th>
+        </tr>
+        <tr style="background-color:#dbdbdb">
             <th>موديل الجهاز</th>
             <th>رقم الاصدار</th>
             <th>اندرويد</th>
@@ -235,6 +243,7 @@ function update_table_pagination(target, page, pages, search) {
     let pagination = document.createElement('nav');
     pagination.style.margin = "10px";
     pagination.classList.add("pagination");
+    pagination.classList.add("rtl");
     let prev = document.createElement("a");
     prev.className = "pagination-previous";
     prev.textContent = "السابقة";
@@ -281,7 +290,7 @@ function calculate_paypal(elem) {
     let item_name = document.getElementById(elem.dataset.itemName);
     let rate = elem.dataset.rate;
 
-    amount.value = elem.value / 1024 * rate;
-    item_name.value = `${elem.value} Megabytes at ${document.location.hostname}`;
+    amount.value = Math.round((elem.value * rate)*100)/100;
+    item_name.value = `${elem.value} Gigabytes at ${document.location.hostname}`;
 
 }

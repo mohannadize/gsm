@@ -31,6 +31,7 @@
                         <th>البريد الالكتورني</th>
                         <th>الرصيد</th>
                         <th>نوع الجساب</th>
+                        <th>ادارة</th>
                     </tr>
                 `
                 let tbody = document.createElement("tbody");

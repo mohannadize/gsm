@@ -34,24 +34,28 @@
         <form action="https://sandbox.paypal.com/cgi-bin/webscr" method="post" method="post">
             <input type="hidden">
             <input type="hidden" name="cmd" value="_xclick">
-            <input type="hidden" name="business" value="<?php $settings['paypal']; ?>">
-            <input type="hidden" name="lc" value="US">
+            <input type="hidden" name="business" value="<?php echo $settings['paypal']; ?>">
+            <input type="hidden" name="lc" value="EG">
             <input type="hidden" id='item_name' name="item_name">
             <input type="hidden" id='amount' name="amount">
             <input type="hidden" name="currency_code" value="USD">
             <input type="hidden" name="notify_url" value="">
+            <input type="hidden" name="button_subtype" value="services">
+            <input type="hidden" name="no_note" value="0">
+            <input type="hidden" name="tax_rate" value="0.000">
+            <input type="hidden" name="shipping" value="0.00">
             <div class="columns">
                 <div class="column is-5-tablet">
 
                     <div class="field">
                         <label class="label">
                             <div class="control has-icons-left">
-                                <input type="number" required onkeyup='calculate_paypal(this)' class="input" data-rate='<?php echo $settings['price']; ?>' data-item-name='item_name' data-target='amount' placeholder='Megabytes'>
+                                <input type="number" required onkeyup='calculate_paypal(this)' class="input" data-rate='<?php echo $settings['price']; ?>' data-item-name='item_name' data-target='amount' placeholder='Gigabytes'>
                                 <span class="icon is-left">
                                     <i class="fas fa-tachometer-alt"></i>
                                 </span>
                             </div>
-                            <span class="help"><?php echo number_format($settings['price'],2); ?>$ per 1GB</span>
+                            <span class="help"><?php echo number_format($settings['price'], 2); ?>$ per 1GB</span>
                         </label>
                     </div>
                     <div class="field">

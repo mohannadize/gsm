@@ -103,13 +103,14 @@ function login_user($data, $db)
 
     $username = trim($data['username']);
     $password = trim($data['password']);
-
-    $result = $db->query("SELECT id,username,password,admin,last_login from users WHERE username='$username'");
+    
+    $result = $db->query("SELECT id,username,password,admin,last_login from users WHERE email='$username' OR username='$username'");
     $settings = $db->query("SELECT daily_free from `site`");
     $settings = $db->fetch_array($settings);
 
     if ($db->num_rows($result)) {
         $result = $db->fetch_array($result);
+
         if ($password == $result['password']) {
             session_start();
             $_SESSION['loggedin'] = true;
