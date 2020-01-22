@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 30, 2019 at 08:47 PM
+-- Generation Time: Jan 22, 2020 at 10:19 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -541,6 +541,32 @@ INSERT INTO `files` (`id`, `type`, `model`, `build_v`, `android_v`, `security_le
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `plans`
+--
+
+DROP TABLE IF EXISTS `plans`;
+CREATE TABLE IF NOT EXISTS `plans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `duration` bigint(20) NOT NULL,
+  `price` float NOT NULL,
+  `cap_per_month` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `plans`
+--
+
+INSERT INTO `plans` (`id`, `name`, `duration`, `price`, `cap_per_month`) VALUES
+(1, 'المجاني', 172800, 0, 3221225472),
+(2, 'الشهري', 2592000, 5, 21474836480),
+(3, 'الفصلي', 7776000, 20, 64424509440),
+(4, 'لا محدود', -1, 35, -1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `site`
 --
 
@@ -563,7 +589,7 @@ CREATE TABLE IF NOT EXISTS `site` (
 --
 
 INSERT INTO `site` (`logo_as_text`, `logo_file`, `email`, `paypal`, `url`, `site-name`, `description`, `daily_free`, `price`, `maintainance`) VALUES
-(1, './imgs/logo.png', 'mohannad@condize.com', 'paypal@googl.ecom', 'http://localhost/gsm', 'ØµÙ‚Ø± Ø§Ù„Ø±ÙˆÙ…Ø§Øª', 'This is the site description', 3145728000, 1.2, 1);
+(1, './imgs/logo.png', 'mohannad@condize.com', 'paypal@googl.ecom', 'http://localhost/gsm', 'Ø±ÙˆÙ…Ø§Ù†ÙˆØ±Ø§', 'This is the site description', 3145728000, 1.2, 1);
 
 -- --------------------------------------------------------
 
@@ -599,6 +625,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `daily_balance` bigint(11) NOT NULL,
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `admin` int(11) NOT NULL DEFAULT '0',
+  `plan` int(11) NOT NULL DEFAULT '1',
+  `plan_expiration` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
@@ -606,9 +634,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`) VALUES
-(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 3145728000, '2019-11-30 14:29:55', 1),
-(7, 'Mohannad Hesham', 'poop', 'poop', 'poop@gmaill.com', '2019-11-26 20:44:59', 115343360, 3145728000, '2019-11-30 20:25:05', 0);
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`, `plan`, `plan_expiration`) VALUES
+(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 3145728000, '2019-12-18 16:20:55', 1, 1, 0),
+(7, 'Mohannad Hesham', 'poop', 'poop2', 'poop@gmaill.com', '2019-11-26 20:44:59', 115343360, 3145728000, '2019-12-18 17:25:56', 0, 1, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
