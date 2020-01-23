@@ -17,3 +17,4 @@ if ($logged_in) {
 <link rel="stylesheet" href="./css/bulma.min.css">
 <link rel="stylesheet" href="./css/bulma-switch.min.css">
 <link rel="stylesheet" href="./css/main.css">
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Tajawal&display=swap" rel="stylesheet">

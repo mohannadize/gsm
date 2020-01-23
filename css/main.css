@@ -1,3 +1,7 @@
+body {
+    font-family: Source Sans Pro, Tajawal, sans-serif, apple color emoji, segoe ui emoji, noto color emoji, segoe ui symbol;
+}
+
 .scrollable-table {
     width: 100%;
     overflow-x: auto;
@@ -6,6 +10,7 @@
 .tab.is-active {
     display: block;
 }
+
 .tab {
     display: none;
 }
@@ -13,6 +18,7 @@
 .rtl {
     direction: rtl;
 }
+
 .ltr {
     direction: ltr;
 }
@@ -25,13 +31,14 @@ table {
     direction: rtl;
 }
 
-table > * > * > * {
+table>*>*>* {
     text-align: right !important;
 }
+
 table .button {
     direction: ltr;
 }
 
-nav .buttons > * {
+nav .buttons>* {
     margin: 0 5px 0;
 }
