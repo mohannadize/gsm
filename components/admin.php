@@ -118,7 +118,7 @@
                 alert("An error has occured, please contact webmaster");
             });
     }
-    
+
     function toggle_add_balance(elem) {
         let target = 'admin_add_balance';
         let body = {};
@@ -135,7 +135,7 @@
             .then(x => {
 
                 let modal = document.getElementById(target);
-                let id,balance;
+                let id, balance;
                 id = modal.querySelector("input[name=id]");
                 id.value = x.id;
                 balance = modal.querySelector("input[name=balance]");
@@ -165,168 +165,41 @@
                     </a>
                 </li>
                 <li class="flipx">
-                    <a onclick='tabchange(this)' data-target="account-settings">
-                        <span class="icon is-small"><i class="fas fa-user" aria-hidden="true"></i></span>
-                        <span>اعدادات الحساب</span>
-                    </a>
-                </li>
-                <li class="flipx">
                     <a onclick='tabchange(this)' data-target="manage-users">
                         <span class="icon is-small"><i class="fas fa-users" aria-hidden="true"></i></span>
                         <span>ادارة الحسابات</span>
+                    </a>
+                </li>
+                <li class='flipx'>
+                    <a onclick='tabchange(this)' data-target="packs">
+                        <span class="icon is-small"><i class="fas fa-cubes" aria-hidden="true"></i></span>
+                        <span>الباقات</span>
+                    </a>
+                </li>
+                <li class="flipx">
+                    <a onclick='tabchange(this)' data-target="account-settings">
+                        <span class="icon is-small"><i class="fas fa-user" aria-hidden="true"></i></span>
+                        <span>اعدادات الحساب</span>
                     </a>
                 </li>
             </ul>
         </div>
     </div>
     <br>
-    <div class="container flipx tab is-active" id="manage-roms">
-        <form class="columns flipx rtl" onsubmit="table_search('roms-table-admin',event)">
-            <div class="column is-3-tablet is-9-mobile is-inline-block">
-                <input type="text" onkeyup='document.forms[0][1].click()' placeholder="بحث" class="input">
-            </div>
-            <div class="column is-2-mobile is-inline-block">
-                <button type="submit" class="button is-link is-light">
-                    <span class="icon">
-                        <i class="fa fa-search"></i>
-                    </span>
-                </button>
-            </div>
-            <div class="column is-inline-block">
-                <div class="field">
-                <a class="button ltr is-danger is-light" onclick="toggle_modal(this)" data-target="add_rom"><span class="icon">
-                            <i class="fa fa-plus"></i>
-                        </span><span>
-                            اضافة روم جديد
-                        </span>
-                    </a>
-                </div>
-            </div>
-        </form>
-        <div class="scrollable-table flipx" id='roms-table-admin'>
-            <div class="has-text-centered">
-                <button class="button is-link is-loading is-large" style="width:100px;"></button>
-            </div>
-        </div>
+    <div class="container flipx tab" id="manage-roms">
+        <?php include "admin/manage-roms.php"; ?>
     </div>
     <div class="container flipx tab" id="manage-users">
-        <form class="columns" onsubmit="users_search('users-table-admin',event)">
-            <div class="column flipx is-3-tablet is-9-mobile is-inline-block">
-                <input type="text" onkeyup="document.forms[1][1].click();" placeholder="بحث" class="input rtl">
-            </div>
-            <div class="column is-2-mobile is-inline-block">
-                <button type="submit" class="button is-link is-light">
-                    <span class="icon">
-                        <i class="fa fa-search"></i>
-                    </span>
-                </button>
-            </div>
-        </form>
-        <div class="scrollable-table flipx" id='users-table-admin'>
-            <div class="has-text-centered">
-                <button class="button is-link is-loading is-large" style="width:100px;"></button>
-            </div>
-        </div>
+        <?php include "admin/users.php"; ?>
     </div>
     <div class="container flipx tab" id="website-settings">
-        <h2 class="title flipx rtl">لوحة اعدادات الموقع</h2>
-
-        <form action="action.php" method="post">
-            <input type="hidden" name="action" value='update_site'>
-            <div class="columns">
-                <div class="column is-6-tablet">
-                    <div class="field flipx rtl">
-                        <label class="switch is-warning">
-                            <input name="maintainance" type="checkbox" <?php echo $settings['maintainance'] ? "checked" : 0; ?>>
-                            <div class="switch-body ltr"></div>
-                            <span>طور التطوير</span>
-                        </label>
-                    </div>
-
-                    <div class="field flipx rtl">
-                        <label class="label">عنوان الموقع</label>
-                        <div class="control">
-                            <input required class="input" name='site-name' type="text" value="<?php echo $settings['site-name']; ?>">
-                        </div>
-                    </div>
-
-                    <div class="field flipx rtl">
-                        <label class="label">نبذه عن الموقع</label>
-                        <div class="control">
-                            <textarea name='description' class="textarea"><?php echo $settings['description']; ?></textarea>
-                        </div>
-                    </div>
-
-                    <div class="field flipx rtl">
-                        <label class="label">البريد الالكتروني</label>
-                        <div class="control has-icons-right">
-                            <input required name="email" class="input" type="email" value="<?php echo $settings['email']; ?>">
-                            <span class="icon is-small is-right">
-                                <i class="fas fa-envelope"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="field flipx rtl">
-                        <label class="label">Paypal بريد</label>
-                        <div class="control has-icons-right">
-                            <input required class="input" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
-                            <span class="icon is-small is-right">
-                                <i class="fab fa-paypal"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="field flipx rtl">
-                        <label class="label">السعر</label>
-                        <div class="control has-icons-right">
-                            <input required class="input" name='price' step="0.01" type="number" value="<?php echo $settings['price']; ?>">
-                            <span class="icon is-small is-right">
-                                <i class="fa fa-dollar-sign"></i>
-                            </span>
-                        </div>
-                        <div class="help is-primary rtl">لكل 1GB بالدولار</div>
-                    </div>
-
-                    <label class="label flipx rtl">لوجو الموقع </label>
-                    <div class="field flipx rtl">
-                        <label class="switch is-info">
-                            <input name='logo_as_text' type="checkbox" <?php echo $settings['logo_as_text'] ? "checked" : 0; ?>>
-                            <div class="switch-body ltr"></div>
-                            <span>استخدام عنوان الموقع كلوجو</span>
-                        </label>
-                    </div>
-
-                    <div class="field">
-                        <a class="button flipx is-warning" onclick="toggle_modal(this)" data-target="upload_logo">
-                            <span class="icon"><i class="fa fa-upload"></i></span>
-                            <span>
-                                ارفع
-                            </span></a>
-                    </div>
-
-                    <div class="field flipx rtl">
-                        <label class="label">الحد المجاني اليومي</label>
-                        <div class="control">
-                            <input required class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free'] / 1024 / 1024; ?>">
-                        </div>
-                        <div class="help is-link">in MegaBytes</div>
-                    </div>
-
-                    <div class="field is-grouped flipx">
-                        <div class="control">
-                            <button class="button is-link" type="submit">حفظ</button>
-                        </div>
-                        <div class="control">
-                            <a href="#" class="button is-link is-light">الغاء</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
+        <?php include "admin/website-settings.php"; ?>
     </div>
     <div class="container tab" id="account-settings">
-        <?php include "account-settings.php"; ?>
+        <?php include "admin/account-settings.php"; ?>
+    </div>
+    <div class="container tab is-active" id="packs">
+        <?php include "admin/packages.php"; ?>
     </div>
 </section>
 
