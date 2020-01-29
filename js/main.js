@@ -1,3 +1,15 @@
+toast = siiimpleToast;
+toast = toast.setOptions({
+    container: 'body',
+    class: 'siiimpleToast',
+    position: 'bottom|left',
+    margin: 15,
+    delay: 0,
+    duration: 3000,
+    style: {},
+});
+
+
 function togglenav(e) {
     let elem = document.getElementById(e.dataset.target);
     e.classList.toggle("is-active");
@@ -290,7 +302,7 @@ function calculate_paypal(elem) {
     let item_name = document.getElementById(elem.dataset.itemName);
     let rate = elem.dataset.rate;
 
-    amount.value = Math.round((elem.value * rate)*100)/100;
+    amount.value = Math.round((elem.value * rate) * 100) / 100;
     item_name.value = `${elem.value} Gigabytes at ${document.location.hostname}`;
 
 }

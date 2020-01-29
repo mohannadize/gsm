@@ -6,10 +6,10 @@ header("content-type: application/json");
 $_POST = json_decode(file_get_contents("php://input"), true);
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["action"])) $action = $_POST['action'];
 else {
+    var_dump($_POST,file_get_contents("php://input"));
     echo "null";
     exit;
 };
-
 switch ($action) {
     case 'details':
         $id = (int) $_POST['id'];
@@ -77,11 +77,33 @@ switch ($action) {
         $array['pages'] = $pages;
 
         while ($row = $db->fetch_array($query)) {
-            $row['balance_string'] = bytes_to_human($row['balance']+$row['daily_balance']);
+            $row['balance_string'] = bytes_to_human($row['balance']);
             array_push($array['rows'], $row);
         }
 
         $json = json_encode($array);
+        break;
+    case "edit_plan":
+        session_start();
+        $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
+        $admin_check = $db->fetch_array($admin_check);
+        $admin_check = (int) $admin_check["admin"];
+        if ($admin_check === 0) {
+            $json = null;
+            break;
+        }
+        $id = (int) $_POST['id'];
+        $name = $_POST['name'];
+        $desc = $_POST['description'];
+        $cap = $_POST['cap'];
+        $color = $_POST['color'];
+        $duration = $_POST['duration'];
+        $price = $_POST['price'];
+
+
+        $success = $db->query("UPDATE plans SET `name`='$name',`description`='$desc',`cap`='$cap',`color`='$color',`duration`='$duration',`price`='$price' WHERE id='$id'");
+        
+        $json = $success ? json_encode(['true']):null;
         break;
     default:
         $json = null;

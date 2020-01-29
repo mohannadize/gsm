@@ -18,3 +18,7 @@ if ($logged_in) {
 <link rel="stylesheet" href="./css/bulma-switch.min.css">
 <link rel="stylesheet" href="./css/main.css">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Tajawal&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/siiimple-toast/dist/style.css" rel="stylesheet">
+<!-- import js -->
+<script src="https://cdn.jsdelivr.net/npm/siiimple-toast/dist/siiimple-toast.min.js"></script>
