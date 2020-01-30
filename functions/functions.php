@@ -2,17 +2,17 @@
 
 function print_web_page($action, $section, $logged_in, $db, $head_append = "")
 {
-    ?>
+?>
     <!DOCTYPE html>
     <html lang="ar" class="has-navbar-fixed-top">
 
     <head>
         <?php
 
-            include "components/head.php";
-            echo $head_append;
+        include "components/head.php";
+        echo $head_append;
 
-            ?>
+        ?>
     </head>
 
     <body>
@@ -20,16 +20,16 @@ function print_web_page($action, $section, $logged_in, $db, $head_append = "")
 
         <?php
 
-            include "components/header.php";
+        include "components/header.php";
 
-            // Page Content
-            include $section;
+        // Page Content
+        include $section;
 
-            include "components/footer.php";
+        include "components/footer.php";
 
-            include "components/scripts.php";
+        include "components/scripts.php";
 
-            ?>
+        ?>
     </body>
 
     </html>
@@ -40,7 +40,7 @@ function print_web_page($action, $section, $logged_in, $db, $head_append = "")
 
 function print_notice_page($action, $page, $message,  $section = false, $db = null, $logged_in = false)
 {
-    ?>
+?>
 
     <!DOCTYPE html>
     <html lang="ar" class="has-navbar-fixed-top">
@@ -48,9 +48,9 @@ function print_notice_page($action, $page, $message,  $section = false, $db = nu
     <head>
         <?php
 
-            include "components/head.php";
+        include "components/head.php";
 
-            ?>
+        ?>
     </head>
 
     <body>
@@ -58,18 +58,18 @@ function print_notice_page($action, $page, $message,  $section = false, $db = nu
 
         <?php
 
-            include "components/header.php";
+        include "components/header.php";
 
-            // Component 
-            include $page;
-            // Page Content
-            if ($section) include $section;
+        // Component 
+        include $page;
+        // Page Content
+        if ($section) include $section;
 
-            include "components/footer.php";
+        include "components/footer.php";
 
-            include "components/scripts.php";
+        include "components/scripts.php";
 
-            ?>
+        ?>
     </body>
 
     </html>
@@ -103,7 +103,7 @@ function login_user($data, $db)
 
     $username = trim($data['username']);
     $password = trim($data['password']);
-    
+
     $result = $db->query("SELECT id,username,password,admin,last_login from users WHERE email='$username' OR username='$username'");
     $settings = $db->query("SELECT daily_free from `site`");
     $settings = $db->fetch_array($settings);
@@ -119,7 +119,7 @@ function login_user($data, $db)
             if ($result['admin']) {
                 $_SESSION['admin'] = true;
             };
-            $new_rewards = time()-date_timestamp_get(date_create($result['last_login']));
+            $new_rewards = time() - date_timestamp_get(date_create($result['last_login']));
             if ($new_rewards > 86400) {
                 $db->query("UPDATE users SET daily_balance='$settings[daily_free]',last_login=CURRENT_TIMESTAMP where id='$result[id]'");
             }
@@ -217,7 +217,7 @@ function modify_file($data, $db)
     $admin_check = $db->fetch_array($admin_check);
     $admin_check = (int) $admin_check["admin"];
     if ($admin_check === 0) return false;
-    
+
     $id = (int) (trim($data['id']));
     $model = strip_tags(trim($data['model']));
     $build = strip_tags(trim($data['build']));
@@ -250,8 +250,6 @@ function delete_file($data, $db)
     } else {
         return false;
     }
-    
-    
 }
 function delete_user($data, $db)
 {
@@ -283,7 +281,6 @@ function admin_add_balance($data, $db)
     $add = $data["add_balance"] * 1024 * 1024;
 
     return $db->query("UPDATE users set `balance`=`balance`+'$add' WHERE id='$id'");
-
 }
 
 function modify_user($data, $db)
@@ -295,10 +292,10 @@ function modify_user($data, $db)
     $id = (int) $data['id'];
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) return false;
-    
+
     $user_exists = $db->query("SELECT username from users WHERE `username`='$username' AND id!='$id'");
     if ($db->num_rows($user_exists)) return false;
-    
+
     $_SESSION['username'] = $username;
     if ($data['password'] != "") {
         if ($data['password'] != $data['cpassword']) {
@@ -323,13 +320,29 @@ function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGH
     return $s;
 }
 
-function bytes_to_human($bytes) {
-    $mapping = ["Bytes","KBs","MBs","GBs","TBs"];
+function bytes_to_human($bytes)
+{
+    $mapping = ["بايت", "كيلوبايت", "ميجا", "جيجا", "تيرا"];
     $counter = 0;
     while ((+$bytes / 1024) >= 1) {
         $bytes = +$bytes / 1024;
         $counter++;
     }
-    $bytes = round($bytes,2);
+    $bytes = round($bytes, 2);
     return "$bytes $mapping[$counter]";
+}
+
+function duration_to_human($time)
+{
+    $mapping = [
+        "86400"=> 'يوم',
+        "604800"=>'اسبوع',
+        "2592000"=>'شهر',
+        "7776000"=>'3 شهور',
+        "15552000"=>'6 شهور',
+        "31104000"=>'سنه',
+        "-1"=>'ﻻ محدود'
+    ];
+    
+    return $mapping[$time];
 }

@@ -149,23 +149,19 @@
     function edit_plan(form, e) {
         e.preventDefault();
         data = {};
-        if (document.activeElement.name == 'cancel') {
-            data = JSON.parse(form.data.value);
-        } else {
-            data.action = 'edit_plan';
-            [].slice.apply(form).filter(row => row.tagName != 'BUTTON').forEach(row => {
-                data[row.name] = row.value
-            })
-            fetch("api.php", {
-                method: "post",
-                body: JSON.stringify(data)
-            }).then(x=>x.json()).then(x=>{
-                if (x[0]) {
-                    toast.success('Saved');
-                }
-            }).catch(err=>{
-                toast.alert('An Error has occured');
-            });
-        }
+        data.action = 'edit_plan';
+        [].slice.apply(form).filter(row => row.tagName != 'BUTTON').forEach(row => {
+            data[row.name] = row.value
+        })
+        fetch("api.php", {
+            method: "post",
+            body: JSON.stringify(data)
+        }).then(x => x.json()).then(x => {
+            if (x[0]) {
+                toast.success('Saved');
+            }
+        }).catch(err => {
+            toast.alert('An Error has occured');
+        });
     }
 </script>

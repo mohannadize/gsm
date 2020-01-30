@@ -35,9 +35,9 @@ switch ($action) {
             exit;
         }
         break;
-    case "balance":
+    case "packages":
         if ($logged_in) {
-            $page = "./components/balance.php";
+            $page = "./components/packages.php";
         } else {
             $message = 'الرجاء تسجيل الدخول اولاََ';
             $page = "./components/error.php";

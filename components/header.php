@@ -61,7 +61,7 @@
                         </span>
                     </a>
 
-                    <a class="navbar-item <?php echo $action == "balance" ? "is-active" : ""; ?> ltr" href='balance'>
+                    <a class="navbar-item <?php echo $action == "packages" ? "is-active" : ""; ?> ltr" href='packages'>
                         <!-- TODO: Points system  -->
                         <span>
                             <?php echo bytes_to_human($user_data['balance'] + $user_data['daily_balance']); ?> Left
