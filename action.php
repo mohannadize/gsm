@@ -124,6 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 $page = "./components/error.php";
                 print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             }
+	    break;
         case "admin_add_balance":
             if (admin_add_balance($_POST, $db)) {
                 $message = "تمت اضافة الرصيد بنجاح!";
@@ -134,6 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 $page = "./components/error.php";
                 print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
             }
+	    break;
         default:
             break;
     }
