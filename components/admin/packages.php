@@ -53,8 +53,7 @@
                             <div class="field">
                                 <div class="control has-icons-right">
                                     <div class="select">
-                                        <select class="rtl" name='duration'>
-                                            <option <?php echo $row['duration'] == '' ? 'selected' : ''; ?>>Duration</option>
+                                        <select required class="rtl" name='duration'>
                                             <option <?php echo $row['duration'] == '86400' ? 'selected' : '';
                                                     echo " value='86400'" ?>>يوم</option>
                                             <option <?php echo $row['duration'] == '604800' ? 'selected' : '';
@@ -83,6 +82,7 @@
                                         <i class="fas fa-tachometer-alt"></i>
                                     </span>
                                 </p>
+                                <small class="has-text-info">حجم الباقة بالميجابايت</small>
                             </div>
                             <div class="field">
                                 <p class="control has-icons-right">
@@ -116,3 +116,27 @@
     </div>
 
 </div>
+
+
+<script>
+
+function edit_plan(form, e) {
+        e.preventDefault();
+        data = {};
+        data.action = 'edit_plan';
+        [].slice.apply(form).filter(row => row.tagName != 'BUTTON').forEach(row => {
+            data[row.name] = row.value
+        })
+        fetch("api.php", {
+            method: "post",
+            body: JSON.stringify(data)
+        }).then(x => x.json()).then(x => {
+            if (x[0]) {
+                toast.success('Saved');
+            }
+        }).catch(err => {
+            toast.alert('An Error has occured');
+        });
+    }
+
+</script>

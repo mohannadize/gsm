@@ -93,11 +93,11 @@ switch ($action) {
             break;
         }
         $id = (int) $_POST['id'];
-        $name = $_POST['name'];
-        $desc = $_POST['description'];
+        $name = $db->escape_value($_POST['name']);
+        $desc = $db->escape_value($_POST['description']);
         $cap = $_POST['cap'];
-        $color = $_POST['color'];
-        $duration = $_POST['duration'];
+        $color = $db->escape_value($_POST['color']);
+        $duration = $db->escape_value($_POST['duration']);
         $price = $_POST['price'];
 
 

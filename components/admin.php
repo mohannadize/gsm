@@ -38,7 +38,7 @@
         </div>
     </div>
     <br>
-    <div class="container flipx tab" id="manage-roms">
+    <div class="container flipx tab is-active" id="manage-roms">
         <?php include "admin/manage-roms.php"; ?>
     </div>
     <div class="container flipx tab" id="manage-users">
@@ -50,7 +50,7 @@
     <div class="container tab" id="account-settings">
         <?php include "admin/account-settings.php"; ?>
     </div>
-    <div class="container tab is-active" id="packs">
+    <div class="container tab" id="packs">
         <?php include "admin/packages.php"; ?>
     </div>
 </section>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jan 22, 2020 at 10:19 PM
--- Server version: 5.7.26
--- PHP Version: 7.2.18
+-- Host: localhost
+-- Generation Time: Apr 18, 2020 at 07:47 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,22 +28,20 @@ SET time_zone = "+00:00";
 -- Table structure for table `files`
 --
 
-DROP TABLE IF EXISTS `files`;
-CREATE TABLE IF NOT EXISTS `files` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` int(11) NOT NULL DEFAULT '0',
+CREATE TABLE `files` (
+  `id` int(11) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT 0,
   `model` mediumtext NOT NULL,
   `build_v` mediumtext NOT NULL,
   `android_v` mediumtext NOT NULL,
-  `security_level` text,
+  `security_level` text DEFAULT NULL,
   `size` bigint(11) NOT NULL,
   `country` mediumtext NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `downloads` int(11) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `downloads` int(11) NOT NULL DEFAULT 0,
   `url` mediumtext NOT NULL,
-  `search_text` mediumtext NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=489 DEFAULT CHARSET=utf8;
+  `search_text` mediumtext NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `files`
@@ -544,25 +542,26 @@ INSERT INTO `files` (`id`, `type`, `model`, `build_v`, `android_v`, `security_le
 -- Table structure for table `plans`
 --
 
-DROP TABLE IF EXISTS `plans`;
-CREATE TABLE IF NOT EXISTS `plans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `plans` (
+  `id` int(11) NOT NULL,
   `name` text NOT NULL,
+  `description` text DEFAULT NULL,
+  `color` text NOT NULL,
+  `cap` int(11) NOT NULL,
   `duration` bigint(20) NOT NULL,
   `price` float NOT NULL,
-  `cap_per_month` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `cap_per_month` bigint(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `plans`
 --
 
-INSERT INTO `plans` (`id`, `name`, `duration`, `price`, `cap_per_month`) VALUES
-(1, 'المجاني', 172800, 0, 3221225472),
-(2, 'الشهري', 2592000, 5, 21474836480),
-(3, 'الفصلي', 7776000, 20, 64424509440),
-(4, 'لا محدود', -1, 35, -1);
+INSERT INTO `plans` (`id`, `name`, `description`, `color`, `cap`, `duration`, `price`, `cap_per_month`) VALUES
+(1, 'Ø§Ù„Ù…Ø¬Ø§Ù†ÙŠ', '', 'green', 0, -1, 0, 3221225472),
+(2, 'Ø§Ù„Ø§Ø­Ù…Ø±', '', 'red', 0, 2592000, 5, 21474836480),
+(3, 'Ø§Ù„Ø§Ø²Ø±Ù‚', '', 'blue', 0, 7776000, 20, 64424509440),
+(4, 'Ø§Ù„Ø°Ù‡Ø¨ÙŠ', 'Ø®Ù„ÙŠÙƒ Ø­Ø±', 'gold', 0, -1, 35, -1);
 
 -- --------------------------------------------------------
 
@@ -570,8 +569,7 @@ INSERT INTO `plans` (`id`, `name`, `duration`, `price`, `cap_per_month`) VALUES
 -- Table structure for table `site`
 --
 
-DROP TABLE IF EXISTS `site`;
-CREATE TABLE IF NOT EXISTS `site` (
+CREATE TABLE `site` (
   `logo_as_text` int(11) NOT NULL,
   `logo_file` mediumtext NOT NULL,
   `email` mediumtext NOT NULL,
@@ -597,14 +595,12 @@ INSERT INTO `site` (`logo_as_text`, `logo_file`, `email`, `paypal`, `url`, `site
 -- Table structure for table `transactions`
 --
 
-DROP TABLE IF EXISTS `transactions`;
-CREATE TABLE IF NOT EXISTS `transactions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `transactions` (
+  `id` int(11) NOT NULL,
   `rom_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `confirmed` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `confirmed` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -613,30 +609,84 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
   `name` mediumtext NOT NULL,
   `username` text NOT NULL,
   `password` mediumtext NOT NULL,
   `email` mediumtext NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `balance` bigint(11) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `balance` bigint(11) NOT NULL DEFAULT 0,
   `daily_balance` bigint(11) NOT NULL,
-  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `admin` int(11) NOT NULL DEFAULT '0',
-  `plan` int(11) NOT NULL DEFAULT '1',
-  `plan_expiration` bigint(20) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  `last_login` timestamp NOT NULL DEFAULT current_timestamp(),
+  `admin` int(11) NOT NULL DEFAULT 0,
+  `plan` int(11) NOT NULL DEFAULT 1,
+  `plan_expiration` bigint(20) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`, `plan`, `plan_expiration`) VALUES
-(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 3145728000, '2019-12-18 16:20:55', 1, 1, 0),
-(7, 'Mohannad Hesham', 'poop', 'poop2', 'poop@gmaill.com', '2019-11-26 20:44:59', 115343360, 3145728000, '2019-12-18 17:25:56', 0, 1, 0);
+(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 3145728000, '2020-04-18 05:28:24', 1, 1, 0),
+(7, 'Mohannad Hesham', 'poop', 'poop2', 'poop@gmaill.com', '2019-11-26 20:44:59', 115343360, 3145728000, '2020-04-18 05:29:46', 0, 1, 0);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `plans`
+--
+ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `files`
+--
+ALTER TABLE `files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=489;
+
+--
+-- AUTO_INCREMENT for table `plans`
+--
+ALTER TABLE `plans`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

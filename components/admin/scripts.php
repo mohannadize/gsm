@@ -145,23 +145,4 @@
                 alert("An error has occured, please contact webmaster");
             });
     }
-
-    function edit_plan(form, e) {
-        e.preventDefault();
-        data = {};
-        data.action = 'edit_plan';
-        [].slice.apply(form).filter(row => row.tagName != 'BUTTON').forEach(row => {
-            data[row.name] = row.value
-        })
-        fetch("api.php", {
-            method: "post",
-            body: JSON.stringify(data)
-        }).then(x => x.json()).then(x => {
-            if (x[0]) {
-                toast.success('Saved');
-            }
-        }).catch(err => {
-            toast.alert('An Error has occured');
-        });
-    }
 </script>
