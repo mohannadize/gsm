@@ -1,7 +1,15 @@
 body {
-    font-family: Source Sans Pro, Tajawal, sans-serif, apple color emoji, segoe ui emoji, noto color emoji, segoe ui symbol;
+    font-family: Inter, Tajawal, sans-serif, apple color emoji, segoe ui emoji, noto color emoji, segoe ui symbol;
 }
-
+form {
+    display: contents;
+}
+.is-fullwidth {
+    width: 100%;
+}
+.title {
+    font-weight: bold;
+}
 .scrollable-table {
     width: 100%;
     overflow-x: auto;

@@ -69,10 +69,17 @@ class MySQLDatabase
         }
     }
 
-    public function escape_value($string)
+    public function escape_value($par)
     {
-        $escaped_string = mysqli_real_escape_string($this->connection, $string);
-        return $escaped_string;
+        if (is_array($par)) {
+            $escaped = [];
+            foreach ($par as $key => $value) {
+                $escaped[$key] = mysqli_real_escape_string($this->connection, $value);
+            }
+        } else {
+            $escaped = mysqli_real_escape_string($this->connection, $par);
+        }
+        return $escaped;
     }
 
     // "database neutral" functions

@@ -17,11 +17,13 @@
                             <div class="card-image">
                                 <div class="hero is-link" id='plan<?php echo $row['id']; ?>color' style="background-color: <?php echo $row['color']; ?>">
                                     <div class="hero-body">
-                                        <div class="container">
-                                            <h1 id='plan<?php echo $row['id']; ?>title' class="title rtl"><?php echo $row['name']; ?>
-                                            </h1>
-                                            <h2 id='plan<?php echo $row['id']; ?>desc' class="subtitle rtl"><?php echo $row['description']; ?>
-                                            </h2>
+                                        <div class="media">
+                                            <div class="media-content">
+                                                <h1 id='plan<?php echo $row['id']; ?>title' class="title rtl"><?php echo $row['name']; ?>
+                                                </h1>
+                                                <h2 id='plan<?php echo $row['id']; ?>desc' class="subtitle rtl"><?php echo $row['description']; ?>
+                                                </h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -40,7 +42,7 @@
                                         <i class="has-text-info fas fa-tachometer-alt"></i>
                                     </div>
                                     <div class="media-content flipx rtl">
-                                        <?php echo ((float) $row['cap']) == -1?"ﻻ محدود":bytes_to_human($row['cap']); ?>
+                                        <?php echo ((float) $row['cap']) == -1 ? "ﻻ محدود" : bytes_to_human($row['cap']); ?>
                                     </div>
                                 </div>
                                 <div class="media flipx">
@@ -48,7 +50,7 @@
                                         <i class="has-text-info fas fa-money-bill-wave"></i>
                                     </div>
                                     <div class="media-content flipx rtl">
-                                            <?php echo (float) $row['price'] ? "USD ".$row['price']:"مجانا!"; ?>
+                                        <?php echo (float) $row['price'] ? "USD " . $row['price'] : "مجانا!"; ?>
                                     </div>
                                 </div>
                                 <div class="field">

@@ -6,7 +6,7 @@ toast = toast.setOptions({
     margin: 15,
     delay: 0,
     duration: 3000,
-    style: {},
+    style: {fontFamily:"monospace"},
 });
 
 
@@ -40,10 +40,42 @@ function verifypass(elem) {
     }
 }
 
-function toggle_modal(elem) {
-    let target = document.getElementById(elem.dataset.target);
-    target.classList.toggle("is-active");
+function toggle_modal(elem, options = {}) {
+    if (!elem) {
+        let modal = document.querySelector(".modal.is-active");
+        if (modal) {
+            if (!modal.classList.toggle("is-active")) {
+                if (window.history.state.modal_active) window.history.back();
+            };
+        };
+    } else {
+        let target;
+        if (typeof elem == 'string') {
+            target = elem;
+        } else {
+            target = elem.dataset.target;
+        }
+        let modal = document.getElementById(target);
+        if (modal.classList.toggle("is-active")) {
+            window.history.pushState({ modal_active: 1 }, "modal is active", "#modal_active");
+        } else {
+            if (window.history.state.modal_active) window.history.back();
+        }
+    }
+    if (options.focus) {
+        let focus = document.querySelector(options.focus);
+        focus.focus();
+    }
 }
+
+let modal_bg = document.querySelectorAll(".modal-background");
+[].slice.apply(modal_bg).forEach(ele=>{
+    ele.addEventListener("click",()=>{
+        let modal = document.querySelector(".modal.is-active");
+        modal.classList.toggle("is-active");
+    })
+})
+
 
 function handle_files(elem, files) {
     let file_name = files[0].name;
@@ -305,4 +337,52 @@ function calculate_paypal(elem) {
     amount.value = Math.round((elem.value * rate) * 100) / 100;
     item_name.value = `${elem.value} Gigabytes at ${document.location.hostname}`;
 
+}
+
+async function make_action(params, options = {}) {
+    let form = options.form ? options.form : 0;
+    let reload = options.hasOwnProperty('reload') ? options.reload : 1;
+    let callback = options.callback ? options.callback : 0;
+    fetch("action.php", {
+        method: "post",
+        body: params
+    }).then(x => x.text())
+        .then(res => {
+            if (res.status) {
+                if (res.message) toast.success(res.message)
+                toggle_modal();
+                if (reload) {
+                    toast.message("Page will refresh in 2 seconds", {
+                        delay: 500
+                    });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }
+                if (callback) callback(res);
+            } else {
+                if (res.message) toast.alert(res.message);
+                if (res.focus && form) form[res.focus].focus();
+            }
+        })
+}
+
+async function make_request(params, options = {}) {
+    let callback = options.callback ? options.callback : 0;
+    fetch("api.php", {
+        method: "POST",
+        body: params
+    }).then(x => x.json())
+        .then(res => {
+            if (res.status) {
+                if (res.message) {
+                    toast.success(res.message)
+                }
+                if (callback) {
+                    callback(res);
+                }
+            } else {
+                toast.alert(res.message);
+            }
+        })
 }

@@ -36,7 +36,7 @@
             if ($logged_in) {
                 ?>
 
-                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+                <?php if ($logged_in['admin'] == '1') {
 
                         ?>
 
@@ -54,7 +54,7 @@
 
                     <a class="navbar-item <?php echo $action == "profile" ? "is-active" : ""; ?> ltr" href='profile'>
                         <span>
-                            <?php echo $_SESSION['username']; ?>
+                            <?php echo $logged_in['username']; ?>
                         </span>
                         <span class="icon" style="padding-left:5px;">
                             <i class="fa fa-user"></i>

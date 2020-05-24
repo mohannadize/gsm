@@ -1,10 +1,9 @@
 <?php
-session_start();
 
 include "./functions/database.php";
 include "./functions/functions.php";
 
-$logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true;
+$logged_in = check_login($db);
 
 
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
@@ -107,36 +106,61 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             if (modify_user($_POST, $db)) {
                 $message = "تم تجديد بيانات الحساب!";
                 $page = "./components/success.php";
-                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
                 $message = "حدث خطأ ما";
                 $page = "./components/error.php";
-                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
             break;
         case "delete_user":
             if (delete_user($_POST, $db)) {
                 $message = "تم مسح الحساب!";
                 $page = "./components/success.php";
-                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
                 $message = "حدث خطأ ما";
                 $page = "./components/error.php";
-                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
-	    break;
+            break;
         case "admin_add_balance":
             if (admin_add_balance($_POST, $db)) {
                 $message = "تمت اضافة الرصيد بنجاح!";
                 $page = "./components/success.php";
-                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             } else {
                 $message = "حدث خطأ ما";
                 $page = "./components/error.php";
-                print_notice_page("profile", $page, $message, './components/admin.php', $db, $logged_in);
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             }
-	    break;
+            break;
+        case "add_new_plan":
+            if (add_new_plan($_POST, $db)) {
+                $message = "تمت اضافة البافة بنجاح!";
+                $page = "./components/success.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            } else {
+                $message = "حدث خطأ ما";
+                $page = "./components/error.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            }
+            break;
+        case "delete_plan":
+            if (delete_plan($_POST, $db)) {
+                $message = "تم مسح البافة بنجاح!";
+                $page = "./components/success.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            } else {
+                $message = "حدث خطأ ما";
+                $page = "./components/error.php";
+                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+            }
+            break;
         default:
+            header('Location: .');
             break;
     }
+} else {
+    header('Location: .');
 }

@@ -4,18 +4,16 @@
     <input type="hidden" name="action" value='update_site'>
     <div class="columns">
         <div class="column is-6-tablet">
-            <div class="field flipx rtl">
-                <label class="switch is-warning">
-                    <input name="maintainance" type="checkbox" <?php echo $settings['maintainance'] ? "checked" : 0; ?>>
-                    <div class="switch-body ltr"></div>
-                    <span>طور التطوير</span>
-                </label>
+            <div class="field rtl flipx">
+                <input id="maintainance" type="checkbox" name="maintainance" class="switch is-rounded is-danger" <?php echo $settings['maintainance'] ? "checked" : ''; ?>>
+                <label for="maintainance">طور التطوير</label>
             </div>
 
             <div class="field flipx rtl">
                 <label class="label">عنوان الموقع</label>
-                <div class="control">
+                <div class="control has-icons-right">
                     <input required class="input" name='site-name' type="text" value="<?php echo $settings['site-name']; ?>">
+                    <span class="icon is-right"><i class="fa fa-globe"></i></span>
                 </div>
             </div>
 
@@ -58,12 +56,9 @@
             </div>
 
             <label class="label flipx rtl">لوجو الموقع </label>
-            <div class="field flipx rtl">
-                <label class="switch is-info">
-                    <input name='logo_as_text' type="checkbox" <?php echo $settings['logo_as_text'] ? "checked" : 0; ?>>
-                    <div class="switch-body ltr"></div>
-                    <span>استخدام عنوان الموقع كلوجو</span>
-                </label>
+            <div class="field rtl flipx">
+                <input id="logo_as_text" type="checkbox" name="logo_as_text" class="switch is-rounded" <?php echo $settings['logo_as_text'] ? "checked" : ''; ?>>
+                <label for="logo_as_text">استخدام عنوان الموقع كلوجو</label>
             </div>
 
             <div class="field">

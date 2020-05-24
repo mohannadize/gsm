@@ -3,6 +3,8 @@ include "./functions/database.php";
 include "./functions/functions.php";
 header("content-type: application/json");
 
+$logged_in = check_login($db);
+
 $_POST = json_decode(file_get_contents("php://input"), true);
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["action"])) $action = $_POST['action'];
 else {
@@ -10,6 +12,7 @@ else {
     echo "null";
     exit;
 };
+
 switch ($action) {
     case 'details':
         $id = (int) $_POST['id'];
@@ -18,11 +21,7 @@ switch ($action) {
         $json = json_encode($query);
         break;
     case "user":
-        session_start();
-        $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-        $admin_check = $db->fetch_array($admin_check);
-        $admin_check = (int) $admin_check["admin"];
-        if ($admin_check === 0) {
+        if (!$logged_in['admin']) {
             $json = null;
             break;
         }
@@ -55,11 +54,7 @@ switch ($action) {
         $json = json_encode($array);
         break;
     case "users":
-        session_start();
-        $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-        $admin_check = $db->fetch_array($admin_check);
-        $admin_check = (int) $admin_check["admin"];
-        if ($admin_check === 0) {
+        if (!$logged_in['admin']) {
             $json = null;
             break;
         }
@@ -84,18 +79,14 @@ switch ($action) {
         $json = json_encode($array);
         break;
     case "edit_plan":
-        session_start();
-        $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-        $admin_check = $db->fetch_array($admin_check);
-        $admin_check = (int) $admin_check["admin"];
-        if ($admin_check === 0) {
+        if (!$logged_in['admin']) {
             $json = null;
             break;
         }
         $id = (int) $_POST['id'];
         $name = $_POST['name'];
         $desc = $_POST['description'];
-        $cap = $_POST['cap'];
+        $cap = $_POST['cap'] * 1024 * 1024;
         $color = $_POST['color'];
         $duration = $_POST['duration'];
         $price = $_POST['price'];

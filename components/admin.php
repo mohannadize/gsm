@@ -100,54 +100,60 @@
             <p class="modal-card-title flipx rtl">اضافة روم جديد</p>
             <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="add_rom"></button>
         </header>
-        <section class="modal-card-body">
-            <form action="action.php" method="post">
+        <form action="action.php" method="post">
+            <div class="modal-card-body">
                 <input type="hidden" required name="action" value="add_rom">
                 <div class="field flipx rtl">
                     <label class="label">موديل الجهاز</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="model" type="text" placeholder="SM-3242">
+                        <span class="icon is-right"><i class="fa fa-mobile"></i></span>
                     </div>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">رقم الاصدار</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="build" type="text" placeholder="7.22.18">
+                        <span class="icon is-right"><i class="fa fa-hashtag"></i></span>
                     </div>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">اصدار اندرويد</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="android" type="text" placeholder="8.1">
+                        <span class="icon is-right"><i class="fab fa-android"></i></span>
                     </div>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">البلد</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="country" type="text" placeholder="Egypt">
+                        <span class="icon is-right"><i class="fa fa-globe-africa"></i></span>
                     </div>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">الحجم</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="size" step="0.0001" type="number" placeholder="0">
+                        <span class="icon is-right"><i class="far fa-save"></i></span>
                     </div>
                     <p class="help is-link">in MegaBytes</p>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">رابط التنزيل</label>
-                    <div class="control">
-                        <input required class="input" name="url" type="text" placeholder="https://">
+                    <div class="control has-icons-right">
+                        <input required class="input ltr" name="url" type="text" placeholder="https://">
+                        <span class="icon is-right"><i class="fa fa-link"></i></span>
                     </div>
                 </div>
-        </section>
-        <footer class="modal-card-foot flipx">
-            <button class="button is-info" type="submit">
-                <span class="icon"><i class="fa fa-plus"></i></span><span>اضافة</span>
-            </button>
-            </form>
-            <button class="button" onclick="toggle_modal(this)" data-target="add_rom">إلغاء</button>
-        </footer>
+            </div>
+            <div class="modal-card-foot flipx">
+                <button class="button is-info" type="submit">
+                    <span class="icon"><i class="fa fa-plus"></i></span><span>اضافة</span>
+                </button>
+                <button class="button" onclick="toggle_modal(this)" data-target="add_rom">إلغاء</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -158,55 +164,61 @@
             <p class="modal-card-title flipx rtl">تعديل روم</p>
             <button class="delete" aria-label="close" onclick="toggle_modal(this)" data-target="modify_rom"></button>
         </header>
-        <section class="modal-card-body">
-            <form action="action.php" method="post">
+        <form action="action.php" method="post">
+            <div class="modal-card-body">
                 <input type="hidden" name="action" value="modify_file">
                 <input type="hidden" name="id">
                 <div class="field flipx rtl">
                     <label class="label">موديل الجهاز</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="model" type="text" placeholder="SM-3242">
+                        <span class="icon is-right"><i class="fa fa-mobile"></i></span>
                     </div>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">رقم الاصدار</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="build" type="text" placeholder="7.22.18">
+                        <span class="icon is-right"><i class="fa fa-hashtag"></i></span>
                     </div>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">اصدار اندرويد</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="android" type="text" placeholder="8.1">
+                        <span class="icon is-right"><i class="fab fa-android"></i></span>
                     </div>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">البلد</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="country" type="text" placeholder="Egypt">
+                        <span class="icon is-right"><i class="fa fa-globe-africa"></i></span>
                     </div>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">الحجم</label>
-                    <div class="control">
+                    <div class="control has-icons-right">
                         <input required class="input" name="size" step="0.0001" type="number" placeholder="0">
+                        <span class="icon is-right"><i class="far fa-save"></i></span>
                     </div>
                     <p class="help is-link">in MegaBytes</p>
                 </div>
                 <div class="field flipx rtl">
                     <label class="label">رابط التنزيل</label>
-                    <div class="control">
-                        <input required class="input" name="url" type="text" placeholder="https://">
+                    <div class="control has-icons-right">
+                        <input required class="input ltr" name="url" type="text" placeholder="https://">
+                        <span class="icon is-right"><i class="fa fa-link"></i></span>
                     </div>
                 </div>
-        </section>
-        <footer class="modal-card-foot flipx">
-            <button class="button is-warning" type="submit">
-                <span class="icon"><i class="fa fa-save"></i></span><span>حفظ</span>
-            </button>
-            </form>
-            <button class="button" onclick="toggle_modal(this)" data-target="modify_rom">إلغاء</button>
-        </footer>
+            </div>
+            <div class="modal-card-foot flipx">
+                <button class="button is-warning" type="submit">
+                    <span class="icon"><i class="fa fa-save"></i></span><span>حفظ</span>
+                </button>
+                <button class="button" onclick="toggle_modal(this)" data-target="modify_rom">إلغاء</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -229,8 +241,8 @@
         </section>
         <footer class="modal-card-foot flipx">
             <button class="button" type="submit">مسح</button>
-            </form>
-            <button class="button is-danger" onclick="toggle_modal(this)" data-target="delete_file">إلغاء</button>
+        </form>
+        <button class="button is-danger" onclick="toggle_modal(this)" data-target="delete_file">إلغاء</button>
         </footer>
     </div>
 </div>

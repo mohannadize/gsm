@@ -1,10 +1,9 @@
 <?php
-session_start();
-
-$logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true;
 
 include "./functions/database.php";
 include "./functions/functions.php";
+
+$logged_in = check_login($db);
 
 if (isset($_GET['a'])) {
     $action = $_GET['a'];
@@ -14,8 +13,6 @@ if (isset($_GET['a'])) {
 
 switch ($action) {
     case 'index':
-        // $page = './components/home.php';
-        // break;
     case 'roms':
         $page = "./components/roms.php";
         break;
@@ -46,7 +43,7 @@ switch ($action) {
         }
         break;
     case "admin":
-        if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+        if ($logged_in['admin']) {
             $page = "./components/admin.php";
         } else {
             $action = '404';

@@ -25,7 +25,7 @@
                 </button>
             </div>
         </form>
-        <div class="box scrollable-table" style="transform:scale(0.95)" id='roms-table'>
+        <div class="scrollable-table" style="transform:scale(0.95)" id='roms-table'>
             <div class="has-text-centered">
                 <button class="button is-link is-loading is-large" style="width:100px;"></button>
             </div>

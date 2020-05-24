@@ -1,4 +1,6 @@
 <?php
+session_start();
+$GLOBALS['title'] = 'gsm';
 
 function print_web_page($action, $section, $logged_in, $db, $head_append = "")
 {
@@ -100,11 +102,11 @@ function verify_signup($data)
 
 function login_user($data, $db)
 {
-
-    $username = trim($data['username']);
+    $username = trim($db->escape_value($data['username']));
+    preg_replace("/[^A-Za-z0-9-_]/", "", $username);
     $password = trim($data['password']);
 
-    $result = $db->query("SELECT id,username,password,admin,last_login from users WHERE email='$username' OR username='$username'");
+    $result = $db->query("SELECT u.`name`, u.`id`, u.`username`, u.`password`, u.`plan`, u.`last_login`, u.`admin` from users u WHERE (email='$username' OR username='$username') AND `deactivated`='0'");
     $settings = $db->query("SELECT daily_free from `site`");
     $settings = $db->fetch_array($settings);
 
@@ -112,13 +114,12 @@ function login_user($data, $db)
         $result = $db->fetch_array($result);
 
         if ($password == $result['password']) {
-            session_start();
-            $_SESSION['loggedin'] = true;
-            $_SESSION['id'] = $result['id'];
-            $_SESSION['username'] = $result['username'];
-            if ($result['admin']) {
-                $_SESSION['admin'] = true;
-            };
+            $_SESSION[$GLOBALS['title']]['loggedin'] = true;
+            $_SESSION[$GLOBALS['title']]['id'] = $result['id'];
+            $_SESSION[$GLOBALS['title']]['name'] = $result['name'];
+            $_SESSION[$GLOBALS['title']]['username'] = $result['username'];
+            $_SESSION[$GLOBALS['title']]['admin'] = (int) $result['admin'];
+            $_SESSION[$GLOBALS['title']]['plan'] = (int) $result['plan'];
             $new_rewards = time() - date_timestamp_get(date_create($result['last_login']));
             if ($new_rewards > 86400) {
                 $db->query("UPDATE users SET daily_balance='$settings[daily_free]',last_login=CURRENT_TIMESTAMP where id='$result[id]'");
@@ -132,6 +133,23 @@ function login_user($data, $db)
         return false;
     }
 
+    return false;
+}
+
+function check_login($db)
+{
+    $title = $GLOBALS['title'];
+    if (!isset($_SESSION[$title])) return false;
+    $session = $_SESSION[$title];
+    if (isset($session['loggedin']) && $session['loggedin'] == true) {
+        if (isset($session['LAST_ACTIVITY']) && (time() - $session['LAST_ACTIVITY'] > 60000)) {
+            session_unset();
+            session_destroy();
+            return false;
+        } else {
+            return $session;
+        }
+    }
     return false;
 }
 
@@ -308,6 +326,29 @@ function modify_user($data, $db)
     }
 }
 
+function add_new_plan($data, $db)
+{
+    $data = $db->escape_value($data);
+    $name = htmlspecialchars($data['name']);
+    $description = htmlspecialchars($data['description']);
+    $color = $data['color'];
+    $duration = $data['duration'];
+    $cap = $data['cap'] * 1024 * 1024;
+    $price = $data['price'];
+
+    $query = "INSERT INTO plans (`name`, `description`, `color`, `duration`, `cap`, `price`) VALUES ('$name', '$description', '$color', '$duration', '$cap', '$price')";
+
+    return $db->query($query);
+}
+
+function delete_plan($data, $db) {
+    $id = (int) $data['plan_id'];
+    $date = date("Y-m-d");
+    $query = "UPDATE plans SET `deactivated` = '$date' WHERE `id` = '$id'";
+
+    return $db->query($query);
+}
+
 function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGHJKLZXCVBNM1234567890qwertyuiopasdfghjkzxcvbnm')
 {
     $s = '';
@@ -335,14 +376,14 @@ function bytes_to_human($bytes)
 function duration_to_human($time)
 {
     $mapping = [
-        "86400"=> 'يوم',
-        "604800"=>'اسبوع',
-        "2592000"=>'شهر',
-        "7776000"=>'3 شهور',
-        "15552000"=>'6 شهور',
-        "31104000"=>'سنه',
-        "-1"=>'ﻻ محدود'
+        "86400" => 'يوم',
+        "604800" => 'اسبوع',
+        "2592000" => 'شهر',
+        "7776000" => '3 شهور',
+        "15552000" => '6 شهور',
+        "31104000" => 'سنه',
+        "-1" => 'ﻻ محدود'
     ];
-    
+
     return $mapping[$time];
 }
