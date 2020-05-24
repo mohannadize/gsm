@@ -6,6 +6,7 @@ header("content-type: application/json");
 $logged_in = check_login($db);
 
 $_POST = json_decode(file_get_contents("php://input"), true);
+$_POST = $db->escape_value($_POST);
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["action"])) $action = $_POST['action'];
 else {
     var_dump($_POST,file_get_contents("php://input"));

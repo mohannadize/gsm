@@ -84,7 +84,7 @@
                                         <i class="fas fa-tachometer-alt"></i>
                                     </span>
                                 </p>
-                                <small class="has-text-info">in MegaBytes</small>
+                                <small class="has-text-info">حجم الباقة بالميجابايت</small>
                             </div>
                             <div class="field">
                                 <p class="control has-icons-right">

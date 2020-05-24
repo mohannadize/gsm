@@ -34,7 +34,7 @@
                         <div class="card-image has-text-centered">
                             <span class="icon has-text-warning" style="font-size:75px;"><i class="fa fa-hdd"></i></span>
                         </div>
-                        <div class="card-content has-text-centered">
+                        <div class="card-content has-text-centered rtl">
                             <div class="content" style="font-size:20px">
                                 <?php echo bytes_to_human($storage['SUM(size)']); ?> <br>
                                 المساحة المستخدمة
