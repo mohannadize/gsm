@@ -4,50 +4,51 @@
         <div>
             <?php
             $active_subscription = get_active_subscription($logged_in, $db);
-            if (!$active_subscription) {
-                $pending_subscription = check_pending_subscription($logged_in, $db);
-                if ($pending_subscription) { ?>
-                    <div class="columns is-vcentered rtl">
-                        <div class="column is-narrow">
-                            <div class="title is-5">حالة اشتراكك في باقة</div>
+            $pending_subscription = check_pending_subscription($logged_in, $db);
+            if ($pending_subscription) { ?>
+                <div class="columns is-vcentered rtl">
+                    <div class="column is-narrow">
+                        <div class="title is-5">حالة اشتراكك في باقة</div>
+                    </div>
+                    <div class="column is-narrow">
+                        <div class="control">
+                            <button class="button is-medium is-primary" style="background-color: <?php echo $pending_subscription['color']; ?>"><?php echo $pending_subscription['name']; ?></button>
                         </div>
-                        <div class="column is-narrow">
+                    </div>
+                    <div class="column is-narrow ltr">
+                        <div class="field has-addons">
                             <div class="control">
-                                <button class="button is-medium is-primary" style="background-color: <?php echo $pending_subscription['color']; ?>"><?php echo $pending_subscription['name']; ?></button>
+                                <button class="button is-medium">
+                                    بإنتظار تأكيد اشتراكك
+                                </button>
                             </div>
-                        </div>
-                        <div class="column is-narrow ltr">
-                            <div class="field has-addons">
-                                <div class="control">
-                                    <button class="button is-medium">
-                                        بإنتظار تأكيد اشتراكك
-                                    </button>
-                                </div>
-                                <div class="control">
-                                    <button class="button is-medium is-primary is-loading"></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column is-narrow ltr">
-                            <div class="field has-addons">
-                                <div class="control">
-                                    <button onclick='copyText("<?php echo $pending_subscription['ref']; ?>")' class="button is-medium">
-                                        <?php echo $pending_subscription['ref']; ?>
-                                    </button>
-                                </div>
-                                <div class="control">
-                                    <button class="button is-medium is-warning">رقم المراجعة</button>
-                                </div>
+                            <div class="control">
+                                <button class="button is-medium is-primary is-loading"></button>
                             </div>
                         </div>
                     </div>
-                <?php } else { ?>
-                    <div class="title is-5 rtl">
-                        لا توجد باقة مفعله على حسابك
+                    <div class="column is-narrow ltr">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button onclick='copyText("<?php echo $pending_subscription["ref"]; ?>")' class="button is-medium">
+                                    <?php echo $pending_subscription['ref']; ?>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-medium is-warning">رقم المراجعة</button>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <hr>
             <?php }
-            } else { ?>
-            <div class="columns is-vcentered rtl">
+            if (!$active_subscription) { ?>
+                <div class="title is-5 rtl">
+                    لا توجد باقة مفعله على حسابك
+                </div>
+                <hr>
+            <?php } else { ?>
+                <div class="columns is-vcentered rtl">
                     <div class="column is-narrow">
                         <div class="title is-5">انت حاليا على باقة</div>
                     </div>
@@ -60,7 +61,7 @@
                         <div class="field has-addons">
                             <div class="control">
                                 <button class="button is-medium">
-                                    <? echo bytes_to_human($user_data['balance']); ?>
+                                    <? echo bytes_to_human($active_subscription['balance']); ?>
                                 </button>
                             </div>
                             <div class="control">
@@ -68,11 +69,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="column is-narrow ltr">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-medium">
+                                    <? echo date("Y-m-d", $active_subscription['plan_expiration']); ?>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-medium is-success">صالحة حتى</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <hr>
             <?php } ?>
         </div>
 
-        <hr>
         <h3 class="title rtl is-2">الباقات</h3>
 
         <div class="columns is-vcentered is-multiline">
@@ -131,9 +144,9 @@
                                     <?php if ($active_subscription) { ?>
                                         <?php if ($active_subscription && $active_subscription['id'] == $row['id']) { ?>
                                             <button class="button is-primary" type="button" style="margin-right: .5em">مفعله!</button>
-                                            <?php } else { ?>
-                                                <button class="button is-info is-light" type="button" onclick="if (confirm('هل ترغب في إلغاء اشتراكك السابق و الاشتراك في هذه الباقه؟')) document.getElementById('plan<?php echo $row['id']; ?>submit').click()" style="margin-right: .5em">اشتراك</button>
-                                                <button name="submit" type="submit" id='plan<?php echo $row['id']; ?>submit' style="position: absolute; pointer-events:none; opacity:0">اشتراك</button>
+                                        <?php } else { ?>
+                                            <button class="button is-info is-light" type="button" onclick="if (confirm('هل ترغب في إلغاء اشتراكك السابق و الاشتراك في هذه الباقه؟')) document.getElementById('plan<?php echo $row['id']; ?>submit').click()" style="margin-right: .5em">اشتراك</button>
+                                            <button name="submit" type="submit" id='plan<?php echo $row['id']; ?>submit' style="position: absolute; pointer-events:none; opacity:0">اشتراك</button>
                                         <?php } ?>
                                     <?php } else { ?>
                                         <button class="button is-info is-light" type="submit" style="margin-right: .5em">اشتراك</button>
