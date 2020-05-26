@@ -79,7 +79,7 @@
                             </div>
                             <div class="field">
                                 <p class="control has-icons-right">
-                                    <input class="input rtl" required name='cap' value="<?php echo $row['cap'] / 1024 / 1024; ?>" type="text" placeholder="سعة التحميل">
+                                    <input class="input rtl" required name='cap' value="<?php echo ($row['cap'] == '-1') ? '-1' : $row['cap'] / 1024 / 1024; ?>" type="text" placeholder="سعة التحميل">
                                     <span class="icon is-small is-right">
                                         <i class="fas fa-tachometer-alt"></i>
                                     </span>

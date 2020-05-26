@@ -360,10 +360,6 @@ function delete_user($data, $db)
 
 function admin_add_balance($data, $db)
 {
-    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-    $admin_check = $db->fetch_array($admin_check);
-    $admin_check = (int) $admin_check["admin"];
-    if ($admin_check === 0) return false;
 
     if (!isset($data['id']) || !isset($data['add_balance'])) {
         return false;
@@ -508,6 +504,8 @@ function get_active_subscription($logged_in, $db)
     if ($check['plan'] != '0' && $check['plan_expiration'] > time() && $check['plan_expiration'] != '0') {
         $plan = $db->query("SELECT `id`, `name`,`color` from plans where `id` = '$check[plan]' ");
         $plan = $db->fetch_array($plan);
+        $plan['balance'] = $check['balance'];
+        $plan['plan_expiration'] = $check['plan_expiration'];
         return $plan;
     }
     return false;
@@ -583,6 +581,7 @@ function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGH
 
 function bytes_to_human($bytes)
 {
+    if ($bytes == '-1') return "لا محدود";
     $mapping = ["بايت", "كيلوبايت", "ميجا", "جيجا", "تيرا"];
     $counter = 0;
     while ((+$bytes / 1024) >= 1) {

@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             }
             break;
         case "admin_add_balance":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in && !$logged_in['admin']) header("Location: login");
             if (admin_add_balance($_POST, $db)) {
                 $message = "تمت اضافة الرصيد بنجاح!";
                 $page = "./components/success.php";

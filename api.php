@@ -9,7 +9,7 @@ $_POST = json_decode(file_get_contents("php://input"), true);
 $_POST = $db->escape_value($_POST);
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["action"])) $action = $_POST['action'];
 else {
-    var_dump($_POST,file_get_contents("php://input"));
+    var_dump($_POST, file_get_contents("php://input"));
     echo "null";
     exit;
 };
@@ -62,7 +62,7 @@ switch ($action) {
         $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
         $search = isset($_POST['search']) ? $_POST['search'] : null;
         $offset = 15 * ($page - 1);
-        $query = "SELECT id,`name`,username,email,balance,daily_balance,`admin` FROM users";
+        $query = "SELECT id,`name`,username,email,balance,`admin` FROM users";
         if ($search) $query .= " WHERE `username` like '%$search%'";
         $pages = $db->query($query);
         $pages = ceil($db->num_rows($pages) / 15);
@@ -75,6 +75,21 @@ switch ($action) {
         while ($row = $db->fetch_array($query)) {
             $row['balance_string'] = bytes_to_human($row['balance']);
             array_push($array['rows'], $row);
+        }
+
+        foreach ($array['rows'] as $key => $row) {
+            $active = get_active_subscription(['id' => $row['id']], $db);
+            if ($active) {
+                $array['rows'][$key]['balance_string'] = bytes_to_human($active['balance']);
+                $date = date("Y-m-d", $active['plan_expiration']);
+                $array['rows'][$key]['package'] = "<strong>$active[name]</strong><br>تنتهي يوم $date";
+                $array['rows'][$key]['balance'] = $active['balance'];
+            } else {
+                $array['rows'][$key]['package'] = "ﻻ توجد باقة مفعله";
+                $array['rows'][$key]['balance_string'] = "0";
+                $array['rows'][$key]['balance'] = 0;
+            }
+            
         }
 
         $json = json_encode($array);
@@ -96,8 +111,8 @@ switch ($action) {
 
 
         $success = $db->query("UPDATE plans SET `name`='$name',`description`='$desc',`cap`='$cap',`color`='$color',`duration`='$duration',`price`='$price' WHERE id='$id'");
-        
-        $json = $success ? json_encode(['true']):null;
+
+        $json = $success ? json_encode(['true']) : null;
         break;
     default:
         $json = null;

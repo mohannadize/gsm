@@ -28,6 +28,7 @@
                         <th>الاسم</th>
                         <th>اسم المستخدم</th>
                         <th>البريد الالكتورني</th>
+                        <th>الباقة</th>
                         <th>الرصيد</th>
                         <th>نوع الجساب</th>
                         <th>ادارة</th>
@@ -43,23 +44,28 @@
                     username.textContent = row.username;
                     let email = document.createElement("td");
                     email.textContent = row.email;
+                    let package = document.createElement("td");
+                    package.innerHTML = (+row.admin) ? "لا محدود" : row.package;
+                    package.classList.add("ltr")
                     let balance = document.createElement("td");
-                    balance.textContent = (+row.admin) ? "لا نهاية" : row.balance_string;
+                    balance.textContent = (+row.admin) ? "لا محدود" : row.balance_string;
                     balance.classList.add("ltr")
                     let admin = document.createElement("td");
                     admin.textContent = (+row.admin) ? "ادمن" : "عادي";
-                    tr.append(name, username, email, balance, admin);
+                    tr.append(name, username, email, package, balance, admin);
 
                     let last = document.createElement("td");
                     last.innerHTML = `
-                        <a onclick='toggle_add_balance(this)' data-id='${row.id}' class=\"button is-success is-light\">
+                        ${(row.balance != '-1') ?
+                        `<a onclick='toggle_add_balance(this)' data-id='${row.id}' class=\"button is-success is-light\">
                             <span class=\"icon\">
                                 <i class=\"fa fa-plus\"></i>
                             </span>
                             <span>
                                 اضافة رصيد
                             </span>
-                        </a>
+                        </a>` : ``
+                        }
                         <a onclick='toggle_delete_user(this)' data-id='${row.id}' class=\"button is-danger\">
                             <span class=\"icon\">
                                 <i class=\"fa fa-trash-alt\"></i>
