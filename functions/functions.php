@@ -80,6 +80,86 @@ function print_notice_page($action, $page, $message,  $section = false, $db = nu
 <?php
 }
 
+function generate_email($details, $db)
+{
+    $site_info = $db->query("SELECT * from `site`");
+    $site_info = $db->fetch_array($site_info);
+    $title = $site_info['site-name'];
+    $url = $site_info['url'];
+    $admin_email = $site_info['email'];
+    if (!isset($details['subject']) || !isset($details['message'])) {
+        return false;
+    }
+    $subject = $details['subject'];
+    $message = $details['message'];
+
+    if (isset($details['title'])) {
+        $title .= " || $details[title]";
+    }
+
+    $email = "
+    <!DOCTYPE html>
+                <html lang=\"en\">
+                <head>
+                <meta charset=\"UTF-8\">
+                <style>
+                html,body {
+                    margin:0;
+                    padding:0;
+                    font-family: sans-serif;
+                }
+                header {
+                    max-width: 100%;
+                    box-sizing: border-box;
+                    background-color: teal;
+                    color:white
+                }
+                header, main, footer {
+                    padding: 20px 30px 20px;
+                }
+                footer {
+                    text-align: center;
+                    background-color: lightgrey;
+                }
+                header a {
+                    text-decoration: none;
+                    color:rgb(95, 226, 243);
+                }
+                a {
+                    color: teal;
+                    font-weight: 600;
+                    display:inline-block;
+                }
+                .rtl {
+                    direction: rtl;
+                }
+
+                .ltr {
+                    direction: ltr;
+                }
+                </style>
+                </head>
+                <body>
+                <header>
+                <h1 class='rtl' style=\"font-weight: 400;\">$title</h1>
+                </header>
+                <main class='rtl'>
+                <h2>$subject</h2>
+                <p>
+                $message
+        </p>
+        </main>
+        <footer class='rtl'>
+        راسلنا على <a class='ltr' href='mailto:$admin_email'>$admin_email</a><br><br><a class='ltr' href='$url'>$url</a>
+        </footer>
+        </body>
+        </html>
+
+    ";
+
+    return $email;
+}
+
 function verify_signup($data)
 {
     if ($data["name"] == "" || $data["username"] == "" || $data["password"] == "" || $data["email"] == "")
@@ -155,12 +235,6 @@ function check_login($db)
 
 function update_site_settings($data, $db)
 {
-    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-    $admin_check = $db->fetch_array($admin_check);
-    $admin_check = (int) $admin_check["admin"];
-    if ($admin_check === 0) {
-        return false;
-    }
     $site_name = strip_tags(trim($data['site-name']));
     $description = strip_tags(trim($data['description']));
     $daily_free = (int) $data['daily_free'] * 1024 * 1024;
@@ -341,12 +415,145 @@ function add_new_plan($data, $db)
     return $db->query($query);
 }
 
-function delete_plan($data, $db) {
+function delete_plan($data, $db)
+{
     $id = (int) $data['plan_id'];
     $date = date("Y-m-d");
     $query = "UPDATE plans SET `deactivated` = '$date' WHERE `id` = '$id'";
 
     return $db->query($query);
+}
+
+function plan_subscribe($logged_in, $data, $db)
+{
+
+    $user_id = $logged_in['id'];
+    $user_email = $db->query("SELECT email from users WHERE `id` = '$user_id'");
+    $user_email = $db->fetch_array($user_email);
+    $user_email = $user_email['email'];
+
+    $plan_id = $data['plan_id'];
+    $date = time();
+
+    $plan = $db->query("SELECT * from plans where `id` = '$plan_id'");
+    $plan = $db->fetch_array($plan);
+
+    $price = (float) $plan['price'];
+    $transaction_ref = generateRandomString(8);
+
+
+
+    $db->query("DELETE FROM transactions WHERE `user_id` = '$user_id'");
+
+    if ($price > 0) {
+        $db->query("INSERT INTO transactions (`user_id`, `plan_id`, `transaction_ref`, `price`, `date`, `confirmed`) VALUES ('$user_id', '$plan_id', '$transaction_ref', '$price', '$date', '0')");
+        include "listener/form.php";
+        send_email('pending_subscription', [
+            'transaction_ref' => $transaction_ref,
+            'user_email' => $user_email
+        ], $db);
+    } else {
+        return successful_subscription([
+            'user_id' => $user_id,
+            'plan_id' => $plan_id
+        ], $db);
+    }
+    return false;
+}
+
+function successful_subscription($data, $db)
+{
+    $user_id = $data['user_id'];
+    $user_email = $db->query("SELECT email from users WHERE `id` = '$user_id'");
+    $user_email = $db->fetch_array($user_email);
+    $user_email = $user_email['email'];
+
+    $plan_id = $data['plan_id'];
+
+    $plan = $db->query("SELECT * from plans where `id` = '$plan_id'");
+    $plan = $db->fetch_array($plan);
+
+    $expiration = time() + $plan['duration'];
+    $capacity = $plan['cap'];
+
+    $query = "UPDATE users SET `balance` = '$capacity', `plan` = '$plan_id', `plan_expiration` = '$expiration' WHERE `id` = '$user_id'";
+    if ($db->query($query)) {
+        send_email('successful_subscription', [
+            'user_email' => $user_email
+        ], $db);
+        return true;
+    }
+    return false;
+}
+
+function check_pending_subscription($logged_in, $db)
+{
+    $user_id = $logged_in['id'];
+    $check = $db->query("SELECT * from transactions WHERE `user_id` = '$user_id' AND `confirmed` = 0 ORDER BY id DESC");
+    $check = $db->fetch_array($check);
+    if ($check) {
+        $plan = $db->query("SELECT `name`,`color` from plans where `id` = '$check[plan_id]' ");
+        $plan = $db->fetch_array($plan);
+        $plan['ref'] = $check['transaction_ref'];
+        return $plan;
+    }
+    return false;
+}
+
+function send_email($type, $data, $db)
+{
+    if (!isset($data['user_email'])) {
+        return false;
+    }
+    $settings = $db->query("SELECT `site-name`, `email`,`url` from `site`");
+    $settings = $db->fetch_array($settings);
+    $to = $data['user_email'];
+    $url = $settings['url'];
+    $sitename = $settings['site-name'];
+    $reply_to = $settings['email'];
+
+    $subject = $settings['site-name'];
+
+
+
+    // Always set content-type when sending HTML email
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: admin@mohannad.website\r\n";
+    $headers .= "Reply-To: $reply_to\r\n";
+    
+    $subject .= ' || ';
+
+    switch ($type) {
+        case 'pending_subscription':
+            $subject .= 'تم انشاء طلب اشتراكك';
+            $title = 'اشتراك في الباقة';
+            $message = "تم انشاء طلب اشتراكك برقم ($data[transaction_ref]).";
+            break;
+        case 'successful_subscription':
+            $subject .= 'تم تأكيد عملية الدفع';
+            $title = 'اشتراك في الباقة';
+            $message = "يمكنك الآن البدأ في التحميل! <a href='$url'>ابدا من هنا</a>";
+            break;
+        case 'successful_signup':
+            $subject = "أهلا بك في $sitename";
+            $title = "أهلا بك";
+            $message = "أهلا يا $data[name]<br>بمكنك الان البدا في تصفح موقعنا و التحميل بحريه، اذا لديك اي استفسارات راسلنا على بريدما الإلكتروني!";
+            break;
+        default:
+            return false;
+            break;
+    }
+
+    $html = generate_email([
+        'title' => $title,
+        'subject' => $subject,
+        'message' => $message
+    ], $db);
+    
+    mail($to, $subject, $html, $headers);
+
+    return $html;
 }
 
 function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGHJKLZXCVBNM1234567890qwertyuiopasdfghjkzxcvbnm')

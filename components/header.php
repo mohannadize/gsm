@@ -25,7 +25,8 @@
                 الرومات
             </a>
 
-            <!-- <a class="navbar-item <?php //echo $action == "combinations" ? "is-active" : ""; ?>" href="combinations">
+            <!-- <a class="navbar-item <?php //echo $action == "combinations" ? "is-active" : ""; 
+                                        ?>" href="combinations">
                 Combinations
             </a> -->
         </div>
@@ -34,11 +35,11 @@
             <?php
 
             if ($logged_in) {
-                ?>
+            ?>
 
                 <?php if ($logged_in['admin'] == '1') {
 
-                        ?>
+                ?>
 
                     <a class="navbar-item <?php echo $action == "admin" ? "is-active" : ""; ?>" href="admin">
                         <span>
@@ -50,7 +51,7 @@
                     </a>
 
                 <?php } else {
-                        ?>
+                ?>
 
                     <a class="navbar-item <?php echo $action == "profile" ? "is-active" : ""; ?> ltr" href='profile'>
                         <span>
@@ -63,16 +64,41 @@
 
                     <a class="navbar-item <?php echo $action == "packages" ? "is-active" : ""; ?> ltr" href='packages'>
                         <!-- TODO: Points system  -->
-                        <span>
-                            <?php echo bytes_to_human($user_data['balance'] + $user_data['daily_balance']); ?> Left
-                        </span>
-                        <span class="icon" style="padding-left:5px;">
-                            <i class="fa fa-tachometer-alt"></i>
-                        </span>
+                        <?php if ($user_data['plan'] == 0) { ?>
+                            <div class="control">
+                                <button class="button is-primary"">
+                                    <span>عرض الباقات</span>
+                                    <span class="icon"><i class="fa fa-boxes"></i></span>
+                                </button>
+                            </div>
+                        <?php } else {
+                            $plan = $db->query("SELECT `name`,`color` from plans where `id` = '$user_data[plan]' ");
+                            $plan = $db->fetch_array($plan);
+                        ?>
+                            <div class="columns is-vcentered rtl">
+                                <div class="column is-narrow">
+                                    <div class="control">
+                                        <button class="button is-primary" style="background-color: <?php echo $plan['color']; ?>"><?php echo $plan['name']; ?></button>
+                                    </div>
+                                </div>
+                                <div class="column is-narrow ltr">
+                                    <div class="field has-addons">
+                                        <div class="control">
+                                            <button class="button">
+                                                <? echo bytes_to_human($user_data['balance']); ?>
+                                            </button>
+                                        </div>
+                                        <div class="control">
+                                            <button class="button is-primary">رصيدك</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </a>
 
                 <?php
-                    } ?>
+                } ?>
                 <a class="navbar-item" href="logout.php">
                     <span>
                         تسجيل خروج
@@ -84,7 +110,7 @@
             <?php
             } else {
 
-                ?>
+            ?>
 
                 <div class="navbar-item">
                     <div class="buttons">

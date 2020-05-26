@@ -12,17 +12,17 @@
 <section class="section">
     <div class="container">
         <!-- <h3 class="title rtl">الرومات</h3> -->
-        <form class='columns flipx' onsubmit="table_search('roms-table',event)">
-            <div class="column flipx rtl is-5-tablet is-offset-3-tablet">
-                <input name='s' onkeyup="document.forms[0][1].click()" type="text" placeholder="بحث" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
-            </div>
-            <div class="column is-1 flipx ltr">
-                <button type='subm`it' class="button is-link is-light">
+        <form class='columns is-mobile' id="search_form" onsubmit="table_search('roms-table',event)">
+            <div class="column is-offset-3-tablet is-narrow ltr">
+                <button type='submit' name='submit' class="button is-link is-light">
                     <span class="icon">
                         <i class="fa fa-search"></i>
                     </span>
-                    <span>بحث</span>
+                    <span class="is-hidden-mobile">بحث</span>
                 </button>
+            </div>
+            <div class="column rtl is-9-mobile is-5-tablet">
+                <input name='s' onkeyup="document.forms.search_form.submit.click()" type="text" placeholder="بحث" class="input" value="<?php echo isset($_GET['s']) ? $_GET["s"] : ''; ?>">
             </div>
         </form>
         <div class="scrollable-table" style="transform:scale(0.95)" id='roms-table'>

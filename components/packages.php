@@ -1,17 +1,93 @@
 <section class="section">
     <div class="container">
-        <h3 class="title">Subscription packages</h3>
+
+        <div>
+            <?php if ($user_data['plan'] == 0) {
+
+                $pending_subscription = check_pending_subscription($logged_in, $db);
+                if ($pending_subscription) { ?>
+                    <div class="columns is-vcentered rtl">
+                        <div class="column is-narrow">
+                            <div class="title is-5">حالة اشتراكك في باقة</div>
+                        </div>
+                        <div class="column is-narrow">
+                            <div class="control">
+                                <button class="button is-medium is-primary" style="background-color: <?php echo $pending_subscription['color']; ?>"><?php echo $pending_subscription['name']; ?></button>
+                            </div>
+                        </div>
+                        <div class="column is-narrow ltr">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <button class="button is-medium">
+                                        بإنتظار تأكيد اشتراكك
+                                    </button>
+                                </div>
+                                <div class="control">
+                                    <button class="button is-medium is-primary is-loading"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-narrow ltr">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <button onclick='copyText("<?php echo $pending_subscription['ref']; ?>")' class="button is-medium">
+                                        <?php echo $pending_subscription['ref']; ?>
+                                    </button>
+                                </div>
+                                <div class="control">
+                                    <button class="button is-medium is-warning">رقم المراجعة</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } else { ?>
+                    <div class="title is-5 rtl">
+                        لا توجد باقة مفعله على حسابك
+                    </div>
+                <?php }
+            } else {
+                $plan = $db->query("SELECT `name`,`color` from plans where `id` = '$user_data[plan]' ");
+                $plan = $db->fetch_array($plan);
+                ?>
+                <div class="columns is-vcentered rtl">
+                    <div class="column is-narrow">
+                        <div class="title is-5">انت حاليا على باقة</div>
+                    </div>
+                    <div class="column is-narrow">
+                        <div class="control">
+                            <button class="button is-medium is-primary" style="background-color: <?php echo $plan['color']; ?>"><?php echo $plan['name']; ?></button>
+                        </div>
+                    </div>
+                    <div class="column is-narrow ltr">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-medium">
+                                    <? echo bytes_to_human($user_data['balance']); ?>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-medium is-primary">رصيدك</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+
+        <hr>
+        <h3 class="title rtl is-2">الباقات</h3>
 
         <div class="columns is-vcentered is-multiline">
             <?php
 
-            $sql = $db->query("SELECT * FROM plans");
+            $sql = $db->query("SELECT * FROM plans WHERE `deactivated`='0'");
             while ($row = $db->fetch_array($sql)) {
             ?>
                 <div class="column is-3-desktop is-4-tablet is-12-mobile">
-                    <form onsubmit='edit_plan(this,event)'>
+                    <form action="action.php" method="post">
                         <input class="input" name='data' value='<?php echo json_encode($row, JSON_UNESCAPED_UNICODE); ?>' type="hidden">
-                        <input class="input" name='id' value="<?php echo $row['id']; ?>" type="hidden">
+                        <input class="input" name='plan_id' value="<?php echo $row['id']; ?>" type="hidden">
+                        <input class="input" name='action' value="plan_subscribe" type="hidden">
 
                         <div class="card">
                             <div class="card-image">
@@ -54,7 +130,12 @@
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <button class="button is-info is-light" type="submit" style="margin-right: .5em">اشتراك</button>
+                                    <?php if ($pending_subscription) { ?>
+                                        <button class="button is-info is-light" type="button" onclick="if (confirm('هل ترغب في إلغاء اشتراكك السابق و الاشتراك في هذه الباقه؟')) document.getElementById('plan<?php echo $row['id']; ?>submit').click()" style="margin-right: .5em">اشتراك</button>
+                                        <button name="submit" type="submit" id='plan<?php echo $row['id']; ?>submit' style="position: absolute; pointer-events:none; opacity:0">اشتراك</button>
+                                    <?php } else { ?>
+                                        <button class="button is-info is-light" type="submit" style="margin-right: .5em">اشتراك</button>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>

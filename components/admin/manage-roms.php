@@ -1,9 +1,9 @@
 <form class="columns flipx rtl is-mobile is-multiline" onsubmit="table_search('roms-table-admin',event)">
     <div class="column is-narrow is-10-mobile">
-        <input type="text" onkeyup='document.forms[0][1].click()' placeholder="بحث" class="input">
+        <input name="s" type="text" onkeyup='document.forms[0].submit.click()' placeholder="بحث" class="input">
     </div>
     <div class="column is-narrow is-2-mobile">
-        <button type="submit" class="button is-link is-light">
+        <button name='submit' type="submit" class="button is-link is-light">
             <span class="icon">
                 <i class="fa fa-search"></i>
             </span>

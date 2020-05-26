@@ -1,4 +1,5 @@
-toast = siiimpleToast;
+let toast = siiimpleToast;
+
 toast = toast.setOptions({
     container: 'body',
     class: 'siiimpleToast',
@@ -6,7 +7,11 @@ toast = toast.setOptions({
     margin: 15,
     delay: 0,
     duration: 3000,
-    style: {fontFamily:"monospace"},
+    style: {
+        fontSize: "14px",
+        fontWeight: "560",
+        borderRadius: "8px"
+    },
 });
 
 
@@ -277,7 +282,7 @@ function table_search(target, event) {
                 <button class="button is-link is-loading is-large" style="width:100px;"></button>
             </div>
             `
-    let search = event.currentTarget[0].value;
+    let search = event.currentTarget.s.value;
     fetch_rows(target, search);
 }
 
@@ -385,4 +390,13 @@ async function make_request(params, options = {}) {
                 toast.alert(res.message);
             }
         })
+}
+
+function copyText(str) {
+    let input = document.getElementById("copyText");
+    input.value = str;
+    input.select();
+    input.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    toast.success("Copied");
 }

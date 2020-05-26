@@ -4,7 +4,7 @@ $settings = $db->query("SELECT * from site");
 $settings = $db->fetch_array($settings);
 
 if ($logged_in) {
-    $user_data = $db->query("SELECT id,username,email,balance,daily_balance from users WHERE id='$logged_in[id]'");
+    $user_data = $db->query("SELECT id,username,email,balance,daily_balance,plan,plan_expiration from users WHERE id='$logged_in[id]'");
     $user_data = $db->fetch_array($user_data);
 }
 
