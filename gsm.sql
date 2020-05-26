@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 26, 2020 at 09:19 AM
+-- Generation Time: May 26, 2020 at 11:12 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -534,7 +534,7 @@ INSERT INTO `files` (`id`, `type`, `model`, `build_v`, `android_v`, `security_le
 (485, 0, 'SM-P900', 'PPW899UYTQSAW', '6', 'Y9', 348002406, 'USA', '2019-11-26 21:03:04', 0, 'https://google.com', 'SM-P900 USA PPW899UYTQSAW'),
 (486, 1, 'SM-T810', 'KHJU234SdE211', '6', 'U2', 881387502, 'Hong Kong', '2019-11-26 21:03:04', 0, 'https://google.com', 'SM-T810 Hong Kong KHJU234SdE211'),
 (487, 1, 'SM-T810', 'G532FXWU1ASB1', '10', 'U2', 754414853, 'Canada', '2019-11-26 21:03:04', 0, 'https://google.com', 'SM-T810 Canada G532FXWU1ASB1'),
-(488, 0, 'SM-P900', 'KHJU234SdE211', '9.0', 'A2', 303243797, 'Qatar', '2019-11-26 21:03:04', 1, 'https://google.com', 'SM-P900 Qatar KHJU234SdE211');
+(488, 0, 'SM-P900', 'KHJU234SdE211', '9.0', 'A2', 303243797, 'Qatar', '2019-11-26 21:03:04', 2, 'https://google.com', 'SM-P900 Qatar KHJU234SdE211');
 
 -- --------------------------------------------------------
 
@@ -558,10 +558,10 @@ CREATE TABLE `plans` (
 --
 
 INSERT INTO `plans` (`id`, `name`, `description`, `color`, `duration`, `price`, `cap`, `deactivated`) VALUES
-(1, 'المجاني', 'اسبوع مجاني', '#3322ff', 604800, 0, 3145728000, '0'),
+(1, 'المجاني', 'اسبوع مجاني', '#3322ff', 604800, 0, -1, '0'),
 (2, 'الشهري', 'اشتراك شهري مجاني', '#22aaaa', 2592000, 5, 20971520000, '0'),
 (3, 'الفصلي', 'اشتراك كل 3 شهور', '#aaaa22', 7776000, 20, 62914560000, '0'),
-(4, 'سنوي', 'كل سنه مره', '#bf8b30', 31104000, 35, -1048576, '0'),
+(4, 'سنوي', 'كل سنه مره', '#bf8b30', 31104000, 35, -1, '0'),
 (5, 'Mohannad Hisham', '2', '#22aaaa', 604800, 2, 12566, '2020-05-24'),
 (6, 'Mohannad Hisham', '2', '#22aaaa', 604800, 2, 12566, '2020-05-24'),
 (7, 'Mohannad Hisham', '2', '#22aaaa', 604800, 2, 12566, '2020-05-24'),
@@ -617,7 +617,7 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `transaction_ref`, `plan_id`, `user_id`, `price`, `date`, `confirmed`) VALUES
-(13, 'tMDZkxph', 4, 7, 35, 1590474348, 0);
+(15, 'fae4S12Q', 3, 7, 20, 1590482605, 0);
 
 -- --------------------------------------------------------
 
@@ -647,7 +647,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`, `plan`, `plan_expiration`, `deactivated`) VALUES
 (1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 0, '2020-05-26 01:39:37', 1, 1, 0, '0'),
-(7, 'Mohannad Hesham', 'poop', 'poop2', 'poop@gmaill.com', '2019-11-26 20:44:59', 3145728000, 0, '2020-05-26 01:15:47', 0, 0, 1591076013, '0');
+(7, 'Mohannad Hesham', 'poop', 'poop2', 'mohannadize15@gmail.com', '2019-11-26 20:44:59', -1, 0, '2020-05-26 01:15:47', 0, 1, 1591085273, '0');
 
 --
 -- Indexes for dumped tables
@@ -697,7 +697,7 @@ ALTER TABLE `plans`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`

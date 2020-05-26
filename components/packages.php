@@ -106,9 +106,9 @@
                                     <div class="hero-body">
                                         <div class="media">
                                             <div class="media-content">
-                                                <h1 id='plan<?php echo $row['id']; ?>title' class="title rtl"><?php echo $row['name']; ?>
+                                                <h1 id='plan<?php echo $row['id']; ?>title' class="title has-text-right rtl"><?php echo $row['name']; ?>
                                                 </h1>
-                                                <h2 id='plan<?php echo $row['id']; ?>desc' class="subtitle rtl"><?php echo $row['description']; ?>
+                                                <h2 id='plan<?php echo $row['id']; ?>desc' class="subtitle has-text-right rtl"><?php echo $row['description']; ?>
                                                 </h2>
                                             </div>
                                         </div>
@@ -118,7 +118,7 @@
                             <div class="card-content">
                                 <div class="media flipx">
                                     <div class="media-left">
-                                        <i class="has-text-info fas fa-stopwatch"></i>
+                                        <i class="has-text-primary fas fa-stopwatch"></i>
                                     </div>
                                     <div class="media-content flipx rtl">
                                         <?php echo duration_to_human($row['duration']); ?>
@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="media flipx">
                                     <div class="media-left">
-                                        <i class="has-text-info fas fa-tachometer-alt"></i>
+                                        <i class="has-text-primary fas fa-tachometer-alt"></i>
                                     </div>
                                     <div class="media-content flipx rtl">
                                         <?php echo ((float) $row['cap']) == -1 ? "ﻻ محدود" : bytes_to_human($row['cap']); ?>
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="media flipx">
                                     <div class="media-left">
-                                        <i class="has-text-info fas fa-money-bill-wave"></i>
+                                        <i class="has-text-primary fas fa-money-bill-wave"></i>
                                     </div>
                                     <div class="media-content flipx rtl">
                                         <?php echo (float) $row['price'] ? "USD " . $row['price'] : "مجانا!"; ?>
