@@ -113,14 +113,14 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             break;
         case "modify_user":
             if (!$logged_in) header("Location: login");
-            if (modify_user($_POST, $db)) {
+            if (modify_user($logged_in, $_POST, $db)) {
                 $message = "تم تجديد بيانات الحساب!";
                 $page = "./components/success.php";
-                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+                print_notice_page("profile", $page, $message, './components/user.php', $db, $logged_in);
             } else {
                 $message = "حدث خطأ ما";
                 $page = "./components/error.php";
-                print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
+                print_notice_page("profile", $page, $message, './components/user.php', $db, $logged_in);
             }
             break;
         case "delete_user":
@@ -173,7 +173,11 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             break;
         case "plan_subscribe":
             if (!$logged_in) header("Location: login");
-            plan_subscribe($logged_in, $_POST, $db);
+            if (plan_subscribe($logged_in, $_POST, $db)) {
+                $page = "./components/success.php";
+                $message = "تم الاشتراك بنجاح!";
+                print_notice_page("packages", $page, $message, './components/packages.php', $db, $logged_in);
+            };
             break;
         default:
             header('Location: .');

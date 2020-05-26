@@ -84,10 +84,12 @@ switch ($action) {
             $json = null;
             break;
         }
+        $_POST = $db->escape_value($_POST);
+
         $id = (int) $_POST['id'];
-        $name = $_POST['name'];
-        $desc = $_POST['description'];
-        $cap = $_POST['cap'] * 1024 * 1024;
+        $name = htmlspecialchars($_POST['name']);
+        $desc = htmlspecialchars($_POST['description']);
+        $cap = ($_POST['cap'] == '-1') ? '-1' : $_POST['cap'] * 1024 * 1024;
         $color = $_POST['color'];
         $duration = $_POST['duration'];
         $price = $_POST['price'];

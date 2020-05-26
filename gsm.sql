@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 24, 2020 at 01:44 PM
+-- Generation Time: May 26, 2020 at 09:19 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -594,7 +594,7 @@ CREATE TABLE `site` (
 --
 
 INSERT INTO `site` (`logo_as_text`, `logo_file`, `email`, `paypal`, `url`, `site-name`, `description`, `daily_free`, `price`, `maintainance`) VALUES
-(1, './imgs/logo.png', 'mohannad@condize.com', 'paypal@googl.ecom', 'http://localhost/gsm', 'رومانورا', 'This is the site description', 3145728000, 1.2, 0);
+(1, './imgs/logo.png', 'mohannad@condize.com', 'plz-buyer@exam.com', 'https://mohannad.website/gsm/', 'رومانورا', 'This is the site description', 0, 1.2, 0);
 
 -- --------------------------------------------------------
 
@@ -604,11 +604,20 @@ INSERT INTO `site` (`logo_as_text`, `logo_file`, `email`, `paypal`, `url`, `site
 
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL,
-  `rom_id` int(11) NOT NULL,
+  `transaction_ref` text NOT NULL,
+  `plan_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `confirmed` int(11) NOT NULL
+  `price` float NOT NULL,
+  `date` int(11) NOT NULL,
+  `confirmed` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `transaction_ref`, `plan_id`, `user_id`, `price`, `date`, `confirmed`) VALUES
+(13, 'tMDZkxph', 4, 7, 35, 1590474348, 0);
 
 -- --------------------------------------------------------
 
@@ -627,8 +636,8 @@ CREATE TABLE `users` (
   `daily_balance` bigint(11) NOT NULL,
   `last_login` timestamp NOT NULL DEFAULT current_timestamp(),
   `admin` int(11) NOT NULL DEFAULT 0,
-  `plan` int(11) NOT NULL DEFAULT 1,
-  `plan_expiration` bigint(20) NOT NULL DEFAULT 0,
+  `plan` int(11) NOT NULL DEFAULT 0,
+  `plan_expiration` int(20) NOT NULL DEFAULT 0,
   `deactivated` text NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -637,8 +646,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`, `plan`, `plan_expiration`, `deactivated`) VALUES
-(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 2842484203, '2020-05-24 03:49:05', 1, 1, 0, '0'),
-(7, 'Mohannad Hesham', 'poop', 'poop2', 'poop@gmaill.com', '2019-11-26 20:44:59', 0, 2842484203, '2020-05-13 00:07:53', 0, 1, 0, '0');
+(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 0, '2020-05-26 01:39:37', 1, 1, 0, '0'),
+(7, 'Mohannad Hesham', 'poop', 'poop2', 'poop@gmaill.com', '2019-11-26 20:44:59', 3145728000, 0, '2020-05-26 01:15:47', 0, 0, 1591076013, '0');
 
 --
 -- Indexes for dumped tables
@@ -688,7 +697,7 @@ ALTER TABLE `plans`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`

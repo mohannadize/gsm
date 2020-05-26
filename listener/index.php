@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $details = $db->query("SELECT * from transactions WHERE BINARY `transaction_ref` = '$transaction_ref'");
         $details = $db->fetch_array($details);
         successful_subscription([
-            'user_id' => $user_id,
-            'plan_id' => $plan_id
+            'user_id' => $details['user_id'],
+            'plan_id' => $details['plan_id']
         ],$db);
     }
 

@@ -375,7 +375,7 @@ function admin_add_balance($data, $db)
     return $db->query("UPDATE users set `balance`=`balance`+'$add' WHERE id='$id'");
 }
 
-function modify_user($data, $db)
+function modify_user($logged_in, $data, $db)
 {
     // ini_set("display_errors",1);
     $username = trim($data["username"]);
@@ -396,7 +396,7 @@ function modify_user($data, $db)
             return $db->query("UPDATE users SET `username`='$username',`email`='$email',`password`='$data[password]' WHERE `id`='$_SESSION[id]'");
         }
     } else {
-        return $db->query("UPDATE users SET `username`='$username',`email`='$email' WHERE `id`='$_SESSION[id]'");
+        return $db->query("UPDATE users SET `username`='$username',`email`='$email' WHERE `id`='$logged_in[id]'");
     }
 }
 
@@ -407,7 +407,7 @@ function add_new_plan($data, $db)
     $description = htmlspecialchars($data['description']);
     $color = $data['color'];
     $duration = $data['duration'];
-    $cap = $data['cap'] * 1024 * 1024;
+    $cap = $data['cap'] == '-1' ? '-1' : $data['cap'] * 1024 * 1024;
     $price = $data['price'];
 
     $query = "INSERT INTO plans (`name`, `description`, `color`, `duration`, `cap`, `price`) VALUES ('$name', '$description', '$color', '$duration', '$cap', '$price')";
@@ -500,6 +500,19 @@ function check_pending_subscription($logged_in, $db)
     return false;
 }
 
+function get_active_subscription($logged_in, $db)
+{
+    $user_id = $logged_in['id'];
+    $check = $db->query("SELECT * from users WHERE `id` = '$user_id'");
+    $check = $db->fetch_array($check);
+    if ($check['plan'] != '0' && $check['plan_expiration'] > time() && $check['plan_expiration'] != '0') {
+        $plan = $db->query("SELECT `id`, `name`,`color` from plans where `id` = '$check[plan]' ");
+        $plan = $db->fetch_array($plan);
+        return $plan;
+    }
+    return false;
+}
+
 function send_email($type, $data, $db)
 {
     if (!isset($data['user_email'])) {
@@ -528,7 +541,7 @@ function send_email($type, $data, $db)
         case 'pending_subscription':
             $subject .= 'تم انشاء طلب اشتراكك';
             $title = 'اشتراك في الباقة';
-            $message = "تم انشاء طلب اشتراكك برقم ($data[transaction_ref]).";
+            $message = "تم انشاء طلب اشتراكك برقم ($data[transaction_ref]).<br><br>بإنتظار تأكيد الدفع";
             break;
         case 'successful_subscription':
             $subject .= 'تم تأكيد عملية الدفع';
