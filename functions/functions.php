@@ -111,7 +111,7 @@ function generate_email($details, $db)
                 header {
                     max-width: 100%;
                     box-sizing: border-box;
-                    background-color: teal;
+                    background-color: #333;
                     color:white
                 }
                 header, main, footer {
@@ -123,10 +123,10 @@ function generate_email($details, $db)
                 }
                 header a {
                     text-decoration: none;
-                    color:rgb(95, 226, 243);
+                    color:#016a94;
                 }
                 a {
-                    color: teal;
+                    color: #016a94;
                     font-weight: 600;
                     display:inline-block;
                 }
@@ -144,8 +144,8 @@ function generate_email($details, $db)
                 <h1 class='rtl' style=\"font-weight: 400;\">$title</h1>
                 </header>
                 <main class='rtl'>
-                <h2>$subject</h2>
-                <p>
+                <h2 class='rtl'>$subject</h2>
+                <p class='rtl'>
                 $message
         </p>
         </main>
