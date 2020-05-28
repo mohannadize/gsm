@@ -35,10 +35,10 @@ switch ($action) {
     case 'get':
         $type = (isset($_POST['type']) && $_POST['type'] == '1') ? 1 : 0;
         $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
-        $search = isset($_POST['search']) ? $_POST['search'] : null;
+        $search = $_POST['search'] != null ? explode('|', $_POST['search']) : ['','',''];
         $offset = 15 * ($page - 1);
         $query = "SELECT * FROM files where `type`='$type'";
-        if ($search) $query .= " AND `search_text` like '%$search%'";
+        if ($search) $query .= " AND `model` like '%$search[0]%' AND `country` like '%$search[1]%' AND `android_v` like '%$search[2]%'";
         $pages = $db->query($query);
         $pages = ceil($db->num_rows($pages) / 15);
         $query .= " ORDER BY id DESC limit 15 offset $offset";
@@ -89,7 +89,6 @@ switch ($action) {
                 $array['rows'][$key]['balance_string'] = "0";
                 $array['rows'][$key]['balance'] = 0;
             }
-            
         }
 
         $json = json_encode($array);

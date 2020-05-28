@@ -16,8 +16,8 @@ $file_info = $db->fetch_array($file_info);
             <div class="column">
                 <nav class="breadcrumb" aria-label="breadcrumbs">
                     <ul>
-                        <li><a href="roms?s=<?php echo $file_info['model']; ?>"><?php echo $file_info['model']; ?></a></li>
-                        <li><a href="roms?s=<?php echo $file_info['model'] . " " . $file_info['country']; ?>"><?php echo $file_info['country']; ?></a></li>
+                        <li><a href="roms?s=<?php echo $file_info['model']; ?>||"><?php echo $file_info['model']; ?></a></li>
+                        <li><a href="roms?s=<?php echo $file_info['model'] . "|" . $file_info['country']; ?>|"><?php echo $file_info['country']; ?></a></li>
                         <li class="is-active"><a href="javascript:void(0)" aria-current="page"><?php echo $file_info['build_v']; ?></a></li>
                     </ul>
                 </nav>

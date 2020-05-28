@@ -17,6 +17,19 @@
                 </div>
             </div>
 
+            <label class="label flipx rtl">لوجو الموقع </label>
+            <div class="field">
+                <a class="button flipx is-warning" onclick="toggle_modal(this)" data-target="upload_logo">
+                    <span class="icon"><i class="fa fa-upload"></i></span>
+                    <span>
+                        ارفع
+                    </span></a>
+            </div>
+            <div class="field rtl flipx">
+                <input id="logo_as_text" type="checkbox" name="logo_as_text" class="switch is-rounded" <?php echo $settings['logo_as_text'] ? "checked" : ''; ?>>
+                <label for="logo_as_text">استخدام عنوان الموقع كلوجو</label>
+            </div>
+
             <div class="field flipx rtl">
                 <label class="label">نبذه عن الموقع</label>
                 <div class="control">
@@ -35,7 +48,7 @@
             </div>
 
             <div class="field flipx rtl">
-                <label class="label">Paypal بريد</label>
+                <label class="label ltr has-text-right">Paypal بريد</label>
                 <div class="control has-icons-right">
                     <input required class="input" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
                     <span class="icon is-small is-right">
@@ -44,7 +57,7 @@
                 </div>
             </div>
 
-            <div class="field flipx rtl">
+            <div class="field flipx rtl is-hidden">
                 <label class="label">السعر</label>
                 <div class="control has-icons-right">
                     <input required class="input" name='price' step="0.01" type="number" value="<?php echo $settings['price']; ?>">
@@ -55,21 +68,7 @@
                 <div class="help is-primary rtl">لكل 1GB بالدولار</div>
             </div>
 
-            <label class="label flipx rtl">لوجو الموقع </label>
-            <div class="field rtl flipx">
-                <input id="logo_as_text" type="checkbox" name="logo_as_text" class="switch is-rounded" <?php echo $settings['logo_as_text'] ? "checked" : ''; ?>>
-                <label for="logo_as_text">استخدام عنوان الموقع كلوجو</label>
-            </div>
-
-            <div class="field">
-                <a class="button flipx is-warning" onclick="toggle_modal(this)" data-target="upload_logo">
-                    <span class="icon"><i class="fa fa-upload"></i></span>
-                    <span>
-                        ارفع
-                    </span></a>
-            </div>
-
-            <div class="field flipx rtl">
+            <div class="field flipx rtl is-hidden">
                 <label class="label">الحد المجاني اليومي</label>
                 <div class="control">
                     <input required class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free'] / 1024 / 1024; ?>">

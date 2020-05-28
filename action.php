@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             break;
 
         case "update_site":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
             if (update_site_settings($_POST, $db)) {
                 $message = "تم حفظ الاعدادات الجديدة بنجاح!";
                 $page = "./components/success.php";
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             };
             break;
         case "add_rom":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
             if (add_rom($_POST, $db)) {
                 $message = "تم اضافة الروم بنجاح";
                 $page = "./components/success.php";
@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             }
             break;
         case "modify_file":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
             if (modify_file($_POST, $db)) {
                 $message = "تم تعديل الملف بنجاح";
                 $page = "./components/success.php";
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             }
             break;
         case "update_logo":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
             if (change_logo_image($_FILES['file'], $db)) {
                 $message = "تم تجديد اللوجو بنجاح";
                 $page = "./components/success.php";
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             }
             break;
         case "delete_file":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
             if (delete_file($_POST, $db)) {
                 $message = "تم مسح الملف بنجاح!";
                 $page = "./components/success.php";
@@ -114,9 +114,11 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         case "modify_user":
             if (!$logged_in) header("Location: login");
             if (modify_user($logged_in, $_POST, $db)) {
-                $message = "تم تجديد بيانات الحساب!";
+                $message = "تم تجديد بيانات الحساب!<br>الرجاء تسجيل الدخول من جديد";
                 $page = "./components/success.php";
-                print_notice_page("profile", $page, $message, './components/user.php', $db, $logged_in);
+                session_destroy();
+                $logged_in = false;
+                print_notice_page("login", $page, $message, './components/login.php', $db, $logged_in);
             } else {
                 $message = "حدث خطأ ما";
                 $page = "./components/error.php";
@@ -124,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             }
             break;
         case "delete_user":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
             if (delete_user($_POST, $db)) {
                 $message = "تم مسح الحساب!";
                 $page = "./components/success.php";
@@ -136,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             }
             break;
         case "admin_add_balance":
-            if (!$logged_in && !$logged_in['admin']) header("Location: login");
+            if (!$logged_in && !$logged_in['admin']) header("Location: .");
             if (admin_add_balance($_POST, $db)) {
                 $message = "تمت اضافة الرصيد بنجاح!";
                 $page = "./components/success.php";
@@ -148,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             }
             break;
         case "add_new_plan":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
             if (add_new_plan($_POST, $db)) {
                 $message = "تمت اضافة البافة بنجاح!";
                 $page = "./components/success.php";
@@ -160,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             }
             break;
         case "delete_plan":
-            if (!$logged_in) header("Location: login");
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
             if (delete_plan($_POST, $db)) {
                 $message = "تم مسح البافة بنجاح!";
                 $page = "./components/success.php";

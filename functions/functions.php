@@ -262,10 +262,6 @@ function update_site_settings($data, $db)
 
 function add_rom($data, $db)
 {
-    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-    $admin_check = $db->fetch_array($admin_check);
-    $admin_check = (int) $admin_check["admin"];
-    if ($admin_check === 0) return false;
 
     $model = strip_tags(trim($data['model']));
     $build = strip_tags(trim($data['build']));
@@ -283,10 +279,6 @@ function add_rom($data, $db)
 
 function change_logo_image($file, $db)
 {
-    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-    $admin_check = $db->fetch_array($admin_check);
-    $admin_check = (int) $admin_check["admin"];
-    if ($admin_check === 0) return false;
 
     $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     if ($ext == 'php') return false;
@@ -305,11 +297,6 @@ function change_logo_image($file, $db)
 
 function modify_file($data, $db)
 {
-    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-    $admin_check = $db->fetch_array($admin_check);
-    $admin_check = (int) $admin_check["admin"];
-    if ($admin_check === 0) return false;
-
     $id = (int) (trim($data['id']));
     $model = strip_tags(trim($data['model']));
     $build = strip_tags(trim($data['build']));
@@ -331,10 +318,6 @@ function modify_file($data, $db)
 
 function delete_file($data, $db)
 {
-    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-    $admin_check = $db->fetch_array($admin_check);
-    $admin_check = (int) $admin_check["admin"];
-    if ($admin_check === 0) return false;
 
     if (isset($data['id'])) {
         $id = (int) (trim($data['id']));
@@ -345,10 +328,6 @@ function delete_file($data, $db)
 }
 function delete_user($data, $db)
 {
-    $admin_check = $db->query("SELECT admin from users WHERE username='$_SESSION[username]'");
-    $admin_check = $db->fetch_array($admin_check);
-    $admin_check = (int) $admin_check["admin"];
-    if ($admin_check === 0) return false;
 
     if (isset($data['id'])) {
         $id = (int) (trim($data['id']));
@@ -384,12 +363,11 @@ function modify_user($logged_in, $data, $db)
     $user_exists = $db->query("SELECT username from users WHERE `username`='$username' AND id!='$id'");
     if ($db->num_rows($user_exists)) return false;
 
-    $_SESSION['username'] = $username;
     if ($data['password'] != "") {
         if ($data['password'] != $data['cpassword']) {
             return false;
         } else {
-            return $db->query("UPDATE users SET `username`='$username',`email`='$email',`password`='$data[password]' WHERE `id`='$_SESSION[id]'");
+            return $db->query("UPDATE users SET `username`='$username',`email`='$email',`password`='$data[password]' WHERE `id`='$logged_in[id]'");
         }
     } else {
         return $db->query("UPDATE users SET `username`='$username',`email`='$email' WHERE `id`='$logged_in[id]'");

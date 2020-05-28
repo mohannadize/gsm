@@ -5,7 +5,7 @@ $site_settings = $db->fetch_array($site_settings);
 
 ?>
 
-<form action="https://sandbox.paypal.com/cgi-bin/webscr" method="post" id="dataForm">
+<form action="https://<?php echo $site_settings['maintainance'] == '1' ? 'sandbox.': ''; ?>paypal.com/cgi-bin/webscr" method="post" id="dataForm">
   <input type="hidden" name="cmd" value="_xclick">
   <input type="hidden" name="business" value="<?php echo $site_settings['paypal']; ?>">
   <input type="hidden" name="lc" value="US">
