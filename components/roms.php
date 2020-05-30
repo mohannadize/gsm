@@ -15,11 +15,22 @@
 
 <section class="section">
     <div class="container">
-        <form class='columns' style="width:700px; max-width:100%;margin:auto" id="search_form" onsubmit="table_search('roms-table',event)">
-            <div class="is-hidden">
-                <input name='s' onchange="document.forms.search_form.submit.click()" type="hidden">
-                <button type='submit' name='submit' class="button is-link is-light">
-                </button>
+        <form class='columns' style="width:700px; max-width:100%;margin:auto" id="search_form"  onsubmit="event.preventDefault()">
+            <div class="column is-4">
+                <div class="control has-icons-right">
+                    <input type="text" list="country" class="input rtl" name="country" onkeyup="search()" placeholder="البلد">
+                    <span class="icon is-right"><i class="fa fa-flag"></i></span>
+                    <datalist id='country'>
+                        <?php
+
+                        $query = $db->query("SELECT DISTINCT country as 'option' from files");
+                        while ($row = $db->fetch_array($query)) {
+                            echo "<option value='$row[option]'>";
+                        }
+
+                        ?>
+                    </datalist>
+                </div>
             </div>
             <div class="column is-4">
                 <div class="control has-icons-right">
@@ -53,22 +64,6 @@
                     </datalist>
                 </div>
             </div>
-            <div class="column is-4">
-                <div class="control has-icons-right">
-                    <input type="text" list="country" class="input rtl" name="country" onkeyup="search()" placeholder="البلد">
-                    <span class="icon is-right"><i class="fa fa-flag"></i></span>
-                    <datalist id='country'>
-                        <?php
-
-                        $query = $db->query("SELECT DISTINCT country as 'option' from files");
-                        while ($row = $db->fetch_array($query)) {
-                            echo "<option value='$row[option]'>";
-                        }
-
-                        ?>
-                    </datalist>
-                </div>
-            </div>
         </form>
         <div class="scrollable-table" style="transform:scale(0.95)" id='roms-table'>
             <div class="has-text-centered">
@@ -79,11 +74,9 @@
 </section>
 
 <script>
-
-function search() {
-    let form = document.forms.search_form;
-    let search = `${form.model.value}|${form.country.value}|${form.android.value}`;
-    fetch_rows('roms-table',search);
-}
-
+    function search() {
+        let form = document.forms.search_form;
+        let search = `${form.model.value}|${form.country.value}|${form.android.value}`;
+        fetch_rows('roms-table', search);
+    }
 </script>

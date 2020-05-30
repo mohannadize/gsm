@@ -1,14 +1,15 @@
 <nav class="navbar is-fixed-top is-dark flipx" role="navigation" aria-label="main navigation">
     <div class="navbar-brand flipx">
         <a class="navbar-item" href=".">
+            <?php if ($settings['logo_as_text']) { ?>
             <h1 class="title is-4 has-text-white">
-                <span class="icon">
-                    <i class="fa fa-mobile-alt"></i>
-                </span>
                 <span>
                     <?php echo $settings['site-name']; ?>
                 </span>
             </h1>
+            <?php } else { ?>
+                <img src="<?php echo $settings['logo_file']; ?>" alt="<?php echo $settings['site-name']; ?>">
+            <?php } ?>
         </a>
 
         <a role="button" class="navbar-burger burger" onclick="togglenav(this)" aria-label="menu" aria-expanded="false" data-target="navmenu">

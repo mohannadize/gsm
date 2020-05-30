@@ -77,9 +77,9 @@
             <strong><?php echo $settings['site-name']; ?></strong>. &copy;2019
             <nav class="breadcrumb" aria-label="breadcrumbs">
                 <ul style='justify-content:center'>
-                    <li><a href="#">سياسة الخصوصية</a></li>
-                    <li><a href="#">اتصل بنا</a></li>
-                    <li><a href="#">طلب اضافة روم</a></li>
+                    <li><a href="privacy">سياسة الخصوصية</a></li>
+                    <li><a href="contact_us">اتصل بنا</a></li>
+                    <li><a href="request">طلب اضافة روم</a></li>
                 </ul>
             </nav>
         </div>

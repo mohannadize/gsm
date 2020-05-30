@@ -186,7 +186,7 @@ function login_user($data, $db)
     preg_replace("/[^A-Za-z0-9-_]/", "", $username);
     $password = trim($data['password']);
 
-    $result = $db->query("SELECT u.`name`, u.`id`, u.`username`, u.`password`, u.`plan`, u.`last_login`, u.`admin` from users u WHERE (email='$username' OR username='$username') AND `deactivated`='0'");
+    $result = $db->query("SELECT u.`name`, u.`id`, u.`username`, u.`email`, u.`password`, u.`plan`, u.`last_login`, u.`admin` from users u WHERE (email='$username' OR username='$username') AND `deactivated`='0'");
     $settings = $db->query("SELECT daily_free from `site`");
     $settings = $db->fetch_array($settings);
 
@@ -198,6 +198,7 @@ function login_user($data, $db)
             $_SESSION[$GLOBALS['title']]['id'] = $result['id'];
             $_SESSION[$GLOBALS['title']]['name'] = $result['name'];
             $_SESSION[$GLOBALS['title']]['username'] = $result['username'];
+            $_SESSION[$GLOBALS['title']]['email'] = $result['email'];
             $_SESSION[$GLOBALS['title']]['admin'] = (int) $result['admin'];
             $_SESSION[$GLOBALS['title']]['plan'] = (int) $result['plan'];
             $new_rewards = time() - date_timestamp_get(date_create($result['last_login']));
@@ -236,11 +237,10 @@ function check_login($db)
 function update_site_settings($data, $db)
 {
     $site_name = strip_tags(trim($data['site-name']));
+    $url = strip_tags(trim($data['url']));
     $description = strip_tags(trim($data['description']));
-    $daily_free = (int) $data['daily_free'] * 1024 * 1024;
     $email = trim($data['email']);
     $paypal = trim($data['paypal']);
-    $price = (float) $data['price'];
     $logo_as_text = isset($data['logo_as_text']) ? 1 : 0;
     $maintainance = isset($data['maintainance']) ? 1 : 0;
 
@@ -252,9 +252,8 @@ function update_site_settings($data, $db)
     return $db->query("UPDATE `site` SET 
      `site-name`='$site_name',
      `description`='$description',
-     `daily_free`='$daily_free',
+     `url`='$url',
      `email`='$email',
-     `price`='$price',
      `paypal`='$paypal',
      `logo_as_text`='$logo_as_text',
      `maintainance`='$maintainance' ");
@@ -583,4 +582,33 @@ function duration_to_human($time)
     ];
 
     return $mapping[$time];
+}
+
+function request_rom($logged_in, $data, $db) {
+    $data = $db->escape_value($data);
+    $model = htmlspecialchars($data['model']);
+    $country = htmlspecialchars($data['country']);
+    $build_v = htmlspecialchars($data['build_v']);
+    $android_v = htmlspecialchars($data['android_v']);
+    $message = htmlspecialchars($data['message']);
+    $email = ($logged_in) ? $logged_in['email'] : htmlspecialchars($data['email']);
+
+    $query = "INSERT INTO requests (`email`, `message`, `country`, `model`, `build_v`, `android_v`) VALUES ('$email', '$message', '$country', '$model', '$build_v', '$android_v')";
+
+    if ($db->query($query)) {
+        return true;
+    }
+    return false;
+}
+
+function delete_request($data, $db) {
+    $data = $db->escape_value($data);
+    $id = $data['id'];
+
+    $query = "DELETE FROM requests WHERE id = '$id'";
+
+    if ($db->query($query)) {
+        return true;
+    }
+    return false;
 }

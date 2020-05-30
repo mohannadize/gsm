@@ -1,5 +1,3 @@
-<div class="title">Admin</div>
-
 <form action="action.php" method="post">
     <input type="hidden" name="action" value='modify_user'>
     <input type="hidden" name="id" value='<?php echo $user_data['id']; ?>'>

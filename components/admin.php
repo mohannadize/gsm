@@ -29,6 +29,12 @@
                     </a>
                 </li>
                 <li class="flipx">
+                    <a onclick='tabchange(this)' data-target="rom-requests">
+                        <span class="icon is-small"><i class="fas fa-comment-alt" aria-hidden="true"></i></span>
+                        <span>الطلبات</span>
+                    </a>
+                </li>
+                <li class="flipx">
                     <a onclick='tabchange(this)' data-target="account-settings">
                         <span class="icon is-small"><i class="fas fa-user" aria-hidden="true"></i></span>
                         <span>اعدادات الحساب</span>
@@ -49,6 +55,9 @@
     </div>
     <div class="container tab" id="account-settings">
         <?php include "admin/account-settings.php"; ?>
+    </div>
+    <div class="container tab" id="rom-requests">
+        <?php include "admin/requests.php"; ?>
     </div>
     <div class="container tab" id="packs">
         <?php include "admin/packages.php"; ?>
@@ -241,8 +250,8 @@
         </section>
         <footer class="modal-card-foot flipx">
             <button class="button" type="submit">مسح</button>
-        </form>
-        <button class="button is-danger" onclick="toggle_modal(this)" data-target="delete_file">إلغاء</button>
+            </form>
+            <button class="button is-danger" onclick="toggle_modal(this)" data-target="delete_file">إلغاء</button>
         </footer>
     </div>
 </div>

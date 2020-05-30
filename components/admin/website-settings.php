@@ -5,7 +5,7 @@
     <div class="columns">
         <div class="column is-6-tablet">
             <div class="field rtl flipx">
-                <input id="maintainance" type="checkbox" name="maintainance" class="switch is-rounded is-danger" <?php echo $settings['maintainance'] ? "checked" : ''; ?>>
+                <input id="maintainance" type="checkbox" name="maintainance" class="switch is-rtl is-rounded is-danger" <?php echo $settings['maintainance'] ? "checked" : ''; ?>>
                 <label for="maintainance">طور التطوير</label>
             </div>
 
@@ -25,8 +25,9 @@
                         ارفع
                     </span></a>
             </div>
+            <br>
             <div class="field rtl flipx">
-                <input id="logo_as_text" type="checkbox" name="logo_as_text" class="switch is-rounded" <?php echo $settings['logo_as_text'] ? "checked" : ''; ?>>
+                <input id="logo_as_text" type="checkbox" name="logo_as_text" class="switch is-rtl is-rounded" <?php echo $settings['logo_as_text'] ? "checked" : ''; ?>>
                 <label for="logo_as_text">استخدام عنوان الموقع كلوجو</label>
             </div>
 
@@ -40,7 +41,7 @@
             <div class="field flipx rtl">
                 <label class="label">البريد الالكتروني</label>
                 <div class="control has-icons-right">
-                    <input required name="email" class="input" type="email" value="<?php echo $settings['email']; ?>">
+                    <input required name="email" class="input ltr" type="email" value="<?php echo $settings['email']; ?>">
                     <span class="icon is-small is-right">
                         <i class="fas fa-envelope"></i>
                     </span>
@@ -48,32 +49,24 @@
             </div>
 
             <div class="field flipx rtl">
-                <label class="label ltr has-text-right">Paypal بريد</label>
+                <label class="label ltr has-text-right">PayPal بريد</label>
                 <div class="control has-icons-right">
-                    <input required class="input" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
+                    <input required class="input ltr" name='paypal' type="email" value="<?php echo $settings['paypal']; ?>">
                     <span class="icon is-small is-right">
                         <i class="fab fa-paypal"></i>
                     </span>
                 </div>
             </div>
-
-            <div class="field flipx rtl is-hidden">
-                <label class="label">السعر</label>
-                <div class="control has-icons-right">
-                    <input required class="input" name='price' step="0.01" type="number" value="<?php echo $settings['price']; ?>">
+            <div class="field flipx rtl">
+                <label class="label ltr has-text-right">رابط الموقع</label>
+                <div class="control has-icons-right has-text-right">
+                    <input required class="input ltr" name='url' type="text" value="<?php echo $settings['url']; ?>">
                     <span class="icon is-small is-right">
-                        <i class="fa fa-dollar-sign"></i>
+                        <i class="fa fa-link"></i>
                     </span>
+                    <small class="has-text-info">ضروري من اجل ان يعمل Paypal بطريقة صحيحة</small><br>
+                    <small class="has-text-danger">ضع "/" في اخر الرابط</small>
                 </div>
-                <div class="help is-primary rtl">لكل 1GB بالدولار</div>
-            </div>
-
-            <div class="field flipx rtl is-hidden">
-                <label class="label">الحد المجاني اليومي</label>
-                <div class="control">
-                    <input required class="input" name="daily_free" step='0.01' type="number" value="<?php echo $settings['daily_free'] / 1024 / 1024; ?>">
-                </div>
-                <div class="help is-link">in MegaBytes</div>
             </div>
 
             <div class="field is-grouped flipx">

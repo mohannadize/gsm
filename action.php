@@ -178,11 +178,36 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             if (plan_subscribe($logged_in, $_POST, $db)) {
                 $page = "./components/success.php";
                 $message = "تم الاشتراك بنجاح!";
-                print_notice_page("packages", $page, $message, './components/packages.php', $db, $logged_in);
+            } else {
+                $page = "./components/error.php";
+                $message = "حدث خطأ اثناء عملية الاشتراك، الرجاء التواصل مع صاحب الموقع";
             };
+            print_notice_page("packages", $page, $message, './components/packages.php', $db, $logged_in);
+            break;
+        case "request_rom":
+            if (request_rom($logged_in, $_POST, $db)) {
+                $page = "./components/success.php";
+                $message = "تم ارسال طلبك بنجاح!";
+            } else {
+                $page = "./components/error.php";
+                $message = "حدث خطأ ما، الرجاء المحاولة مجددا ﻻحقا";
+            };
+            print_notice_page("request", $page, $message, './components/request.php', $db, $logged_in);
+            break;
+        case "delete_request":
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
+            if (delete_request($_POST, $db)) {
+                $page = "./components/success.php";
+                $message = "تم مسح الطلب!";
+            } else {
+                $page = "./components/error.php";
+                $message = "حدث خطأ ما";
+            };
+            print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             break;
         default:
-            header('Location: .');
+            echo 'undefined action';
+            var_dump($_POST);
             break;
     }
 } else {

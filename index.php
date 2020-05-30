@@ -73,9 +73,15 @@ switch ($action) {
             exit;
         }
         break;
-    break;
-    case "combinations":
-        $page = "./components/combinations.php";
+        break;
+    case "request":
+        $page = "./components/request.php";
+        break;
+    case "privacy":
+        $page = "./components/privacy.php";
+        break;
+    case "contact_us":
+        $page = "./components/contact_us.php";
         break;
     default:
         $action = "404";

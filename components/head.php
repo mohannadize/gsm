@@ -17,6 +17,7 @@ if ($logged_in) {
 <link rel="stylesheet" href="./css/bulmaswatch.min.css">
 <link rel="stylesheet" href="./css/bulma-switch.min.css">
 <link href="https://fonts.googleapis.com/css?family=Inter:300,400,600,700|Tajawal&display=swap" rel="stylesheet">
+<meta name="description" content="<?php echo htmlspecialchars($settings['description']); ?>">
 
 <link href="https://cdn.jsdelivr.net/npm/siiimple-toast/dist/style.css" rel="stylesheet">
 <!-- import js -->

@@ -34,7 +34,7 @@ switch ($action) {
         break;
     case 'get':
         $type = (isset($_POST['type']) && $_POST['type'] == '1') ? 1 : 0;
-        $page = (isset($_POST['type']) && is_int($_POST['page'])) ? (int) $_POST['page'] : 1;
+        $page = (isset($_POST['page'])) ? (int) $_POST['page'] : 1;
         $search = $_POST['search'] != null ? explode('|', $_POST['search']) : ['','',''];
         $offset = 15 * ($page - 1);
         $query = "SELECT * FROM files where `type`='$type'";

@@ -16,7 +16,7 @@ $site_settings = $db->fetch_array($site_settings);
   <input type="hidden" name="no_note" value="0">
   <input type="hidden" name="tax_rate" value="0.000">
   <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
-  <input type="hidden" name="notify_url" value="https://mohannad.website/gsm/listener/index.php?transaction_ref=<?php echo $transaction_ref; ?>">
+  <input type="hidden" name="notify_url" value="<?php echo $site_settings['url']; ?>listener/index.php?transaction_ref=<?php echo $transaction_ref; ?>">
   <input type="submit" id='submit_button' style="display: none" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
 </form>
 
