@@ -47,6 +47,16 @@
                     </span>
                 </div>
             </div>
+            <div class="field flipx rtl">
+                <label class="label">البريد الالكتروني للتواصل</label>
+                <div class="control has-icons-right">
+                    <input required name="contact_email" class="input ltr" type="email" value="<?php echo $settings['contact_email']; ?>">
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                </div>
+                <small>هذا البريد سوف ترسل عليه الرسائل من صفحة اتصل بنا او اي رد على الرسائل المرسله اوتوماتيكيا</small>
+            </div>
 
             <div class="field flipx rtl">
                 <label class="label ltr has-text-right">PayPal بريد</label>

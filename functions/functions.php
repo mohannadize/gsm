@@ -240,12 +240,14 @@ function update_site_settings($data, $db)
     $url = strip_tags(trim($data['url']));
     $description = strip_tags(trim($data['description']));
     $email = trim($data['email']);
+    $contact_email = trim($data['contact_email']);
     $paypal = trim($data['paypal']);
     $logo_as_text = isset($data['logo_as_text']) ? 1 : 0;
     $maintainance = isset($data['maintainance']) ? 1 : 0;
 
     if (
         !filter_var($email, FILTER_VALIDATE_EMAIL)
+        || !filter_var($contact_email, FILTER_VALIDATE_EMAIL)
         || !filter_var($paypal, FILTER_VALIDATE_EMAIL)
     ) return false;
 
@@ -254,6 +256,7 @@ function update_site_settings($data, $db)
      `description`='$description',
      `url`='$url',
      `email`='$email',
+     `contact_email`='$contact_email',
      `paypal`='$paypal',
      `logo_as_text`='$logo_as_text',
      `maintainance`='$maintainance' ");
@@ -493,12 +496,12 @@ function send_email($type, $data, $db)
     if (!isset($data['user_email'])) {
         return false;
     }
-    $settings = $db->query("SELECT `site-name`, `email`,`url` from `site`");
+    $settings = $db->query("SELECT `site-name`, `email`,`contact_email`,`url` from `site`");
     $settings = $db->fetch_array($settings);
     $to = $data['user_email'];
     $url = $settings['url'];
     $sitename = $settings['site-name'];
-    $reply_to = $settings['email'];
+    $reply_to = $settings['contact_email'];
 
     $subject = $settings['site-name'];
 
@@ -509,7 +512,7 @@ function send_email($type, $data, $db)
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "From: admin@mohannad.website\r\n";
     $headers .= "Reply-To: $reply_to\r\n";
-    
+
     $subject .= ' || ';
 
     switch ($type) {
@@ -528,6 +531,11 @@ function send_email($type, $data, $db)
             $title = "أهلا بك";
             $message = "أهلا يا $data[name]<br>بمكنك الان البدا في تصفح موقعنا و التحميل بحريه، اذا لديك اي استفسارات راسلنا على بريدما الإلكتروني!";
             break;
+        case "contact_form":
+            $to = $settings['contact_email'];
+            $subject .= "استمارة التواصل || $data[subject]";
+            $title = "$data[subject]";
+            $message = "$data[name] - <a href='mailto:$data[email]'>$data[email]</a><br><br>$data[message]";
         default:
             return false;
             break;
@@ -538,10 +546,8 @@ function send_email($type, $data, $db)
         'subject' => $subject,
         'message' => $message
     ], $db);
-    
-    mail($to, $subject, $html, $headers);
 
-    return $html;
+    return mail($to, $subject, $html, $headers);
 }
 
 function generateRandomString($length = 6, $letters = '1234567890QWERTYUOPASDFGHJKLZXCVBNM1234567890qwertyuiopasdfghjkzxcvbnm')
@@ -584,7 +590,8 @@ function duration_to_human($time)
     return $mapping[$time];
 }
 
-function request_rom($logged_in, $data, $db) {
+function request_rom($logged_in, $data, $db)
+{
     $data = $db->escape_value($data);
     $model = htmlspecialchars($data['model']);
     $country = htmlspecialchars($data['country']);
@@ -601,7 +608,8 @@ function request_rom($logged_in, $data, $db) {
     return false;
 }
 
-function delete_request($data, $db) {
+function delete_request($data, $db)
+{
     $data = $db->escape_value($data);
     $id = $data['id'];
 
@@ -611,4 +619,22 @@ function delete_request($data, $db) {
         return true;
     }
     return false;
+}
+
+function edit_privacy($data, $db)
+{
+    $data = $db->escape_value($data);
+    $text = $data['text'];
+
+    $query = "UPDATE privacy SET `text`='$text'";
+
+    if ($db->query($query)) {
+        return true;
+    }
+    return false;
+}
+
+function contact_form($data, $db)
+{
+    return send_email('contact_form', $data, $db);
 }

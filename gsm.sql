@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 26, 2020 at 11:12 AM
+-- Generation Time: May 30, 2020 at 11:05 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -573,6 +573,40 @@ INSERT INTO `plans` (`id`, `name`, `description`, `color`, `duration`, `price`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `privacy`
+--
+
+CREATE TABLE `privacy` (
+  `text` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `privacy`
+--
+
+INSERT INTO `privacy` (`text`) VALUES
+('# Heading 1\r\n## Heading 2\r\n### Heading 3\r\n#### Heading 4\r\n##### Heading 5\r\n###### Heading 6\r\n\r\n---\r\n\r\n*Italics*	\r\n**Bold**	\r\n\r\n---\r\n * List item one\r\n* List item two\r\n    * A nested item\r\n\r\n---\r\n\r\n1. Number list item one		\r\n	1.1. A nested item\r\n2. Number list item two\r\n3. Number list item three\r\n\r\n\r\n\r\n---\r\n\r\nStandard link =  http://ghost.org	\r\n[Custom Text Link](http://ghost.org)\r\n');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requests`
+--
+
+CREATE TABLE `requests` (
+  `id` int(11) NOT NULL,
+  `email` text NOT NULL,
+  `message` text DEFAULT NULL,
+  `model` text NOT NULL,
+  `country` text DEFAULT NULL,
+  `build_v` text DEFAULT NULL,
+  `android_v` text DEFAULT NULL,
+  `date` text NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `site`
 --
 
@@ -580,6 +614,7 @@ CREATE TABLE `site` (
   `logo_as_text` int(11) NOT NULL,
   `logo_file` mediumtext NOT NULL,
   `email` mediumtext NOT NULL,
+  `contact_email` text NOT NULL,
   `paypal` mediumtext NOT NULL,
   `url` mediumtext NOT NULL,
   `site-name` mediumtext NOT NULL,
@@ -593,8 +628,8 @@ CREATE TABLE `site` (
 -- Dumping data for table `site`
 --
 
-INSERT INTO `site` (`logo_as_text`, `logo_file`, `email`, `paypal`, `url`, `site-name`, `description`, `daily_free`, `price`, `maintainance`) VALUES
-(1, './imgs/logo.png', 'mohannad@condize.com', 'plz-buyer@exam.com', 'https://mohannad.website/gsm/', 'رومانورا', 'This is the site description', 0, 1.2, 0);
+INSERT INTO `site` (`logo_as_text`, `logo_file`, `email`, `contact_email`, `paypal`, `url`, `site-name`, `description`, `daily_free`, `price`, `maintainance`) VALUES
+(1, './imgs/logo.jpg', 'mohannad@condize.com', 'mohannadize15@gmail.com', 'plz-buyer@exam.com', 'https://localhost:800/gsm/', 'رومانورا', 'This is the site descriptionasdsa', 0, 1.2, 0);
 
 -- --------------------------------------------------------
 
@@ -646,8 +681,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`, `plan`, `plan_expiration`, `deactivated`) VALUES
-(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 0, '2020-05-26 01:39:37', 1, 1, 0, '0'),
-(7, 'Mohannad Hesham', 'poop', 'poop2', 'mohannadize15@gmail.com', '2019-11-26 20:44:59', -1, 0, '2020-05-26 01:15:47', 0, 1, 1591085273, '0');
+(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 0, '2020-05-30 06:41:58', 1, 1, 0, '0');
 
 --
 -- Indexes for dumped tables
@@ -663,6 +697,12 @@ ALTER TABLE `files`
 -- Indexes for table `plans`
 --
 ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `requests`
+--
+ALTER TABLE `requests`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -692,6 +732,12 @@ ALTER TABLE `files`
 --
 ALTER TABLE `plans`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `requests`
+--
+ALTER TABLE `requests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`

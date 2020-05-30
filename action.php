@@ -205,6 +205,27 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             };
             print_notice_page("admin", $page, $message, './components/admin.php', $db, $logged_in);
             break;
+        case "edit_privacy":
+            if (!$logged_in || !$logged_in['admin']) header("Location: .");
+            if (edit_privacy($_POST, $db)) {
+                $page = "./components/success.php";
+                $message = "";
+            } else {
+                $page = "./components/error.php";
+                $message = "حدث خطأ ما";
+            };
+            print_notice_page("privacy", $page, $message, './components/privacy.php', $db, $logged_in);
+            break;
+        case "contact_form":
+            if (contact_form($_POST, $db)) {
+                $page = "./components/success.php";
+                $message = "تم ارسال رسالتك بنجاح";
+            } else {
+                $page = "./components/error.php";
+                $message = "حدث خطأ ما";
+            };
+            print_notice_page("contact_us", $page, $message, './components/contact_us.php', $db, $logged_in);
+            break;
         default:
             echo 'undefined action';
             var_dump($_POST);
