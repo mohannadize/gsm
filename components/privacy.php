@@ -35,7 +35,7 @@ $text = $db->fetch_array($text)['text'];
                         <div class="title">معاينه</div>
                         <div class="card">
                             <div class="card-content">
-                                <div class="content rtl" id="privacy_perview"><?php echo $text; ?></div>
+                                <div class="content rtl" id="privacy_perview"><?php echo $Parsedown->text($text); ?></div>
                             </div>
                         </div>
                     </div>

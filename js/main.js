@@ -1,3 +1,5 @@
+
+
 let toast = siiimpleToast;
 
 toast = toast.setOptions({
@@ -75,10 +77,12 @@ function toggle_modal(elem, options = {}) {
 
 let modal_bg = document.querySelectorAll(".modal-background");
 [].slice.apply(modal_bg).forEach(ele=>{
-    ele.addEventListener("click",()=>{
-        let modal = document.querySelector(".modal.is-active");
-        modal.classList.toggle("is-active");
-    })
+    if (!ele.classList.contains("not-clickable")) {
+        ele.addEventListener("click",()=>{
+            let modal = document.querySelector(".modal.is-active");
+            modal.classList.toggle("is-active");
+        })
+    }
 })
 
 

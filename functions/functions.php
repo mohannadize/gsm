@@ -270,7 +270,12 @@ function add_rom($data, $db)
     $android = strip_tags(trim($data['android']));
     $country = strip_tags(trim($data['country']));
     $size = trim($data['size']) * 1024 * 1024;
-    $url = trim($data['url']);
+    if ($data['uploaded_file_id'] != '') {
+        $url = $data['uploaded_file_id'];
+    } else {
+        $url = trim($data['url']);
+    }
+
     $search = "$model $country $build";
 
     $query = "INSERT INTO files (model, build_v, android_v, country, size, `url`, search_text) 
@@ -310,10 +315,9 @@ function modify_file($data, $db)
         $security = null;
     }
     $size = trim($data['size']) * 1024 * 1024;
-    $url = trim($data['url']);
     $search = "$model $country $build";
 
-    $query = "UPDATE files SET model='$model', build_v='$build', android_v='$android', country='$country', security_level='$security', size='$size', `url`='$url', search_text='$search' WHERE id='$id'";
+    $query = "UPDATE files SET model='$model', build_v='$build', android_v='$android', country='$country', security_level='$security', size='$size', search_text='$search' WHERE id='$id'";
 
     return $db->query($query);
 }
@@ -428,6 +432,7 @@ function plan_subscribe($logged_in, $data, $db)
             'transaction_ref' => $transaction_ref,
             'user_email' => $user_email
         ], $db);
+        return true;
     } else {
         return successful_subscription([
             'user_id' => $user_id,
@@ -493,12 +498,13 @@ function get_active_subscription($logged_in, $db)
 
 function send_email($type, $data, $db)
 {
-    if (!isset($data['user_email'])) {
+    if (!isset($data['user_email']) && $type != 'contact_form') {
         return false;
+    } else {
+        $to = $data['user_email'];
     }
     $settings = $db->query("SELECT `site-name`, `email`,`contact_email`,`url` from `site`");
     $settings = $db->fetch_array($settings);
-    $to = $data['user_email'];
     $url = $settings['url'];
     $sitename = $settings['site-name'];
     $reply_to = $settings['contact_email'];
@@ -507,11 +513,6 @@ function send_email($type, $data, $db)
 
 
 
-    // Always set content-type when sending HTML email
-    $headers = "MIME-Version: 1.0" . "\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: admin@mohannad.website\r\n";
-    $headers .= "Reply-To: $reply_to\r\n";
 
     $subject .= ' || ';
 
@@ -533,13 +534,20 @@ function send_email($type, $data, $db)
             break;
         case "contact_form":
             $to = $settings['contact_email'];
+            $reply_to = $data['email'];
             $subject .= "استمارة التواصل || $data[subject]";
             $title = "$data[subject]";
             $message = "$data[name] - <a href='mailto:$data[email]'>$data[email]</a><br><br>$data[message]";
+            break;
         default:
             return false;
             break;
     }
+
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: admin@mohannad.website\r\n";
+    $headers .= "Reply-To: $reply_to\r\n";
 
     $html = generate_email([
         'title' => $title,
@@ -637,4 +645,32 @@ function edit_privacy($data, $db)
 function contact_form($data, $db)
 {
     return send_email('contact_form', $data, $db);
+}
+
+function upload_rom($file, $db)
+{
+    $json = [
+        'status' => 0
+    ];
+    if (!$file) {
+        $json['message'] = "هناك خطا في اعدادات السيرفر";
+        return $json;
+    }
+    $tmp_name = generateRandomString(11);
+    $target_dir = "./uploads/";
+    $target_file = $target_dir . $tmp_name;
+    $file_name = $file["name"];
+    $type = $file["type"];
+    is_dir($target_dir) ? 0 : mkdir($target_dir);
+    if (!move_uploaded_file($file["tmp_name"], $target_file)) {
+        $json['message'] = "An error has occured while moving the file on the server\nPlease check your server files permissions.";
+        return $json;
+    }
+
+    $db->query("INSERT INTO uploads (`file_name`,`tmp_name`, `location`, `content_type`) VALUES ('$file_name','$tmp_name', '$target_file','$type')");
+
+    $json['file_name'] = $file_name;
+    $json['file_id'] = $db->insert_id();
+    $json['status'] = 1;
+    return $json;
 }

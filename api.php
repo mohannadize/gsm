@@ -19,6 +19,9 @@ switch ($action) {
         $id = (int) $_POST['id'];
         $query = $db->query("SELECT * from files where id='$id'");
         $query = $db->fetch_array($query);
+        if (is_numeric($query['url'])) {
+            $query['url'] = $db->fetch_array($db->query("SELECT `file_name` from uploads WHERE id='$query[url]'"))['file_name'];
+        }
         $json = json_encode($query);
         break;
     case "user":

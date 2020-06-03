@@ -110,7 +110,7 @@
 
         ?>
         <div class="column is-3-desktop is-4-tablet is-12-mobile" id='addplan'>
-            <a class='card is-block' onclick="view.new_plan(this)">
+            <a class='card is-block' onclick="packages.new_plan(this)">
                 <div class="card-image has-text-centered" style="padding-top: 75px;">
                     <span class="icon has-text-primary" style="font-size:75px;"><i class="fa fa-plus"></i></span>
                 </div>
@@ -124,7 +124,7 @@
 </div>
 
 <script>
-    let view = {
+    let packages = {
         new_plan: function(elem) {
             elem.outerHTML = `
             <form action='action.php' method="post">

@@ -5,7 +5,7 @@ $site_settings = $db->fetch_array($site_settings);
 
 ?>
 
-<form action="https://<?php echo $site_settings['maintainance'] == '1' ? 'sandbox.': ''; ?>paypal.com/cgi-bin/webscr" method="post" id="dataForm">
+<form action="https://<?php echo $site_settings['maintainance'] == '1' ? 'sandbox.': 'ipnpb.'; ?>paypal.com/cgi-bin/webscr" method="post" id="dataForm">
   <input type="hidden" name="cmd" value="_xclick">
   <input type="hidden" name="business" value="<?php echo $site_settings['paypal']; ?>">
   <input type="hidden" name="lc" value="US">
@@ -17,7 +17,7 @@ $site_settings = $db->fetch_array($site_settings);
   <input type="hidden" name="tax_rate" value="0.000">
   <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
   <input type="hidden" name="notify_url" value="<?php echo $site_settings['url']; ?>listener/index.php?transaction_ref=<?php echo $transaction_ref; ?>">
-  <input type="submit" id='submit_button' style="display: none" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+  <input type="submit" id='submit_button' style="display: none" name="submit">
 </form>
 
 <script>
