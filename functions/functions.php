@@ -160,13 +160,13 @@ function generate_email($details, $db)
     return $email;
 }
 
-function verify_signup($data)
+function verify_signup($data,$db)
 {
     if ($data["name"] == "" || $data["username"] == "" || $data["password"] == "" || $data["email"] == "")
         return false;
 
     $data["name"] = strip_tags(trim($data["name"]));
-
+    $data = $db->escape_value($data);
     if (filter_var($data['email'], FILTER_VALIDATE_EMAIL))
         $data['email'] = trim($data['email']);
     else return false;

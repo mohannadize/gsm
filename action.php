@@ -10,18 +10,25 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
     switch ($_POST['action']) {
         case 'signup':
-            $user_data = verify_signup($_POST);
+            $user_data = verify_signup($_POST, $db);
             if (!$user_data) {
                 $message = "حدث خطأ، الرجاء اعادة المحاولة لاحقاََ";
                 $page = "./components/error.php";
-                print_notice_page('signup', $page, $message, null, $db);
+                print_notice_page('signup', $page, $message, "./components/signup.php", $db);
                 die();
             } else {
-                $user_exists = $db->query("SELECT username from users WHERE `username`='$_POST[username]'");
+                $user_exists = $db->query("SELECT id from users WHERE `username`='$user_data[username]'");
                 if ($db->num_rows($user_exists)) {
                     $message = "اسم المستخدم مسنخدم من قبل.";
                     $page = "./components/error.php";
-                    print_notice_page('signup', $page, $message, null, $db);
+                    print_notice_page('signup', $page, $message, "./components/signup.php", $db);
+                    exit;
+                }
+                $user_exists = $db->query("SELECT id from users WHERE `email`='$user_data[email]'");
+                if ($db->num_rows($user_exists)) {
+                    $message = "البريد الإلكتروني مستخدم من قبل";
+                    $page = "./components/error.php";
+                    print_notice_page('signup', $page, $message, "./components/signup.php", $db);
                     exit;
                 }
                 if ($db->add_user($user_data['name'], $user_data['username'], $user_data['password'], $user_data['email'])) {
@@ -261,7 +268,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 header("Location: .");
                 exit();
             }
-            echo json_encode(upload_rom($_FILES['file'],$db));
+            echo json_encode(upload_rom($_FILES['file'], $db));
             break;
         default:
             echo 'undefined action';

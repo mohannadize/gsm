@@ -1,6 +1,7 @@
 <section class="section">
     <div class="container flipx">
         <h2 class="title flipx rtl">تسجيل حساب جديد</h2>
+        <br>
         <div class="columns">
             <div class="column is-4 is-offset-2">
                 <div class="card">
@@ -32,7 +33,7 @@
                                 <div class="control">
                                     <label class="checkbox">
                                         <input required name='terms' type="checkbox">
-                                        انا اوافق على  <a href="#">الشروط و الاحكام</a>
+                                        انا اوافق على  <a href="privacy" target="_blank">الشروط و الاحكام</a>
                                     </label>
                                 </div>
                             </div>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 03, 2020 at 05:08 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Host: localhost:3306
+-- Generation Time: Jun 03, 2020 at 03:48 PM
+-- Server version: 10.3.22-MariaDB-log-cll-lve
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gsm`
+-- Database: `mohamrze_gsm`
 --
 
 -- --------------------------------------------------------
@@ -42,6 +42,7 @@ CREATE TABLE `files` (
   `url` mediumtext NOT NULL,
   `search_text` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -68,14 +69,7 @@ INSERT INTO `plans` (`id`, `name`, `description`, `color`, `duration`, `price`, 
 (1, 'FREE', 'One GB One Week', '#3322ff', 604800, 0, 1073741824, '0'),
 (2, 'BLUE', 'Monthly', '#22aaaa', 2592000, 5, 20971520000, '0'),
 (3, 'GREEN', 'Quarterly', '#aaaa22', 7776000, 20, 62914560000, '0'),
-(4, 'GOLD', 'Yearly', '#bf8b30', 31104000, 35, -1, '0'),
-(5, 'Mohannad Hisham', '2', '#22aaaa', 604800, 2, 12566, '2020-05-24'),
-(6, 'Mohannad Hisham', '2', '#22aaaa', 604800, 2, 12566, '2020-05-24'),
-(7, 'Mohannad Hisham', '2', '#22aaaa', 604800, 2, 12566, '2020-05-24'),
-(8, 'Mohannad Hisham', '2', '#22aaaa', 604800, 2, 12566, '2020-05-24'),
-(9, 'Mohannad Hisham', 'new plan B', '#22aaaa', 15552000, 2, 23068672, '2020-05-24'),
-(10, 'Mohannad Hisham', 'new plan B', '#22aaaa', 15552000, 2, 23068672, '2020-05-24'),
-(11, 'بووب', 'بييب', '#22aaaa', 2592000, 2, 830472192, '2020-05-24');
+(4, 'GOLD', 'Yearly', '#bf8b30', 31104000, 35, -1, '0');
 
 -- --------------------------------------------------------
 
@@ -92,7 +86,7 @@ CREATE TABLE `privacy` (
 --
 
 INSERT INTO `privacy` (`text`) VALUES
-('# Heading 1\r\n## Heading 2\r\n### Heading 3\r\n#### Heading 4\r\n##### Heading 5\r\n###### Heading 6\r\n\r\n---\r\n\r\n*Italics*	\r\n**Bold**	\r\n\r\n---\r\n * List item one\r\n* List item two\r\n    * A nested item\r\n\r\n---\r\n\r\n1. Number list item one		\r\n	1.1. A nested item\r\n2. Number list item two\r\n3. Number list item three\r\n\r\n\r\n\r\n---\r\n\r\nStandard link =  http://ghost.org	\r\n[Custom Text Link](http://ghost.org)\r\n');
+('# Heading 1\r\n## Heading 2\r\n### Heading 3\r\n#### Heading 4\r\n##### Heading 5\r\n###### Heading 6\r\n\r\n---\r\n\r\n*Italics*	\r\n**Bold**	\r\n\r\n---\r\n * List item one\r\n* List item two\r\n    * A nested item\r\n\r\n---\r\n\r\n1. Number list item one		\r\n	1.1. A nested item\r\n2. Number list item two\r\n3. Number list item three\r\n\r\n\r\n\r\n---\r\n\r\nStandard link =  http://example.com	\r\n[Custom Text Link](http://example.com)\r\n');
 
 -- --------------------------------------------------------
 
@@ -136,7 +130,7 @@ CREATE TABLE `site` (
 --
 
 INSERT INTO `site` (`logo_as_text`, `logo_file`, `email`, `contact_email`, `paypal`, `url`, `site-name`, `description`, `daily_free`, `price`, `maintainance`) VALUES
-(1, './imgs/logo.jpg', 'mohannad@condize.com', 'mohannadize15@gmail.com', 'plz-buyer@exam.com', 'https://localhost:800/gsm/', 'Romanora', 'This is the site descriptionasdsa', 0, 1.2, 1);
+(1, './imgs/logo.jpg', 'no-reply@yourdomain.com', 'contact_email@gmail.com', 'sb-a1mcd19810@business.example.com', 'https://yourdomain.com/', 'Romanora', 'This is the site descriptionasdsa', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -154,14 +148,6 @@ CREATE TABLE `transactions` (
   `confirmed` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`id`, `transaction_ref`, `plan_id`, `user_id`, `price`, `date`, `confirmed`) VALUES
-(15, 'fae4S12Q', 3, 7, 20, 1590482605, 0),
-(22, 'yXWJm35M', 2, 8, 5, 1590831685, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -175,6 +161,8 @@ CREATE TABLE `uploads` (
   `file_name` text NOT NULL,
   `content_type` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 -- --------------------------------------------------------
 
@@ -203,8 +191,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`, `plan`, `plan_expiration`, `deactivated`) VALUES
-(1, 'Admin User', 'admin', 'admin', 'mohannadize15@gmail.com', '2019-10-26 20:26:38', 0, 0, '2020-06-03 13:30:35', 1, 1, 0, '0'),
-(8, 'mohanad', 'mohannad', 'poop', 'mohannadize15@gmail.com', '2020-05-30 09:33:37', -1, 0, '2020-05-30 09:33:37', 0, 1, 1591436030, '0');
+(1, 'Admin User', 'admin', 'admin', 'admin@yourdomain.com', '2019-10-26 20:26:38', 0, 0, '2020-06-03 13:30:35', 1, 1, 0, '0'),
 
 --
 -- Indexes for dumped tables
@@ -238,8 +225,7 @@ ALTER TABLE `transactions`
 -- Indexes for table `uploads`
 --
 ALTER TABLE `uploads`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `tmp_name` (`tmp_name`) USING HASH;
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -255,13 +241,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `requests`
@@ -273,19 +259,19 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
