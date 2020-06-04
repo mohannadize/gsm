@@ -58,7 +58,7 @@ CREATE TABLE `plans` (
   `duration` bigint(20) NOT NULL,
   `price` float NOT NULL,
   `cap` bigint(20) NOT NULL,
-  `deactivated` text NOT NULL DEFAULT '0'
+  `deactivated` varchar(10) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `requests` (
   `country` text DEFAULT NULL,
   `build_v` text DEFAULT NULL,
   `android_v` text DEFAULT NULL,
-  `date` text NOT NULL DEFAULT current_timestamp()
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -183,7 +183,7 @@ CREATE TABLE `users` (
   `admin` int(11) NOT NULL DEFAULT 0,
   `plan` int(11) NOT NULL DEFAULT 0,
   `plan_expiration` int(20) NOT NULL DEFAULT 0,
-  `deactivated` text NOT NULL DEFAULT '0'
+  `deactivated` varchar(10) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `created`, `balance`, `daily_balance`, `last_login`, `admin`, `plan`, `plan_expiration`, `deactivated`) VALUES
-(1, 'Admin User', 'admin', 'admin', 'admin@yourdomain.com', '2019-10-26 20:26:38', 0, 0, '2020-06-03 13:30:35', 1, 1, 0, '0'),
+(1, 'Admin User', 'admin', 'admin', 'admin@yourdomain.com', '2019-10-26 20:26:38', 0, 0, '2020-06-03 13:30:35', 1, 1, 0, '0');
 
 --
 -- Indexes for dumped tables

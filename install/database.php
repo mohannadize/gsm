@@ -3,10 +3,10 @@
 class MySQLDatabase
 {
 
-    private $host = "localhost"; //the host
-    private $db_user = "root";  //Your username
-    private $pass = "";  // Your password
-    private $dbase = "gsm"; // database name
+    private $host = "poop1"; //the host
+    private $db_user = "poop2";  //Your username
+    private $pass = "poop3";  // Your password
+    private $dbase = "poop4"; // database name
     private $connection;
 
     function __construct()
